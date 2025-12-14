@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cenário das Faxineiras e Trabalhadoras de Limpeza no Brasil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-teal: #16a085;
+            --dark-teal: #138d75;
+            --secondary-blue: #3498db;
+            --dark-blue: #2980b9;
+            --accent-purple: #8e44ad;
+            --dark-purple: #7d3c98;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --bg-white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-teal), var(--dark-teal));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-teal);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, var(--secondary-blue), var(--dark-blue));
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .profile-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-teal);
+        }
+
+        .profile-card h3 {
+            color: var(--primary-teal);
+            margin-bottom: 10px;
+        }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .challenge-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-purple);
+        }
+
+        .challenge-card h3 {
+            color: var(--accent-purple);
+            margin-bottom: 10px;
+        }
+
+        .opportunity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .opportunity-card {
+            background: linear-gradient(135deg, var(--primary-teal), var(--dark-teal));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .opportunity-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .opportunity-details {
+            text-align: left;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .phase-card {
+            background: linear-gradient(135deg, var(--secondary-blue), var(--dark-blue));
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .phase-number {
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        .phase-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .phase-duration {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .kpi-item {
+            background: linear-gradient(135deg, var(--primary-teal), var(--dark-teal));
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .kpi-target {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-light);
+            background: var(--bg-white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-purple);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-purple);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 15px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .close-modal:hover {
+            color: var(--text-dark);
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .policy-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 6px solid var(--secondary-blue);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .policy-card.federal {
+            border-left-color: var(--primary-teal);
+        }
+
+        .policy-card.estadual {
+            border-left-color: var(--accent-purple);
+        }
+
+        .policy-card.municipal {
+            border-left-color: var(--secondary-blue);
+        }
+
+        .policy-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .policy-icon {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .policy-card.federal .policy-icon {
+            background: rgba(22, 160, 133, 0.1);
+            color: var(--primary-teal);
+        }
+
+        .policy-card.estadual .policy-icon {
+            background: rgba(142, 68, 173, 0.1);
+            color: var(--accent-purple);
+        }
+
+        .policy-card.municipal .policy-icon {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary-blue);
+        }
+
+        .policy-title {
+            flex: 1;
+        }
+
+        .policy-title h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+        }
+
+        .policy-title p {
+            margin: 5px 0 0 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .policy-content h4 {
+            color: var(--text-dark);
+            margin: 20px 0 10px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .policy-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .policy-content li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .policy-content li:last-child {
+            border-bottom: none;
+        }
+
+        .policy-content li::before {
+            content: "▸";
+            color: var(--secondary-blue);
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .implementation-timeline {
+            background: linear-gradient(135deg, var(--primary-teal), var(--dark-teal));
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .timeline-content h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .timeline-content p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧹 Cenário das Faxineiras e Trabalhadoras de Limpeza no Brasil</h1>
+            <p>Análise abrangente: desafios, informalidade, terceirização e propostas de valorização</p>
+            <p>Relatório de Pesquisa - Dezembro/2025</p>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">5.9M</div>
+                <div class="stat-label">Trabalhadoras Domésticas no Brasil</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">75.6%</div>
+                <div class="stat-label">Taxa de Informalidade (Sem Carteira)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">R$ 1.189</div>
+                <div class="stat-label">Salário Médio Nacional</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">92%</div>
+                <div class="stat-label">Mulheres no Setor</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">R$ 1.717</div>
+                <div class="stat-label">Piso Salarial Limpeza Terceirizada (SP)</div>
+            </div>
+        </section>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">👩‍🦰</span> Perfil das Trabalhadoras de Limpeza</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>📊 Dados Demográficos Gerais</h3>
+                <ul>
+                    <li><strong>Total:</strong> 5,9 milhões de trabalhadoras domésticas no Brasil (2024)</li>
+                    <li><strong>Gênero:</strong> 92% são mulheres</li>
+                    <li><strong>Raça/Cor:</strong> 69% são negras (pretas ou pardas)</li>
+                    <li><strong>Idade:</strong> 54,2% têm 45 anos ou mais</li>
+                    <li><strong>Escolaridade:</strong> Predomínio de ensino fundamental e médio incompleto</li>
+                </ul>
+
+                <h3>💰 Condições Econômicas</h3>
+                <ul>
+                    <li><strong>Salário Médio:</strong> R$ 1.189,00 (abaixo do salário mínimo)</li>
+                    <li><strong>Abaixo do Mínimo:</strong> 64,5% recebem menos que um salário mínimo</li>
+                    <li><strong>Informalidade:</strong> 75,6% trabalham sem carteira assinada</li>
+                    <li><strong>Setor Privado:</strong> Piso salarial de R$ 1.717,20 para terceirizadas (SP/2025)</li>
+                    <li><strong>Redução:</strong> 18% de queda em empregos formais em 10 anos</li>
+                </ul>
+
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <h3>🏠 Trabalho Doméstico</h3>
+                        <ul>
+                            <li>5,9 milhões de trabalhadoras</li>
+                            <li>76,4% na informalidade</li>
+                            <li>Salário médio: R$ 1.189</li>
+                            <li>89% são mulheres</li>
+                            <li>Maior concentração em residências</li>
+                            <li>Funções: faxina, cozinha, cuidado com crianças e idosos</li>
+                        </ul>
+                    </div>
+
+                    <div class="profile-card">
+                        <h3>🏢 Limpeza Terceirizada</h3>
+                        <ul>
+                            <li>Empresas e condomínios</li>
+                            <li>Piso: R$ 1.717,20 (SP)</li>
+                            <li>Reajustes de 4% a 7,32%</li>
+                            <li>Jornada de 44 horas semanais</li>
+                            <li>Cargos: auxiliar de limpeza, copeira, zelador</li>
+                            <li>Convenções coletivas anuais</li>
+                        </ul>
+                    </div>
+
+                    <div class="profile-card">
+                        <h3>🏥 Limpeza Hospitalar</h3>
+                        <ul>
+                            <li>Setor saúde público e privado</li>
+                            <li>Salários entre R$ 1.500 - R$ 2.500</li>
+                            <li>Exigência de capacitação específica</li>
+                            <li>Risco biológico elevado</li>
+                            <li>Treinamentos obrigatórios</li>
+                            <li>EPIs específicos necessários</li>
+                        </ul>
+                    </div>
+
+                    <div class="profile-card">
+                        <h3>🏫 Limpeza Escolar</h3>
+                        <ul>
+                            <li>Escolas públicas e privadas</li>
+                            <li>Concursos públicos para setor público</li>
+                            <li>Salários de R$ 1.300 - R$ 2.000</li>
+                            <li>Período de férias sem pagamento</li>
+                            <li>Exposição a crianças e doenças</li>
+                            <li>Trabalho noturno comum</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">⚠️</span> Principais Desafios Enfrentados</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>⚖️ Desafios Legais e Trabalhistas</h3>
+                <ul>
+                    <li><strong>Alta Informalidade:</strong> 75,6% sem direitos trabalhistas garantidos</li>
+                    <li><strong>Fiscalização Insuficiente:</strong> Dificuldade de fiscalização em residências</li>
+                    <li><strong>Conhecimento Limitado:</strong> Muitas desconhecem seus direitos</li>
+                    <li><strong>Acesso à Justiça:</strong> Barreiras econômicas e processuais</li>
+                    <li><strong>Terceirização Predatória:</strong> Redução de custos através de precarização</li>
+                </ul>
+
+                <h3>🏥 Saúde e Segurança no Trabalho</h3>
+                <ul>
+                    <li><strong>Acidentes:</strong> Quedas, cortes, intoxicação por produtos químicos</li>
+                    <li><strong>Doenças Ocupacionais:</strong> Problemas respiratórios, lesões por esforço repetitivo</li>
+                    <li><strong>Falta de EPIs:</strong> Equipamentos de proteção inadequados ou inexistentes</li>
+                    <li><strong>Carga Física:</strong> Trabalho pesado com posturas inadequadas</li>
+                    <li><strong>Exposição Química:</strong> Contato com produtos de limpeza agressivos</li>
+                </ul>
+
+                <div class="challenge-grid">
+                    <div class="challenge-card">
+                        <h3>💰 Econômicos Financeiros</h3>
+                        <ul>
+                            <li>Salários abaixo do mínimo</li>
+                            <li>Descumprimento do piso salarial</li>
+                            <li>Atrasos e não pagamento</li>
+                            <li>Falta de benefícios sociais</li>
+                            <li>Dificuldade de acesso a crédito</li>
+                            <li>Insegurança financeira permanente</li>
+                        </ul>
+                    </div>
+
+                    <div class="challenge-card">
+                        <h3>🎓 Educação e Capacitação</h3>
+                        <ul>
+                            <li>Baixa escolaridade formal</li>
+                            <li>Falta de capacitação profissional</li>
+                            <li>Limitações para recolocação</li>
+                            <li>Desconhecimento de novas tecnologias</li>
+                            <li>Dificuldade em adquirir novas competências</li>
+                            <li>Estigma social da profissão</li>
+                        </ul>
+                    </div>
+
+                    <div class="challenge-card">
+                        <h3>👩‍👧‍👦 Questões Sociais e Familiares</h3>
+                        <ul>
+                            <li>Chefes de família majoritariamente</li>
+                            <li>Dependentes financeiros</li>
+                            <li>Falta de rede de apoio</li>
+                            <li>Preconceito e discriminação</li>
+                            <li>Isolamento social</li>
+                            <li>Dificuldade de participar da vida escolar dos filhos</li>
+                        </ul>
+                    </div>
+
+                    <div class="challenge-card">
+                        <h3>🏗️ Condições de Trabalho</h3>
+                        <ul>
+                            <li>Jornadas extensas</li>
+                            <li>Trabalho noturno e finais de semana</li>
+                            <li>Ambientes inadequados e perigosos</li>
+                            <li>Falta de equipamentos adequados</li>
+                            <li>Sobrecarga física e mental</li>
+                            <li>Pressão por produtividade</li>
+                        </ul>
+                    </div>
+
+                    <div class="challenge-card">
+                        <h3>🔒 Segurança Pessoal</h3>
+                        <ul>
+                            <li>Risco de assaltos no trajeto</li>
+                            <li>Trabalho em áreas perigosas</li>
+                            <li>Assédio moral e sexual</li>
+                            <li>Falta de proteção policial</li>
+                            <li>Trabalho em isolamento</li>
+                            <li>Vulnerabilidade física</li>
+                        </ul>
+                    </div>
+
+                    <div class="challenge-card">
+                        <h3>🌱 Desenvolvimento Profissional</h3>
+                        <ul>
+                            <li>Estagnação na carreira</li>
+                            <li>Falta de plano de carreira</li>
+                            <li>Dificuldade de ascensão</li>
+                            <li>Falta de reconhecimento</li>
+                            <li>Limitadas oportunidades de crescimento</li>
+                            <li>Preconceito profissional</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">📋</span> Legislação e Políticas Existentes</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>🏛️ Marco Legal Doméstico</h3>
+                <ul>
+                    <li><strong>PEC das Domésticas (2013):</strong> Igualdade de direitos trabalhistas</li>
+                    <li><strong>Lei Complementar 150/2015:</strong> Regulamentação do trabalho doméstico</li>
+                    <li><strong>Jornada 44h:</strong> Limite de horas semanais</li>
+                    <li><strong>FGTS Obrigatório:</strong> A partir de 2016</li>
+                    <li><strong>Seguro Desemprego:</strong> Acesso garantido</li>
+                </ul>
+
+                <h3>🏢 Terceirização e Limpeza Predial</h3>
+                <ul>
+                    <li><strong>Lei 13.429/2017:</strong> Regulamentação da terceirização</li>
+                    <li><strong>Convenções Coletivas:</strong> Negociações anuais de reajustes</li>
+                    <li><strong>Pisos Salariais:</strong> Definidos por estados e categorias</li>
+                    <li><strong>NR 35:</strong> Norma regulamentadora de trabalho em altura</li>
+                    <li><strong>NR 32:</strong> Segurança e saúde em serviços de saúde</li>
+                </ul>
+
+                <h3>📊 Impacto da Legislação</h3>
+                <ul>
+                    <li><strong>Formalização em Queda:</strong> 18% menos empregos formais em 10 anos</li>
+                    <li><strong>Informalidade Crescente:</strong> Aumento após PEC das Domésticas</li>
+                    <li><strong>Fiscalização Limitada:</strong> Dificuldade de aplicação efetiva</li>
+                    <li><strong>Conhecimento Insuficiente:</strong> Trabalhadoras desconhecem direitos</li>
+                </ul>
+
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <h3>🔍 Programas Atuais</h3>
+                        <ul>
+                            <li>Programa de Formalização (PFN)</li>
+                            <li>Microcrédito Produtivo</li>
+                            <li>Capacitação do SENAI/SEBRAE</li>
+                            <li>Fiscalização do Ministério do Trabalho</li>
+                            <li>Assistência Jurídica Gratuita</li>
+                            <li>Programas de qualificação municipal</li>
+                        </ul>
+                    </div>
+
+                    <div class="profile-card">
+                        <h3>⚖️ Órgãos Fiscalizadores</h3>
+                        <ul>
+                            <li>Ministério do Trabalho e Emprego</li>
+                            <li>Ministério Público do Trabalho</li>
+                            <li>Sindicatos das categorias</li>
+                            <li>Delegacias Regionais do Trabalho</li>
+                            <li>Superintendências Regionais</li>
+                            <li>Conselhos Municipais</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">💡</span> Propostas de Transformação</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>🎯 Visão Estratégica</h3>
+                <p>Transformar a limpeza e serviços domésticos de atividade precarizada e invisível para profissão valorizada, digna e com direitos plenamente garantidos.</p>
+
+                <div class="policy-grid">
+                    <div class="policy-card federal">
+                        <div class="policy-header">
+                            <div class="policy-icon">🇧🇷</div>
+                            <div class="policy-title">
+                                <h3>Políticas Federais Estruturantes</h3>
+                                <p>Transformação Nacional do Setor</p>
+                            </div>
+                        </div>
+                        <div class="policy-content">
+                            <h4>💰 Valorização e Remuneração</h4>
+                            <ul>
+                                <li><strong>Piso Nacional Real:</strong> Dois salários mínimos para categoria</li>
+                                <li><strong>Selo Empresa Amiga:</strong> Incentivos fiscais para empregadores formais</li>
+                                <li><strong>Bonus Formalização:</strong> Crédito tributário por empregada formalizada</li>
+                                <li><strong>Fundo de Garantia:</strong> R$ 2 bilhões para garantia de salários</li>
+                                <li><strong>Auxílio-Doença Ampliado:</strong> Cobertura específica para doenças ocupacionais</li>
+                            </ul>
+
+                            <h4>🛡️ Proteção Social Ampliada</h4>
+                            <ul>
+                                <li><strong>Seguro Especial de Acidentes:</strong> Cobertura ampla para trabalhadoras domésticas</li>
+                                <li><strong>Previdência Simplificada:</strong> Contribuições menores com benefícios integrais</li>
+                                <li><strong>Bolsa-Capacitação:</strong> R$ 400 mensais durante formação</li>
+                                <li><strong>Assistência Jurídica Gratuita Federal:</strong> Defesa de direitos</li>
+                                <li><strong>Programa de Saúde Ocupacional:</strong> Atendimento especializado</li>
+                            </ul>
+
+                            <h4>🎓 Educação e Capacitação</h4>
+                            <ul>
+                                <li><strong>Escola Nacional de Limpeza Profissional:</strong> Curso técnico gratuito</li>
+                                <li><strong>Certificação Nacional:</strong> Reconhecimento de competências</li>
+                                <li><strong>Universidade Aberta da Limpeza:</strong> EAD gratuita com certificado</li>
+                                <li><strong>Programa Mentor Jovem:</strong> Apoio de profissionais experientes</li>
+                                <li><strong>Bolsa de Estudos Integral:</strong> Para filhos de trabalhadoras</li>
+                            </ul>
+
+                            <h4>🏗️ Infraestrutura e Tecnologia</h4>
+                            <ul>
+                                <li><strong>App Trabalhadora Legal:</strong> Plataforma de formalização e direitos</li>
+                            </ul>
+                            <ul>
+                                <li><strong>Rede Nacional de Centros de Apoio:</strong> 200 unidades equipadas</li>
+                                <li><strong>Tecnologia de Produtos Seguros:</strong> Pesquisa e desenvolvimento</li>
+                                <li><strong>Equipamentos Ergonômicos:</strong> Financiamento para compra</li>
+                                <li><strong>Plataforma de Empregos:</strong> Conexão direta empregador-trabalhadora</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-card estadual">
+                        <div class="policy-header">
+                            <div class="policy-icon">🏢</div>
+                            <div class="policy-title">
+                                <h3>Políticas Estaduais de Integração</h3>
+                                <p>Desenvolvimento Regional e Articulação</p>
+                            </div>
+                        </div>
+                        <div class="policy-content">
+                            <h4>🏥 Saúde e Segurança</h4>
+                            <ul>
+                                <li><strong>Programas Estaduais de Saúde:</strong> Unidades móveis nos bairros</li>
+                                <li><strong>Campanhas de Vacinação:</strong> Foco em doenças ocupacionais</li>
+                                <li><strong>Atendimento Psicológico:</strong> Grupos de apoio e terapia</li>
+                                <li><strong>Exames Periódicos Gratuitos:</strong> Detecção precoce</li>
+                                <li><strong>Assistência Farmacêutica:</strong> Medicamentos gratuitos</li>
+                            </ul>
+
+                            <h4>💼 Desenvolvimento Econômico</h4>
+                            <ul>
+                                <li><strong>Cooperativas Estaduais:</strong> Modelo alternativo de organização</li>
+                                <li><strong>Fomento à Microempreendedora:</strong> Apoio à abertura de negócios</li>
+                                <li><strong>Rede Estadual de Serviços:</strong> Plataforma conectando clientes</li>
+                                <li><strong>Feiras e Eventos:</strong> Espaços para展示 serviços</li>
+                                <li><strong>Parcerias com Empresas:</strong> Programas de responsabilidade social</li>
+                            </ul>
+
+                            <h4>🏫 Educação e Qualificação</h4>
+                            <ul>
+                                <li><strong>Centros Estaduais de Capacitação:</strong> Cursos gratuitos intensivos</li>
+                                <li><strong>Parcerias com Universidades:</strong> Pesquisa e extensão</li>
+                                <li><strong>Programas de Alfabetização:</strong> Para trabalhadoras adultas</li>
+                                <li><strong>Capacitação Digital:</strong> Inclusão no mundo tecnológico</li>
+                                <li><strong>Idiomas e Comunicação:</strong> Expansão de oportunidades</li>
+                            </ul>
+
+                            <h4>🤝 Articulação Institucional</h4>
+                            <ul>
+                                <li><strong>Conselhos Estaduais:</strong> Participação social na formulação de políticas</li>
+                                <li><strong>Fóruns Regionais:</strong> Espaços de diálogo e mobilização</li>
+                                <li><strong>Parcerias Público-Privadas:</strong> Desenvolvimento de projetos</li>
+                                <li><strong>Rede de Apoio Jurídico:</strong> Defensorias públicas especializadas</li>
+                                <li><strong>Sistemas de Monitoramento:</strong> Dados e indicadores</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-card municipal">
+                        <div class="policy-header">
+                            <div class="policy-icon">🏘️</div>
+                            <div class="policy-title">
+                                <h3>Políticas Municipais de Ação Direta</h3>
+                                <p>Impacto Imediato e Inclusão Comunitária</p>
+                            </div>
+                        </div>
+                        <div class="policy-content">
+                            <h4>🏠 Apoio Comunitário e Social</h4>
+                            <ul>
+                                <li><strong>Centros de Referência:</strong> Apoio direto nos bairros</li>
+                                <li><strong>Agentes Comunitárias:</strong> Trabalhadoras como multiplicadoras</li>
+                                <li><strong>Creches Comunitárias:</strong> Cuidado dos filhos gratuito</li>
+                                <li><strong>Grupos de Apoio:</strong> Encontros semanais</li>
+                                <li><strong>Programas de Moradia:</strong> Prioridade nas políticas habitacionais</li>
+                            </ul>
+
+                            <h4>🚌 Mobilidade e Segurança</h4>
+                            <ul>
+                                <li><strong>Transporte Gratuito:</strong> Para deslocamento ao trabalho</li>
+                                <li><strong>Corredores Seguros:</strong> Iluminação e monitoramento</li>
+                                <li><strong>Guarda Municipal Especial:</strong> Proteção em horários noturnos</li>
+                                <li><strong>Dispositivos de Segurança:</strong> Botões de pânico</li>
+                                <li><strong>Patrulha Comunitária:</strong> Vigilância nos pontos de trabalho</li>
+                            </ul>
+
+                            <h4>📋 Serviços Municipais</h4>
+                            <ul>
+                                <li><strong>Cadastro Simplificado:</strong> Processo único de formalização</li>
+                                <li><strong>Isenção de Taxas:</strong> Para formalização e licenciamento</li>
+                                <li><strong>Serviço Social:</strong> Acompanhamento familiar</li>
+                                <li><strong>Assistência Jurídica:</strong> Defensoria especializada</li>
+                                <li><strong>Banco de Empregos:</strong> Conexão local de oportunidades</li>
+                            </ul>
+
+                            <h4>🌱 Desenvolvimento Sustentável</h4>
+                            <ul>
+                                <li><strong>Produtos Ecológicos:</strong> Distribuição de materiais seguros</li>
+                                <li><strong>Coleta Seletiva:</strong> Programa de educação ambiental</li>
+                                <li><strong>Energia Solar:</strong> Kits para comunidades</li>
+                                <li><strong>Economia Solidária:</strong> Bancos comunitários</li>
+                                <li><strong>Feiras Locais:</strong> Espaços de comercialização</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">🚀</span> Propostas de Implementação</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <div class="phase-title">Formalização e Proteção</div>
+                        <div class="phase-duration">0-12 meses</div>
+                        <ul style="text-align: left; margin-top: 15px;">
+                            <li>Campanha nacional de formalização</li>
+                            <li>Criação do App Trabalhadora Legal</li>
+                            <li>Programa de capacitação emergencial</li>
+                            <li>Instalação de centros de apoio</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <div class="phase-title">Desenvolvimento e Qualificação</div>
+                        <div class="phase-duration">12-24 meses</div>
+                        <ul style="text-align: left; margin-top: 15px;">
+                            <li>Implementação da Escola Nacional</li>
+                            <li>Expansão da rede de saúde ocupacional</li>
+                            <li>Criação de cooperativas modelo</li>
+                            <li>Desenvolvimento tecnológico</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <div class="phase-title">Sustentabilidade e Autonomia</div>
+                        <div class="phase-duration">24-36 meses</div>
+                        <ul style="text-align: left; margin-top: 15px;">
+                            <li>Modelos econômicos sustentáveis</li>
+                            <li>Plataformas digitais integradas</li>
+                            <li>Sistemas de avaliação contínua</li>
+                            <li>Autonomia profissional e econômica</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">📊</span> KPIs e Métricas de Sucesso</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-target">+300%</div>
+                        <div>Aumento na Renda Média</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">80%</div>
+                        <div>Taxa de Formalização</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">100%</div>
+                        <div>Cobertura de Saúde</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">-90%</div>
+                        <div>Acidentes de Trabalho</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">+200%</div>
+                        <div>Acesso à Capacitação</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">100%</div>
+                        <div>Respeito aos Direitos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">🎯</span> Impacto Transformador Esperado</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A transformação deste setor beneficiará múltiplos segmentos da sociedade brasileira:</p>
+
+                <h3>👩‍🦰 Trabalhadoras e Famílias</h3>
+                <ul>
+                    <li>Renda digna e estável com benefícios</li>
+                    <li>Saúde e segurança garantidas</li>
+                    <li>Desenvolvimento pessoal e profissional</li>
+                    <li>Dignidade e reconhecimento social</li>
+                    <li>Qualidade de vida e bem-estar</li>
+                    <li>Oportunidades de crescimento</li>
+                </ul>
+
+                <h3>🏠 Famílias e Sociedade</h3>
+                <ul>
+                    <li>Serviços de qualidade para todos</li>
+                    <li>Redução da desigualdade social</li>
+                    <li>Melhoria nas condições de vida</li>
+                    <li>Fortalecimento da economia familiar</li>
+                    <li>Desenvolvimento comunitário</li>
+                    <li>Inclusão social efetiva</li>
+                </ul>
+
+                <h3>💼 Economia e Mercado</h3>
+                <ul>
+                    <li>Formalização de milhões de empregos</li>
+                    <li>Aumento da arrecadação tributária</li>
+                    <li>Desenvolvimento de novos modelos de negócio</li>
+                    <li>Qualificação profissional em massa</li>
+                    <li>Inovação em serviços domésticos</li>
+                    <li>Sustentabilidade econômica do setor</li>
+                </ul>
+
+                <h3>🌍 Desenvolvimento Sustentável</h3>
+                <ul>
+                    <li>Cidadania plena e participação social</li>
+                    <li>Redução da informalidade</li>
+                    <li>Justiça social e igualdade</li>
+                    <li>Desenvolvimento humano integral</li>
+                    <li>Construção de sociedade mais justa</li>
+                    <li>Exemplo internacional de políticas inclusivas</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>Relatório elaborado com base em pesquisa extensiva sobre a realidade das trabalhadoras de limpeza no Brasil</p>
+            <p>Para mais informações ou discussões sobre implementação, entre em contato</p>
+            <p><strong>Referências:</strong> IBGE/PNAD, Ministério do Trabalho, DIEESE, Sindicatos, Organizações Internacionais, Pesquisas Acadêmicas</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div id="summaryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeSummary()">&times;</span>
+            <h2>🎯 Resumo Executivo</h2>
+            <p><strong>Oportunidade:</strong> Transformar o trabalho de limpeza e serviços domésticos de atividade precarizada e invisível para profissão valorizada, digna e com direitos plenamente garantidos.</p>
+
+            <h3>📊 Cenário Atual Crítico</h3>
+            <ul>
+                <li>5,9 milhões de trabalhadoras domésticas no Brasil</li>
+                <li>75,6% na informalidade (sem carteira assinada)</li>
+                <li>64,5% recebem menos que um salário mínimo</li>
+                <li>92% são mulheres, 69% negras</li>
+                <li>Salário médio: R$ 1.189 (abaixo do mínimo)</li>
+                <li>18% de queda em empregos formais em 10 anos</li>
+            </ul>
+
+            <h3>⚠️ Desafios Múltiplos</h3>
+            <p>Os desafios abrangem desde condições de trabalho precárias, riscos à saúde, falta de direitos trabalhistas, limitadas oportunidades de desenvolvimento, até estigma social e discriminação.</p>
+
+            <h3>💡 Proposta de Transformação</h3>
+            <p>Criar ecossistema integrado com pisos salariais dignos (dois salários mínimos), proteção social ampliada, capacitação profissional gratuita, tecnologia de apoio e políticas de inclusão efetivas.</p>
+
+            <h3>📈 Impacto Transformador</h3>
+            <ul>
+                <li>+300% na renda média das trabalhadoras</li>
+                <li>80% de formalização do setor</li>
+                <li>100% de cobertura de saúde</li>
+                <li>-90% em acidentes de trabalho</li>
+                <li>+200% no acesso à capacitação</li>
+                <li>Transformação social e econômica</li>
+            </ul>
+
+            <h3>🤖 Ações Prioritárias</h3>
+            <ol>
+                <li>Criação do piso nacional real (dois salários mínimos)</li>
+                <li>Implementação do App Trabalhadora Legal</li>
+                <li>Ampliação da Escola Nacional de Limpeza Profissional</li>
+                <li>Criação do selo empresa amiga com incentivos</li>
+                <li>Expansão da rede de centros de apoio</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allContents = document.querySelectorAll('.section-content');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Close all other sections
+            allContents.forEach(item => {
+                if (item !== content && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(item => {
+                if (item !== header && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Toggle current section
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'block';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Animate numbers on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const numbers = document.querySelectorAll('.stat-number');
+
+            numbers.forEach(number => {
+                const target = number.innerText;
+                if (!target.includes('%') && !target.includes('M') && !target.includes('R$')) {
+                    const numTarget = parseInt(target.replace(/[^0-9]/g, ''));
+                    let current = 0;
+                    const increment = numTarget / 50;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= numTarget) {
+                            number.innerText = target;
+                            clearInterval(timer);
+                        } else {
+                            number.innerText = Math.floor(current).toLocaleString('pt-BR');
+                        }
+                    }, 30);
+                }
+            });
+
+            // Open first section by default
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
