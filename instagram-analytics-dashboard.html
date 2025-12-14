@@ -657,116 +657,329 @@
     <script>
         // Global variables to store analyzed data
         let analyzedData = null;
+        let profileCache = new Map();
 
-        // Simulated data patterns based on Instagram statistics
-        const instagramPatterns = {
-            // Engagement rate patterns by follower count
-            engagementRates: {
-                nano: { avg: 0.05, min: 0.02, max: 0.15 },      // < 1K
-                micro: { avg: 0.035, min: 0.01, max: 0.12 },    // 1K-10K
-                mid: { avg: 0.025, min: 0.008, max: 0.08 },     // 10K-100K
-                macro: { avg: 0.02, min: 0.005, max: 0.06 },    // 100K-1M
-                mega: { avg: 0.015, min: 0.003, max: 0.04 }     // > 1M
-            },
-            // Post frequency patterns (posts per day)
-            postFrequencies: {
-                nano: 0.3,      // ~2 posts/week
-                micro: 0.5,     // ~3-4 posts/week
-                mid: 0.8,       // ~5-6 posts/week
-                macro: 1.2,     // ~1 post/day
-                mega: 2.0       // ~14 posts/week
-            },
-            // Following ratio patterns (following/followers)
-            followRatios: {
-                nano: 0.8,
-                micro: 0.4,
-                mid: 0.2,
-                macro: 0.1,
-                mega: 0.05
+        // Instagram API scraper using public data endpoints
+        class InstagramScraper {
+            constructor() {
+                this.baseURL = 'https://www.instagram.com';
+                this.graphqlURL = 'https://www.instagram.com/graphql/query';
+                this.headers = {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.5',
+                    'Accept-Encoding': 'gzip, deflate, br',
+                    'Connection': 'keep-alive',
+                    'Upgrade-Insecure-Requests': '1',
+                    'Sec-Fetch-Dest': 'document',
+                    'Sec-Fetch-Mode': 'navigate',
+                    'Sec-Fetch-Site': 'none',
+                    'Cache-Control': 'max-age=0'
+                };
             }
-        };
 
-        function simulateProfileData(username) {
-            // Simulate fetching profile data with realistic variations
-            const usernameLower = username.toLowerCase();
-            let followers = estimateFollowers(username);
+            async fetchProfileData(username) {
+                try {
+                    // Check cache first
+                    const cacheKey = username.toLowerCase();
+                    if (profileCache.has(cacheKey)) {
+                        const cached = profileCache.get(cacheKey);
+                        if (Date.now() - cached.timestamp < 300000) { // 5 minutes cache
+                            return cached.data;
+                        }
+                    }
 
-            const category = classifyInfluencer(followers);
-            const patterns = instagramPatterns[category.category];
+                    // Method 1: Try to fetch profile page HTML
+                    let profileData = await this.fetchFromHTML(username);
 
-            // Generate realistic metrics based on patterns
-            const following = Math.round(followers * patterns.followRatios * (0.8 + Math.random() * 0.4));
-            const posts = Math.round(patterns.postFrequencies * 365 * (0.7 + Math.random() * 0.6));
+                    // Method 2: Fallback to GraphQL if HTML fails
+                    if (!profileData) {
+                        profileData = await this.fetchFromGraphQL(username);
+                    }
 
-            // Engagement metrics
-            const engagementRate = patterns.avg + (Math.random() - 0.5) * (patterns.max - patterns.min);
-            const avgLikes = Math.round(followers * engagementRate * 0.7); // 70% likes
-            const avgComments = Math.round(avgLikes * 0.05 * (0.5 + Math.random())); // 5% of likes
-            const avgSaves = Math.round(avgLikes * 0.03 * (0.5 + Math.random())); // 3% of likes
+                    // Method 3: Final fallback to estimated data
+                    if (!profileData) {
+                        profileData = await this.generateEstimatedData(username);
+                    }
 
-            // Reach and impressions (estimated)
-            const reach = Math.round(followers * 0.3 * (0.7 + Math.random() * 0.6));
-            const impressions = Math.round(reach * 2.5 * (0.8 + Math.random() * 0.4));
-            const profileViews = Math.round(followers * 0.02 * (0.7 + Math.random() * 0.6));
+                    // Cache the results
+                    profileCache.set(cacheKey, {
+                        data: profileData,
+                        timestamp: Date.now()
+                    });
 
-            return {
-                profileUrl: `https://www.instagram.com/${usernameLower}`,
-                profileName: usernameLower,
-                followers,
-                following,
-                posts,
-                avgLikes,
-                avgComments,
-                avgSaves,
-                impressions,
-                reach,
-                profileViews,
-                // Calculated metrics
-                engagementRate: engagementRate * 100,
-                followersGrowthRate: (profileViews / followers) * 100,
-                reachEfficiency: (reach / followers) * 100,
-                contentPerformance: (avgComments / avgLikes) * 100,
-                followRatio: following / followers,
-                postFrequency: posts / 365,
-                authenticityScore: calculateAuthenticityScore(followers, following, avgLikes, avgComments),
-                monetizationPotential: calculateMonetizationPotential(followers, engagementRate * 100, avgLikes, profileViews),
-                category: category.category,
-                categoryLabel: category.label,
-                timestamp: new Date().toISOString()
-            };
+                    return profileData;
+
+                } catch (error) {
+                    console.error('Error fetching profile data:', error);
+                    return this.generateEstimatedData(username);
+                }
+            }
+
+            async fetchFromHTML(username) {
+                try {
+                    const response = await fetch(`${this.baseURL}/${username}/`, {
+                        headers: this.headers
+                    });
+
+                    if (!response.ok) return null;
+
+                    const html = await response.text();
+
+                    // Extract data from script tags
+                    const scriptData = this.extractScriptData(html);
+                    if (scriptData) {
+                        return this.parseProfileData(scriptData, username);
+                    }
+
+                    return null;
+
+                } catch (error) {
+                    console.error('HTML fetch error:', error);
+                    return null;
+                }
+            }
+
+            async fetchFromGraphQL(username) {
+                try {
+                    // This is a simplified version - in reality, Instagram requires authentication
+                    // For demo purposes, we'll use the estimated method
+                    return null;
+
+                } catch (error) {
+                    console.error('GraphQL fetch error:', error);
+                    return null;
+                }
+            }
+
+            extractScriptData(html) {
+                // Look for shared data script
+                const scripts = html.match(/<script[^>]*>window\._sharedData\s*=\s*({.+?});<\/script>/);
+                if (scripts && scripts[1]) {
+                    try {
+                        return JSON.parse(scripts[1]);
+                    } catch (e) {
+                        console.error('Error parsing shared data:', e);
+                    }
+                }
+
+                // Look for additional data
+                const additionalScripts = html.match(/<script[^>]*>window\.__additionalData\s*=\s*\[({.+?})\];<\/script>/);
+                if (additionalScripts && additionalScripts[1]) {
+                    try {
+                        return JSON.parse(additionalScripts[1]);
+                    } catch (e) {
+                        console.error('Error parsing additional data:', e);
+                    }
+                }
+
+                return null;
+            }
+
+            parseProfileData(scriptData, username) {
+                try {
+                    // Extract user data from the parsed script
+                    let userData = null;
+
+                    if (scriptData.entry_data && scriptData.entry_data.ProfilePage) {
+                        userData = scriptData.entry_data.ProfilePage[0].graphql.user;
+                    } else if (scriptData.config && scriptData.config.viewer) {
+                        userData = scriptData.config.viewer;
+                    }
+
+                    if (!userData) return null;
+
+                    // Extract recent posts for engagement calculation
+                    const posts = userData.edge_owner_to_timeline_media.edges.slice(0, 12);
+                    let totalLikes = 0;
+                    let totalComments = 0;
+
+                    posts.forEach(edge => {
+                        const node = edge.node;
+                        totalLikes += node.edge_liked_by.count || 0;
+                        totalComments += node.edge_media_to_comment.count || 0;
+                    });
+
+                    const avgLikes = Math.round(totalLikes / posts.length);
+                    const avgComments = Math.round(totalComments / posts.length);
+
+                    // Calculate estimated metrics
+                    const followers = userData.edge_followed_by.count;
+                    const following = userData.edge_follow.count;
+                    const postsCount = userData.edge_owner_to_timeline_media.count;
+
+                    return {
+                        profileUrl: `${this.baseURL}/${username}/`,
+                        profileName: username.toLowerCase(),
+                        followers,
+                        following,
+                        posts: postsCount,
+                        avgLikes,
+                        avgComments,
+                        avgSaves: Math.round(avgLikes * 0.03), // Estimated saves
+                        profilePic: userData.profile_pic_url_hd || userData.profile_pic_url,
+                        isPrivate: userData.is_private,
+                        isVerified: userData.is_verified,
+                        biography: userData.biography || '',
+                        externalUrl: userData.external_url || ''
+                    };
+
+                } catch (error) {
+                    console.error('Error parsing profile data:', error);
+                    return null;
+                }
+            }
+
+            async generateEstimatedData(username) {
+                // Enhanced estimation based on username patterns
+                const usernameLower = username.toLowerCase();
+                let followers = this.estimateFollowersRealistic(username);
+
+                const category = classifyInfluencer(followers);
+
+                // More realistic patterns based on actual Instagram data
+                const engagementRates = {
+                    nano: { avg: 0.05, std: 0.02 },      // < 1K: 5% ± 2%
+                    micro: { avg: 0.035, std: 0.015 },   // 1K-10K: 3.5% ± 1.5%
+                    mid: { avg: 0.025, std: 0.012 },     // 10K-100K: 2.5% ± 1.2%
+                    macro: { avg: 0.02, std: 0.01 },     // 100K-1M: 2% ± 1%
+                    mega: { avg: 0.015, std: 0.008 }     // > 1M: 1.5% ± 0.8%
+                };
+
+                const pattern = engagementRates[category.category];
+
+                // Gaussian-like distribution for engagement rate
+                const engagementRate = Math.max(0.001, pattern.avg + (this.gaussianRandom() * pattern.std));
+
+                // Generate realistic metrics
+                const following = Math.round(followers * this.getFollowRatio(category.category));
+                const posts = Math.round(this.getPostFrequency(category.category) * 365);
+
+                const avgLikes = Math.round(followers * engagementRate * 0.7); // 70% likes
+                const avgComments = Math.round(avgLikes * 0.05 * (0.5 + Math.random() * 0.5)); // 5% of likes
+                const avgSaves = Math.round(avgLikes * 0.03 * (0.5 + Math.random() * 0.5)); // 3% of likes
+
+                // More realistic reach and impressions
+                const reachEfficiency = 0.25 + Math.random() * 0.2; // 25-45% reach efficiency
+                const reach = Math.round(followers * reachEfficiency);
+                const impressions = Math.round(reach * (2.5 + Math.random() * 1.5)); // 2.5-4x impressions
+                const profileViews = Math.round(followers * (0.01 + Math.random() * 0.03)); // 1-4% profile views
+
+                return {
+                    profileUrl: `${this.baseURL}/${usernameLower}/`,
+                    profileName: usernameLower,
+                    followers,
+                    following,
+                    posts,
+                    avgLikes,
+                    avgComments,
+                    avgSaves,
+                    impressions,
+                    reach,
+                    profileViews,
+                    estimated: true, // Flag to indicate estimated data
+                    profilePic: `https://ui-avatars.com/api/?name=${username}&background=e4405f&color=fff&size=200`,
+                    isPrivate: false,
+                    isVerified: followers > 100000 && Math.random() > 0.7,
+                    biography: `Profile analysis for @${usernameLower}`,
+                    externalUrl: ''
+                };
+            }
+
+            estimateFollowersRealistic(username) {
+                const usernameLength = username.length;
+                const hasNumbers = /\d/.test(username);
+                const hasUnderscores = /_/.test(username);
+                const hasDots = /\./.test(username);
+                const isAllLetters = /^[a-zA-Z]+$/.test(username);
+                const isCommonWord = this.isCommonWord(username);
+
+                // Base estimation algorithm
+                let baseEstimate = 1000;
+
+                // Length factor (shorter usernames tend to be more valuable/popular)
+                if (usernameLength <= 4) baseEstimate *= 100;
+                else if (usernameLength <= 6) baseEstimate *= 50;
+                else if (usernameLength <= 8) baseEstimate *= 20;
+                else if (usernameLength <= 12) baseEstimate *= 10;
+                else baseEstimate *= 5;
+
+                // Character composition factors
+                if (hasNumbers) baseEstimate *= 0.4;          // Numbers reduce perceived value
+                if (hasUnderscores) baseEstimate *= 0.7;      // Underscores are less premium
+                if (hasDots) baseEstimate *= 0.6;             // Dots are uncommon in popular accounts
+                if (isAllLetters) baseEstimate *= 1.3;        // Clean letters are preferred
+
+                // Common word factor (brands, names, etc.)
+                if (isCommonWord) baseEstimate *= 3;
+
+                // Add realistic variation
+                const variation = 0.3 + (Math.random() * 1.4); // 0.3x to 1.7x variation
+                baseEstimate *= variation;
+
+                // Apply realistic bounds
+                baseEstimate = Math.max(50, Math.min(baseEstimate, 50000000));
+
+                // Round to nice numbers
+                return this.roundToNiceNumber(baseEstimate);
+            }
+
+            isCommonWord(username) {
+                const commonWords = [
+                    'art', 'photo', 'design', 'style', 'fashion', 'beauty', 'life', 'love', 'world', 'travel',
+                    'food', 'music', 'dance', 'sport', 'fitness', 'health', 'tech', 'news', 'blog', 'media',
+                    'official', 'real', 'the', 'pro', 'best', 'top', 'new', 'live', 'fresh', 'cool',
+                    'john', 'alex', 'mike', 'sarah', 'emma', 'lisa', 'david', 'james', 'anna', 'maria'
+                ];
+
+                return commonWords.some(word =>
+                    username.toLowerCase().includes(word) || word.includes(username.toLowerCase())
+                );
+            }
+
+            getFollowRatio(category) {
+                const ratios = {
+                    nano: 0.9,    // 90% follow ratio
+                    micro: 0.5,   // 50% follow ratio
+                    mid: 0.25,    // 25% follow ratio
+                    macro: 0.15,  // 15% follow ratio
+                    mega: 0.05    // 5% follow ratio
+                };
+                return ratios[category] * (0.7 + Math.random() * 0.6);
+            }
+
+            getPostFrequency(category) {
+                const frequencies = {
+                    nano: 0.2,    // ~1.4 posts/week
+                    micro: 0.4,   // ~2.8 posts/week
+                    mid: 0.7,     // ~4.9 posts/week
+                    macro: 1.1,   // ~7.7 posts/week
+                    mega: 1.8     // ~12.6 posts/week
+                };
+                return frequencies[category] * (0.6 + Math.random() * 0.8);
+            }
+
+            gaussianRandom() {
+                // Box-Muller transform for normal distribution
+                let u = 0, v = 0;
+                while(u === 0) u = Math.random();
+                while(v === 0) v = Math.random();
+                return Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+            }
+
+            roundToNiceNumber(num) {
+                if (num < 1000) return Math.round(num / 10) * 10;
+                if (num < 10000) return Math.round(num / 50) * 50;
+                if (num < 100000) return Math.round(num / 100) * 100;
+                if (num < 1000000) return Math.round(num / 1000) * 1000;
+                if (num < 10000000) return Math.round(num / 10000) * 10000;
+                return Math.round(num / 100000) * 100000;
+            }
         }
 
-        function estimateFollowers(username) {
-            // Simulate follower count estimation based on username patterns
-            const usernameLength = username.length;
-            const hasNumbers = /\d/.test(username);
-            const hasUnderscores = /_/.test(username);
-            const isAllLetters = /^[a-zA-Z]+$/.test(username);
+        const scraper = new InstagramScraper();
 
-            let baseEstimate = 1000;
-
-            // Adjust based on username characteristics
-            if (usernameLength <= 6) baseEstimate *= 50;      // Short usernames likely more popular
-            else if (usernameLength <= 10) baseEstimate *= 10;
-            else if (usernameLength <= 15) baseEstimate *= 2;
-
-            if (hasNumbers) baseEstimate *= 0.3;               // Numbers often indicate later adoption
-            if (hasUnderscores) baseEstimate *= 0.7;           // Underscores less common in popular accounts
-            if (isAllLetters) baseEstimate *= 1.5;             // Clean usernames preferred
-
-            // Add some randomness for realism
-            baseEstimate *= (0.5 + Math.random() * 2);
-
-            // Ensure minimum and reasonable ranges
-            baseEstimate = Math.max(100, Math.min(baseEstimate, 10000000));
-
-            // Round to nice numbers
-            if (baseEstimate < 1000) return Math.round(baseEstimate / 10) * 10;
-            if (baseEstimate < 100000) return Math.round(baseEstimate / 100) * 100;
-            return Math.round(baseEstimate / 1000) * 1000;
-        }
-
-        function analyzeProfileFromUsername() {
+        async function analyzeProfileFromUsername() {
             const username = document.getElementById('profileUsername').value.trim().replace('@', '');
 
             if (username === '') {
@@ -774,37 +987,114 @@
                 return;
             }
 
-            // Show alert about simulated data
-            document.getElementById('alertBox').style.display = 'block';
-
             // Show loading
             document.getElementById('loadingSection').style.display = 'block';
             document.getElementById('resultsSection').classList.remove('active');
 
-            // Simulate API call delay
-            setTimeout(() => {
-                const profileData = simulateProfileData(username);
+            try {
+                // Fetch real profile data
+                const profileData = await scraper.fetchProfileData(username);
+
+                // Calculate metrics
+                const engagementRate = calculateEngagementRate(
+                    profileData.avgLikes,
+                    profileData.avgComments,
+                    profileData.avgSaves,
+                    profileData.followers
+                );
+
+                const followersGrowthRate = calculateFollowersGrowthRate(
+                    profileData.impressions,
+                    profileData.profileViews,
+                    profileData.followers
+                );
+
+                const reachEfficiency = calculateReachEfficiency(
+                    profileData.reach,
+                    profileData.followers
+                );
+
+                const contentPerformance = calculateContentPerformance(
+                    profileData.avgLikes,
+                    profileData.avgComments,
+                    profileData.posts
+                );
+
+                const followRatio = profileData.following / profileData.followers;
+                const postFrequency = profileData.posts / 365;
+                const authenticityScore = calculateAuthenticityScore(
+                    profileData.followers,
+                    profileData.following,
+                    profileData.avgLikes,
+                    profileData.avgComments
+                );
+
+                const monetizationPotential = calculateMonetizationPotential(
+                    profileData.followers,
+                    engagementRate,
+                    profileData.avgLikes,
+                    profileData.profileViews
+                );
 
                 // Calculate overall score
                 const scores = [
-                    Math.min(100, profileData.engagementRate * 10),
-                    Math.min(100, profileData.reachEfficiency),
-                    Math.min(100, profileData.contentPerformance * 10),
-                    profileData.authenticityScore,
-                    profileData.monetizationPotential
+                    Math.min(100, engagementRate * 10),
+                    Math.min(100, reachEfficiency),
+                    Math.min(100, contentPerformance * 10),
+                    authenticityScore,
+                    monetizationPotential
                 ];
-                profileData.overallScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+                const overallScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
 
-                // Store analyzed data
-                analyzedData = profileData;
+                // Classify influencer
+                const influencerInfo = classifyInfluencer(profileData.followers);
+
+                // Prepare complete data object
+                analyzedData = {
+                    ...profileData,
+                    engagementRate,
+                    followersGrowthRate,
+                    reachEfficiency,
+                    contentPerformance,
+                    followRatio,
+                    postFrequency,
+                    authenticityScore,
+                    monetizationPotential,
+                    overallScore,
+                    category: influencerInfo.category,
+                    categoryLabel: influencerInfo.label,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Show data source alert if using estimated data
+                if (profileData.estimated) {
+                    document.getElementById('alertBox').innerHTML = `
+                        <strong>📊 Nota Importante:</strong> Este perfil está privado ou não foi possível acessar os dados em tempo real. Os dados apresentados são estimativas baseadas em padrões do Instagram para análise demonstrativa.
+                        <br><br>
+                        <strong>Dados Estimados:</strong> Seguidores, engajamento e métricas calculadas com base no username e padrões da plataforma.
+                    `;
+                    document.getElementById('alertBox').style.display = 'block';
+                } else {
+                    document.getElementById('alertBox').innerHTML = `
+                        <strong>✅ Dados Reais:</strong> Análise baseada em dados públicos extraídos diretamente do perfil Instagram.
+                        <br><br>
+                        <strong>Métricas Calculadas:</strong> Taxa de engajamento, eficiência de alcance, score de autenticidade e potencial de monetização.
+                    `;
+                    document.getElementById('alertBox').style.display = 'block';
+                }
 
                 // Update UI
-                updateUI(profileData);
+                updateUI(analyzedData);
 
                 // Hide loading and show results
                 document.getElementById('loadingSection').style.display = 'none';
                 document.getElementById('resultsSection').classList.add('active');
-            }, 2500);
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+                document.getElementById('loadingSection').style.display = 'none';
+                alert('Erro ao analisar o perfil. Por favor, tente novamente.');
+            }
         }
 
         function loadSampleProfile() {
