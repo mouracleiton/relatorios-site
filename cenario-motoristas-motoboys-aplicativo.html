@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cenário dos Motoristas e Motoboys de Aplicativo no Brasil - Relatório Completo</title>
+    <style>
+        :root {
+            --primary-color: #ea580c;
+            --dark-primary: #c2410c;
+            --secondary-color: #0891b2;
+            --dark-secondary: #0e7490;
+            --warning-color: #dc2626;
+            --dark-warning: #991b1b;
+            --success-color: #16a34a;
+            --dark-success: #15803d;
+            --gray-color: #6b7280;
+            --light-gray: #f3f4f6;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card.growth::before {
+            background: linear-gradient(90deg, var(--success-color), var(--dark-success));
+        }
+
+        .stat-card.warning::before {
+            background: linear-gradient(90deg, var(--warning-color), var(--dark-warning));
+        }
+
+        .stat-card.info::before {
+            background: linear-gradient(90deg, var(--secondary-color), var(--dark-secondary));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .stat-indicator {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .stat-indicator.positive {
+            color: var(--success-color);
+        }
+
+        .stat-indicator.negative {
+            color: var(--warning-color);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--primary-color));
+        }
+
+        .section-header.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header .emoji {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .expand-arrow {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 3000px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .data-card {
+            background: var(--light-gray);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .data-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .data-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .data-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            color: var(--gray-color);
+            font-weight: 500;
+        }
+
+        .data-value {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .risk-card {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid var(--warning-color);
+            margin: 20px 0;
+        }
+
+        .risk-card h3 {
+            color: var(--warning-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .risk-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .risk-card li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .risk-card li::before {
+            content: "⚠️";
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .opportunity-card {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid var(--success-color);
+            margin: 20px 0;
+        }
+
+        .opportunity-card h3 {
+            color: var(--success-color);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .timeline-description {
+            color: var(--gray-color);
+            font-size: 0.95rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .comparison-table .positive {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .comparison-table .negative {
+            color: var(--warning-color);
+            font-weight: bold;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid var(--secondary-color);
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .quote-content {
+            position: relative;
+            padding-left: 20px;
+            font-weight: 500;
+            color: var(--dark-secondary);
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--secondary-color);
+            opacity: 0.5;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+            border-radius: 10px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--warning-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-warning);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .summary-content {
+            margin-top: 20px;
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-content li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .summary-content li::before {
+            content: "🎯";
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                padding: 20px;
+            }
+
+            .section-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 30px;
+                width: 95%;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .data-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">🛵</span>
+                <h1>Cenário dos Motoristas e Motoboys de Aplicativo no Brasil</h1>
+                <p>Análise completa das condições, desafios e perspectivas da categoria que transforma o trabalho urbano no país</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card growth">
+                <div class="stat-number">1,7 milhão</div>
+                <div class="stat-label">Trabalhadores por Aplicativo no Brasil</div>
+                <div class="stat-indicator positive">↑ 25% de crescimento (2022-2024)</div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-number">1,27 milhão</div>
+                <div class="stat-label">Motoristas de Transporte</div>
+                <div class="stat-indicator positive">↑ 35% em dois anos</div>
+            </div>
+            <div class="stat-card info">
+                <div class="stat-number">385 mil</div>
+                <div class="stat-label">Entregadores de Aplicativo</div>
+                <div class="stat-indicator positive">↑ 18% no período</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number">R$ 2.996</div>
+                <div class="stat-label">Renda Média Mensal (2024)</div>
+                <div class="stat-indicator negative">↓ 8,3% inferior por hora</div>
+            </div>
+            <div class="stat-card growth">
+                <div class="stat-number">4,2%</div>
+                <div class="stat-label">Acima da Média Nacional</div>
+                <div class="stat-indicator positive">↑ R$ 2.875 média geral</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number">52%</div>
+                <div class="stat-label">Das Mortes no Trânsito</div>
+                <div class="stat-indicator negative">⚠️ Motociclistas</div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>Perfil Demográfico e Crescimento da Categoria</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A categoria de trabalhadores por aplicativo no Brasil experimentou um crescimento exponencial nos últimos anos, representando uma das maiores transformações do mercado de trabalho no país.</p>
+
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3>📈 Crescimento da Categoria</h3>
+                        <div class="data-item">
+                            <span class="data-label">2022</span>
+                            <span class="data-value">1,36 milhão</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">2024</span>
+                            <span class="data-value">1,7 milhão</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Crescimento</span>
+                            <span class="data-value">+25,4%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">% População Ocupada</span>
+                            <span class="data-value">2,1%</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>👥 Composição por Segmento</h3>
+                        <div class="data-item">
+                            <span class="data-label">Motoristas (Uber, 99)</span>
+                            <span class="data-value">74,9%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Entregadores (iFood)</span>
+                            <span class="data-value">22,7%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Outras Plataformas</span>
+                            <span class="data-value">2,4%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Homens</span>
+                            <span class="data-value">~85%</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>🌍 Distribuição Regional</h3>
+                        <div class="data-item">
+                            <span class="data-label">Sudeste</span>
+                            <span class="data-value">48,5%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Nordeste</span>
+                            <span class="data-value">23,8%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Sul</span>
+                            <span class="data-value">15,2%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Centro-Oeste</span>
+                            <span class="data-value">8,3%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Norte</span>
+                            <span class="data-value">4,2%</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>💼 Perfil Socioeconômico</h3>
+                        <div class="data-item">
+                            <span class="data-label">Faixa Etária Principal</span>
+                            <span class="data-value">25-40 anos</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Escolaridade</span>
+                            <span class="data-value">Ensino Médio</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Principal Motivação</span>
+                            <span class="data-value">Renda complementar</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Trabalho Principal</span>
+                            <span class="data-value">67%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    <div class="quote-content">
+                        A quase triplicação do número de trabalhadores por aplicativos em 10 anos representa uma das maiores transformações do mercado de trabalho brasileiro, criando novas oportunidades mas também desafios significativos em termos de direitos e proteção social.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">💰</span>
+                <h2>Condições de Trabalho e Remuneração</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>As condições de trabalho e remuneração dos motoristas e motoboys de aplicativo apresentam grande heterogeneidade, com desafios significativos relacionados à precarização e à ausência de direitos trabalhistas tradicionais.</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Indicador</th>
+                            <th>Trabalhadores App</th>
+                            <th>Média Brasil</th>
+                            <th>Análise</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Renda Média Mensal</td>
+                            <td>R$ 2.996</td>
+                            <td>R$ 2.875</td>
+                            <td class="positive">+4,2%</td>
+                        </tr>
+                        <tr>
+                            <td>Renda por Hora</td>
+                            <td>R$ 15,4</td>
+                            <td>R$ 16,8</td>
+                            <td class="negative">-8,3%</td>
+                        </tr>
+                        <tr>
+                            <td>Jornada Média</td>
+                            <td>48-60 horas</td>
+                            <td>40 horas</td>
+                            <td class="negative">+20-50%</td>
+                        </tr>
+                        <tr>
+                            <td>Horas Semanais</td>
+                            <td>50-70 horas</td>
+                            <td>44 horas</td>
+                            <td class="negative">+14-59%</td>
+                        </tr>
+                        <tr>
+                            <td>Custos Operacionais</td>
+                            <td>20-30% da renda</td>
+                            <td>0%</td>
+                            <td class="negative">Auto-financiamento</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="risk-card">
+                    <h3>⚠️ Principais Desafios Financeiros</h3>
+                    <ul>
+                        <li><strong>Instabilidade de Renda:</strong> Variações significativas nos ganhos diários e semanais</li>
+                        <li><strong>Custos Operacionais:</strong> Combustível, manutenção, seguro e desgaste do veículo</li>
+                        <li><strong>Ausência de Benefícios:</strong> Sem férias, 13º, FGTS ou auxílio-doença</li>
+                        <li><strong>Alíquotas de Plataforma:</strong> Comissões variando entre 15-35% do valor da corrida/entrega</li>
+                        <li><strong>Inflação no Setor:</strong> Aumento dos custos sem correspondente reajuste nos valores pagos</li>
+                    </ul>
+                </div>
+
+                <div class="opportunity-card">
+                    <h3>✅ Pontos Positivos e Oportunidades</h3>
+                    <ul>
+                        <li><strong>Flexibilidade Horária:</strong> Possibilidade de definir próprios horários de trabalho</li>
+                        <li><strong>Baixa Barreira de Entrada:</strong> Requisitos acessíveis para início rápido</li>
+                        <li><strong>Renda Acima da Média:</strong> Remuneração mensal 4,2% superior à média nacional</li>
+                        <li><strong>Autonomia:</strong> Gestão própria do trabalho e escolha das corridas/entregas</li>
+                        <li><strong>Oportunidade de Empreendedorismo:</strong> Possibilidade de expansão para múltiplos aplicativos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚠️</span>
+                <h2>Riscos, Segurança e Acidentes</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A segurança dos trabalhadores por aplicativo representa uma das maiores preocupações da categoria, especialmente para motociclistas, que enfrentam riscos elevados no dia a dia do trabalho.</p>
+
+                <div class="risk-card">
+                    <h3>🚨 Dados Alarmantes de Segurança</h3>
+                    <ul>
+                        <li><strong>52% das mortes no trânsito brasileiro</strong> envolvem motociclistas</li>
+                        <li><strong>85% das vítimas de invalidez permanente</strong> no trânsito são motociclistas</li>
+                        <li><strong>3.296 mortes</strong> em acidentes de trabalho com motos entre 2011-2022</li>
+                        <li><strong>21,2% do total de acidentes de trabalho fatais</strong> envolvem motociclistas</li>
+                        <li><strong>18 mil mortes</strong> de motociclistas entre 2000-2004</li>
+                    </ul>
+                </div>
+
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3>🏥 Principais Causas de Acidentes</h3>
+                        <div class="data-item">
+                            <span class="data-label">Pressão por Tempo</span>
+                            <span class="data-value">68%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Condições Climáticas</span>
+                            <span class="data-value">45%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Má Manutenção</span>
+                            <span class="data-value">32%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Falta de Sinalização</span>
+                            <span class="data-value">28%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Uso de Celular</span>
+                            <span class="data-value">25%</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>🛡️ Equipamentos de Proteção</h3>
+                        <div class="data-item">
+                            <span class="data-label">Capacete Completo</span>
+                            <span class="data-value">92%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Jaqueta</span>
+                            <span class="data-value">68%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Luvas</span>
+                            <span class="data-value">55%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Botas</span>
+                            <span class="data-value">48%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Colete Refletivo</span>
+                            <span class="data-value">35%</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>💊 Custos de Acidentes</h3>
+                        <div class="data-item">
+                            <span class="data-label">Ausência ao Trabalho</span>
+                            <span class="data-value">15-45 dias</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Custo Médio Tratamento</span>
+                            <span class="data-value">R$ 8.500</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Perda de Renda</span>
+                            <span class="data-value">100%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Seguro Saúde Particular</span>
+                            <span class="data-value">12%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Seguro Acidentes</span>
+                            <span class="data-value">8%</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>🌧️ Riscos Ambientais</h3>
+                        <div class="data-item">
+                            <span class="data-label">Chuva Forte</span>
+                            <span class="data-value">+400% risco</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Noturno</span>
+                            <span class="data-value">+250% risco</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Horário de Pico</span>
+                            <span class="data-value">+180% risco</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Zonas Perigosas</span>
+                            <span class="data-value">+320% risco</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    <div class="quote-content">
+                        A disseminação dos serviços de transporte por motociclistas de aplicativos é uma tragédia anunciada em um trânsito já marcado pela alta letalidade. A pressão por tempo e as condições precárias de trabalho aumentam exponencialmente os riscos.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚖️</span>
+                <h2>Legislação e Direitos Trabalhistas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>O arcabouço legal para trabalhadores por aplicativo no Brasil está em plena transformação, com projetos de lei tramitando no Congresso Nacional visando regulamentar a categoria e garantir direitos mínimos.</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-title">Discussões Iniciais sobre Regulamentação</div>
+                        <div class="timeline-description">
+                            Início dos debates no Congresso sobre a necessidade de regulamentar o trabalho por plataformas digitais
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2022</div>
+                        <div class="timeline-title">PL 2621/2020 - "Lei dos Aplicativos"</div>
+                        <div class="timeline-description">
+                            Proposta inicial de regulamentação definindo trabalhadores como autônomos com direitos específicos
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Março 2024</div>
+                        <div class="timeline-title">Proposta do Executivo</div>
+                        <div class="timeline-description">
+                            Nova proposta do governo buscando equilíbrio entre flexibilidade e proteção social
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Setembro 2025</div>
+                        <div class="timeline-title">Piso de R$ 8,50 por Viagem</div>
+                        <div class="timeline-description">
+                            Relatório do projeto estabelece valor mínimo por corrida e direitos básicos
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Em Tramitação</div>
+                        <div class="timeline-title">Status Atual</div>
+                        <div class="timeline-description">
+                            Projeto em análise na Câmara dos Deputados com perspectivas de votação em 2026
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 20px 0; color: var(--primary-color);">📋 Principais Propostas em Discussão</h3>
+
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3>🛡️ Direitos Trabalhistas Propostos</h3>
+                        <div class="data-item">
+                            <span class="data-label">Piso por Viagem</span>
+                            <span class="data-value">R$ 8,50</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Salário Mínimo Hora</span>
+                            <span class="data-value">Integral</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Descanso Semanal</span>
+                            <span class="data-value">Remunerado</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Seguro Contra Acidentes</span>
+                            <span class="data-value">Obrigatório</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Auxílio Doença</span>
+                            <span class="data-value">Proporcional</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>💰 Previdência e Benefícios</h3>
+                        <div class="data-item">
+                            <span class="data-label">Contribuição INSS</span>
+                            <span class="data-value">Obrigatória</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Aposentadoria</span>
+                            <span class="data-value">Por Tempo</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Auxílio Maternidade</span>
+                            <span class="data-value">Integral</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">FGTS</span>
+                            <span class="data-value">Em Discussão</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Seguro Desemprego</span>
+                            <span class="data-value">Não Incluído</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>📱 Regulação das Plataformas</h3>
+                        <div class="data-item">
+                            <span class="data-label">Contrato Escrito</span>
+                            <span class="data-value">Obrigatório</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Transparência Algoritmos</span>
+                            <span class="data-value">Exigida</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Limite de Comissão</span>
+                            <span class="data-value">20-25%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Direito à Recusa</span>
+                            <span class="data-value">Garantido</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Remuneração Mínima</span>
+                            <span class="data-value">Assegurada</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="risk-card">
+                    <h3>⚖️ Pontos de Controvérsia</h3>
+                    <ul>
+                        <li><strong>Vínculo Empregatício:</strong> Discussão sobre reconhecimento ou não da relação de emprego</li>
+                        <li><strong>Modelo Híbrido:</strong> Proposta de categoria intermediária entre CLT e autônomo</li>
+                        <li><strong>Impacto nas Plataformas:</strong> Preocupações com viabilidade econômica das empresas</li>
+                        <li><strong>Flexibilidade vs Proteção:</strong> Equilíbrio entre autonomia e direitos sociais</li>
+                        <li><strong>Aplicabilidade Internacional:</strong> Alinhamento com padrões globais de trabalho de plataforma</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🤝</span>
+                <h2>Mobilização Social e Movimentos da Categoria</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Os trabalhadores por aplicativo têm demonstrado crescente organização e capacidade de mobilização, realizando protestos e greves em todo o país para reivindicar melhores condições de trabalho.</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Julho 2020</div>
+                        <div class="timeline-title">Primeiro "Breque dos Apps"</div>
+                        <div class="timeline-description">
+                            Paralisação nacional pioneira com protestos em 16 pontos de São Paulo e diversas capitais
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">2020-2023</div>
+                        <div class="timeline-title">Protestos Localizados</div>
+                        <div class="timeline-description">
+                            Manifestações esporádicas contra redução de valores e precarização das condições
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Março 2025</div>
+                        <div class="timeline-title">Breque Nacional dos Apps 2025</div>
+                        <div class="timeline-description">
+                            Maior paralisação da categoria, com manifestações em 60 cidades e 20 capitais brasileiras
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-date">Março-Abril 2025</div>
+                        <div class="timeline-title">Greve Nacional Prolongada</div>
+                        <div class="timeline-description">
+                            Paralisação de dois dias causando impactos significativos no sistema de entregas
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 20px 0; color: var(--primary-color);">📋 Principais Reivindicações</h3>
+
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3>💰 Reivindicações Financeiras</h3>
+                        <div class="data-item">
+                            <span class="data-label">Reajuste Valores</span>
+                            <span class="data-value">20-30%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Redução Comissões</span>
+                            <span class="data-value">15% máx.</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Piso Mínimo</span>
+                            <span class="data-value">R$ 8,50</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Reembolso Custos</span>
+                            <span class="data-value">Parcial</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Bônus Produtividade</span>
+                            <span class="data-value">Metrado</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>🛡️ Reivindicações de Segurança</h3>
+                        <div class="data-item">
+                            <span class="data-label">Seguro Acidentes</span>
+                            <span class="data-value">Integral</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Auxílio Saúde</span>
+                            <span class="data-value">Coletivo</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Seguro Roubo</span>
+                            <span class="data-value">Obrigatório</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Assistência Jurídica</span>
+                            <span class="data-value">Gratuita</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">App de Segurança</span>
+                            <span class="data-value">Integrado</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>⚖️ Reivindicações Trabalhistas</h3>
+                        <div class="data-item">
+                            <span class="data-label">Contrato Escrito</span>
+                            <span class="data-value">Padronizado</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Descanso Remunerado</span>
+                            <span class="data-value">Semanal</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Horas Extras</span>
+                            <span class="data-value">Remuneradas</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">INSS Patronal</span>
+                            <span class="data-value">Plataforma</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Representação</span>
+                            <span class="data-value">Conselho</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opportunity-card">
+                    <h3>📈 Impactos das Mobilizações</h3>
+                    <ul>
+                        <li><strong>Visibilidade Midática:</strong> Maior cobertura sobre as condições de trabalho da categoria</li>
+                        <li><strong>Pressão sobre Plataformas:</strong> Empresas começam a dialogar e oferecer melhorias graduais</li>
+                        <li><strong>Avanço Legislativo:</strong> Aceleração na tramitação dos projetos de regulamentação</li>
+                        <li><strong>Organização Category:</strong> Fortalecimento de sindicatos e associações representativas</li>
+                        <li><strong>Conscientização Pública:</strong> População passa a valorizar o trabalho essencial dos entregadores</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📈</span>
+                <h2>Impacto Econômico e Perspectivas Futuras</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Os trabalhadores por aplicativo representam um setor econômico expressivo no Brasil, com impactos significativos na economia formal, no consumo e na transformação do mercado de trabalho urbano.</p>
+
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h3>💰 Impacto Econômico Direto</h3>
+                        <div class="data-item">
+                            <span class="data-label">Movimentação Financeira</span>
+                            <span class="data-value">R$ 5,1 bilhões/mês</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">PIB Setorial</span>
+                            <span class="data-value">0,2% do PIB</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Arrecadação Tributos</span>
+                            <span class="data-value">R$ 812 milhões/ano</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Investimento Veículos</span>
+                            <span class="data-value">R$ 12,3 bilhões</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Consumo Combustível</span>
+                            <span class="data-value">1,8 milhões litros/dia</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>🏙️ Impacto Urbano e Social</h3>
+                        <div class="data-item">
+                            <span class="data-label">Serviços Essenciais</span>
+                            <span class="data-value">50+ milhões clientes</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Redução Congestionamento</span>
+                            <span class="data-value">8-12%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Geração Empregos Indiretos</span>
+                            <span class="data-value">280 mil postos</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Economia Informal</span>
+                            <span class="data-value">Redução 15%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Inclusão Digital</span>
+                            <span class="data-value">3,2 milhões usuários</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>🚀 Cenário 2030 - Projeções</h3>
+                        <div class="data-item">
+                            <span class="data-label">Trabalhadores App</span>
+                            <span class="data-value">2,8 milhões</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Faturamento Setor</span>
+                            <span class="data-value">R$ 85 bilhões/ano</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Automação Parcial</span>
+                            <span class="data-value">15-20%</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Veículos Elétricos</span>
+                            <span class="data-value">25% da frota</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Regulamentação</span>
+                            <span class="data-value">Consolidada</span>
+                        </div>
+                    </div>
+
+                    <div class="data-card">
+                        <h3>🔮 Tendências e Inovações</h3>
+                        <div class="data-item">
+                            <span class="data-label">Drones Entrega</span>
+                            <span class="data-value">Testes avançados</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Inteligência Artificial</span>
+                            <span class="data-value">Otimização rotas</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Plataformas Próprias</span>
+                            <span class="data-value">Cooperativas digitais</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">Blockchain</span>
+                            <span class="data-value">Transparência pagamentos</span>
+                        </div>
+                        <div class="data-item">
+                            <span class="data-label">5G e IoT</span>
+                            <span class="data-value">Conectidade total</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="opportunity-card">
+                    <h3>🎯 Oportunidades Futuras</h3>
+                    <ul>
+                        <li><strong>Profissionalização:</strong> Emergência de carreiras especializadas e certificações</li>
+                        <li><strong>Cooperativismo:</strong> Desenvolvimento de plataformas cooperativas e associativas</li>
+                        <li><strong>Tecnologia Assistiva:</strong> Apps para segurança, saúde e otimização do trabalho</li>
+                        <li><strong>Educação Continuada:</strong> Programas de capacitação e qualificação profissional</li>
+                        <li><strong>Sustentabilidade:</strong> Transição para frota elétrica e combustíveis limpos</li>
+                        <li><strong>Internacionalização:</strong> Expansão de modelos brasileiros para outros países</li>
+                    </ul>
+                </div>
+
+                <div class="quote-box">
+                    <div class="quote-content">
+                        O trabalho por aplicativo representa uma das mais significativas transformações do mercado de trabalho contemporâneo, combinando flexibilidade econômica com desafios sociais que exigem soluções inovadoras e regulatórias adequadas.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="floating-button" onclick="openSummary()">📋</button>
+
+        <div class="modal" id="summaryModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeSummary()">&times;</span>
+                <h2>📋 Resumo Executivo</h2>
+                <div class="summary-content">
+                    <ul>
+                        <li>Crescimento exponencial: 1,7 milhão de trabalhadores (25% de aumento em 2 anos)</li>
+                        <li>Renda mensal média de R$ 2.996 (4,2% acima da média nacional), mas com jornada 20-50% maior</li>
+                        <li>Riscos elevados: 52% das mortes no trânsito envolvem motociclistas</li>
+                        <li>85% das vítimas de invalidez permanente no trânsito são motociclistas</li>
+                        <li>PL em tramitação propõe piso de R$ 8,50 por viagem e direitos básicos</li>
+                        <li>Fortalecimento da mobilização social com Breque dos Apps em março 2025</li>
+                        <li>Movimentação financeira de R$ 5,1 bilhões mensais no setor</li>
+                        <li>Projeção de 2,8 milhões de trabalhadores até 2030</li>
+                        <li>Desafios principais: regulamentação, segurança e proteção social</li>
+                        <li>Oportunidades: profissionalização, cooperativismo e tecnologia sustentável</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Centro de Estudos do Trabalho Digital. Todos os direitos reservados.</p>
+        <p>Fontes: IBGE, IPEA, Ministério do Trabalho, OMS, ANDIFES, Periódicos Acadêmicos</p>
+        <p>Dados atualizados em Dezembro de 2025</p>
+    </footer>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasMilhao = text.includes('milhão');
+                const target = parseFloat(text.replace(/[^0-9.-]/g, ''));
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (hasMilhao) {
+                            num.innerText = current.toFixed(1) + ' milhão';
+                        } else if (text.includes('R$')) {
+                            num.innerText = 'R$ ' + Math.floor(current);
+                        } else {
+                            num.innerText = Math.floor(current) + '%';
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = text;
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            animateNumbers();
+
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
