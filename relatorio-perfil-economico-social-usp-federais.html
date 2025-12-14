@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Econômico e Social dos Alunos da USP e Universidades Federais - Relatório Completo</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --dark-primary: #1e40af;
+            --secondary-color: #7c3aed;
+            --dark-secondary: #6d28d9;
+            --accent-color: #dc2626;
+            --dark-accent: #991b1b;
+            --success-color: #16a34a;
+            --warning-color: #ea580c;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--dark-accent));
+        }
+
+        .stat-card.positive::before {
+            background: linear-gradient(90deg, var(--success-color), #15803d);
+        }
+
+        .stat-card.warning::before {
+            background: linear-gradient(90deg, var(--warning-color), #c2410c);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .stat-indicator {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .stat-indicator.up {
+            color: var(--success-color);
+        }
+
+        .stat-indicator.down {
+            color: var(--accent-color);
+        }
+
+        .stat-indicator.warning {
+            color: var(--warning-color);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--primary-color));
+        }
+
+        .section-header.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header .emoji {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .expand-arrow {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 3000px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .comparison-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .comparison-card.usp {
+            border-left-color: var(--primary-color);
+        }
+
+        .comparison-card.federais {
+            border-left-color: var(--success-color);
+        }
+
+        .comparison-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .comparison-card h3 .emoji {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            align-items: center;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .data-value {
+            font-weight: bold;
+            color: var(--primary-color);
+            background: rgba(37, 99, 235, 0.1);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .strategy-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+
+        .strategy-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .strategy-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .strategy-card h3 {
+            color: var(--primary-color);
+            margin: 10px 0 15px 0;
+            font-size: 1.2rem;
+        }
+
+        .strategy-card p {
+            color: #4b5563;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .strategy-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .strategy-card li {
+            padding: 6px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .strategy-card li::before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .impact-meter {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .impact-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .impact-label {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 5px solid var(--warning-color);
+            margin: 20px 0;
+            font-style: italic;
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--warning-color);
+            opacity: 0.5;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+        }
+
+        .quote-content {
+            position: relative;
+            z-index: 1;
+            padding-left: 20px;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .metrics-table th,
+        .metrics-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .metrics-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .metrics-table tr:hover {
+            background: #f9fafb;
+        }
+
+        .metrics-table .positive {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .metrics-table .negative {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-accent);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .summary-content {
+            margin-top: 20px;
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-content li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .summary-content li::before {
+            content: "🎯";
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            margin-top: 50px;
+        }
+
+        footer p {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                padding: 20px;
+            }
+
+            .section-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .modal-content {
+                margin: 10% auto;
+                padding: 30px;
+                width: 95%;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">📊</span>
+                <h1>Perfil Econômico e Social dos Alunos da USP e Universidades Federais</h1>
+                <p>Análise comparativa e estratégias comunitárias para ocupação periférica no ambiente acadêmico</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card positive">
+                <div class="stat-number">51,7%</div>
+                <div class="stat-label">Alunos de Escola Pública na USP (2021)</div>
+                <div class="stat-indicator up">↑ Maioria Histórica</div>
+            </div>
+            <div class="stat-card positive">
+                <div class="stat-number">70%+</div>
+                <div class="stat-label">Baixa Renda nas Universidades Federais</div>
+                <div class="stat-indicator up">↑ Inclusão Social</div>
+            </div>
+            <div class="stat-card positive">
+                <div class="stat-number">51,2%</div>
+                <div class="stat-label">Estudantes Negros nas Federais</div>
+                <div class="stat-indicator up">↑ Triplicou desde 2003</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number">1,5 SM</div>
+                <div class="stat-label">Renda Média Familiar nas Federais</div>
+                <div class="stat-indicator warning">⚠️ Baixa Renda</div>
+            </div>
+            <div class="stat-card positive">
+                <div class="stat-number">167%</div>
+                <div class="stat-label">Aumento do Ingresso por Cotas</div>
+                <div class="stat-indicator up">↑ Lei de Cotas Efetiva</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number">39,8%</div>
+                <div class="stat-label">Renda ≤ 0,5 SM - USP Leste</div>
+                <div class="stat-indicator warning">⚠️ Vulnerabilidade</div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏫</span>
+                <h2>Análise Comparativa: USP vs Universidades Federais</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A análise comparativa do perfil socioeconômico entre estudantes da Universidade de São Paulo (USP) e das universidades federais brasileiras revela diferenças significativas, mas também avanços importantes na democratização do acesso ao ensino superior.</p>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card usp">
+                        <h3><span class="emoji">🎓</span>Universidade de São Paulo (USP)</h3>
+                        <div class="data-row">
+                            <span class="data-label">Escola Pública</span>
+                            <span class="data-value">51,7% (2021)</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Escola Particular</span>
+                            <span class="data-value">48,3%</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Renda ≤ 1 SM</span>
+                            <span class="data-value">4,6%</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Renda 1-3 SM</span>
+                            <span class="data-value">49,4%</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Alunos PPI</span>
+                            <span class="data-value">32% (2024)</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Mulheres</span>
+                            <span class="data-value">Aprox. 50%</span>
+                        </div>
+                    </div>
+
+                    <div class="comparison-card federais">
+                        <h3><span class="emoji">🏛️</span>Universidades Federais</h3>
+                        <div class="data-row">
+                            <span class="data-label">Baixa Renda</span>
+                            <span class="data-value">70%+</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Negros/Pardos</span>
+                            <span class="data-value">51,2%</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Renda Média Familiar</span>
+                            <span class="data-value">1,5 Salários Mínimos</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Escola Pública</span>
+                            <span class="data-value">Maioria significativa</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Mulheres</span>
+                            <span class="data-value">54,6%</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Idade Média</span>
+                            <span class="data-value">20-24 anos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    <div class="quote-content">
+                        A USP atingiu em 2021 o maior percentual histórico de estudantes de escola pública: 51,7% dos calouros. Este marco representa uma transformação fundamental no perfil da universidade, que historicamente era predominantemente frequentada por estudantes de escolas particulares.
+                    </div>
+                </div>
+
+                <p style="margin-top: 20px;"><strong>Diferenças Estruturais:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li>As universidades federais atendem predominantemente estudantes de baixa renda (>70%)</li>
+                    <li>A USP mostra distribuição mais equilibrada entre escola pública e particular</li>
+                    <li>O percentual de estudantes negros é maior nas federais (51,2%) que na USP (32%)</li>
+                    <li>A renda média familiar nas federais é significativamente menor que na USP</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚖️</span>
+                <h2>Impacto das Políticas de Ações Afirmativas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>As políticas de ações afirmativas, implementadas a partir de 2012 com a Lei de Cotas, transformaram radicalmente o perfil do ensino superior brasileiro, promovendo maior inclusão e diversidade nas universidades públicas.</p>
+
+                <div class="metrics-table">
+                    <thead>
+                        <tr>
+                            <th>Indicador</th>
+                            <th>Antes das Cotas (2003)</th>
+                            <th>Pós-Lei de Cotas (2024)</th>
+                            <th>Variação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Estudantes Negros nas Federais</td>
+                            <td>~17%</td>
+                            <td>51,2%</td>
+                            <td class="positive">+201%</td>
+                        </tr>
+                        <tr>
+                            <td>Ingresso por Cotas</td>
+                            <td>-</td>
+                            <td>55.371 (2022)</td>
+                            <td class="positive">+167%</td>
+                        </tr>
+                        <tr>
+                            <td>Alunos de Escola Pública - USP</td>
+                            <td>24,7% (2006)</td>
+                            <td>51,7% (2021)</td>
+                            <td class="positive">+109%</td>
+                        </tr>
+                        <tr>
+                            <td>Estudantes PPI na FEA-USP</td>
+                            <td>-</td>
+                            <td>32% (2024)</td>
+                            <td class="positive">+59% YoY</td>
+                        </tr>
+                        <tr>
+                            <td>Desempenho Acadêmico</td>
+                            <td>-</td>
+                            <td>Similar aos não-cotistas</td>
+                            <td class="positive">✓ Equalização</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top: 25px;"><strong>Eficácia Comprovada:</strong></p>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li><strong>Superação do Desempenho:</strong> Estudos indicam que cotistas obtiveram rendimentos similares aos demais estudantes, superando-os em muitos casos</li>
+                    <li><strong>Impacto na Permanência:</strong> Taxas de evasão reduzidas entre estudantes beneficiados por políticas de assistência</li>
+                    <li><strong>Diversidade Acadêmica:</strong> Enriquecimento do ambiente acadêmico com diferentes perspectivas e experiências</li>
+                    <li><strong>Desconstrução de Preconceitos:</strong> Quebra de estigmas sobre capacidade de estudantes de origem popular</li>
+                </ul>
+
+                <div class="quote-box">
+                    <div class="quote-content">
+                        O aumento do número de estudantes provenientes da escola pública não alterou o desempenho das universidades, ao contrário, a maior parte delas teve um ganho na qualidade e diversidade acadêmica.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🎯</span>
+                <h2>Estratégias Comunitárias para Ocupação Periférica</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Para ampliar efetivamente a ocupação do ambiente acadêmico por estudantes de origem periférica, é necessário implementar estratégias integradas que vão além das políticas de ingresso, focando na permanência qualificada e no fortalecimento comunitário.</p>
+
+                <div class="strategy-grid">
+                    <div class="strategy-card">
+                        <span class="strategy-icon">🏠</span>
+                        <h3>Fortalecimento da Base Comunitária</h3>
+                        <p>Desenvolvimento de estruturas de apoio nos próprios territórios periféricos para criar identificação e pertencimento acadêmico.</p>
+                        <ul>
+                            <li>Núcleos de estudos comunitários nas periferias</li>
+                            <li>Programas de mentorias com ex-alunos da comunidade</li>
+                            <li>Bibliotecas e espaços de estudo locais</li>
+                            <li>Grupos de apoio familiar ao estudante</li>
+                        </ul>
+                        <div class="impact-meter">
+                            <div class="impact-fill" style="width: 90%;"></div>
+                        </div>
+                        <div class="impact-label">Impacto: Altíssimo | Prazo: Médio</div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">📚</span>
+                        <h3>Educação Integral desde a Base</h3>
+                        <p>Investimento estrutural na educação básica das comunidades periféricas com foco na excelência acadêmica.</p>
+                        <ul>
+                            <li>Cursinhos populares comunitários de qualidade</li>
+                            <li>Programas de desenvolvimento docente nas escolas da periferia</li>
+                            <li>Tecnologia educacional e acesso a recursos digitais</li>
+                            <li>Olimpíadas e competições acadêmicas locais</li>
+                        </ul>
+                        <div class="impact-meter">
+                            <div class="impact-fill" style="width: 95%;"></div>
+                        </div>
+                        <div class="impact-label">Impacto: Transformador | Prazo: Longo</div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">🤝</span>
+                        <h3>Redes de Apoio e Pertencimento</h3>
+                        <p>Criação de ecossistemas de apoio psicossocial e acadêmico dentro das universidades para estudantes de origem periférica.</p>
+                        <ul>
+                            <li>Coletivos de estudantes periféricos nas universidades</li>
+                            <li>Programas de acolhimento e integração</li>
+                            <li>Serviços de saúde mental especializados</li>
+                            <li>Grupos de identidade e pertencimento cultural</li>
+                        </ul>
+                        <div class="impact-meter">
+                            <div class="impact-fill" style="width: 85%;"></div>
+                        </div>
+                        <div class="impact-label">Impacto: Alto | Prazo: Curto</div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">💰</span>
+                        <h3>Sustentabilidade Financeira</h3>
+                        <p>Modelos inovadores de apoio financeiro que garantam permanência digna e foco nos estudos.</p>
+                        <ul>
+                            <li>Fundos comunitários de apoio estudantil</li>
+                            <li>Cooperativas de estudantes para geração de renda</li>
+                            <li>Programas de trabalho-formativo dentro da universidade</li>
+                            <li>Parcerias com empresas locais para bolsas</li>
+                        </ul>
+                        <div class="impact-meter">
+                            <div class="impact-fill" style="width: 80%;"></div>
+                        </div>
+                        <div class="impact-label">Impacto: Alto | Prazo: Médio</div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">🌐</span>
+                        <h3>Extensão Universitária Reversa</h3>
+                        <p>Levar a universidade para as periferias através de projetos extensionistas que fortaleçam os laços comunitários.</p>
+                        <ul>
+                            <li>Laboratórios itinerantes nas comunidades</li>
+                            <li>Projetos de pesquisa desenvolvidos nas periferias</li>
+                            <li>Programas de extensão liderados por estudantes locais</li>
+                            <li>Centros culturais universitários nos bairros</li>
+                        </ul>
+                        <div class="impact-meter">
+                            <div class="impact-fill" style="width: 88%;"></div>
+                        </div>
+                        <div class="impact-label">Impacto: Altíssimo | Prazo: Médio</div>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">📱</span>
+                        <h3>Tecnologia e Conectividade</h3>
+                        <p>Uso de tecnologia digital como ferramenta de democratização do acesso e equalização de oportunidades.</p>
+                        <ul>
+                            <li>Plataformas online de preparação vestibular gratuita</li>
+                            <li>Programas de inclusão digital nas comunidades</li>
+                            <li>Redes sociais de apoio acadêmico e profissional</li>
+                            <li>Aplicativos de orientação e mentoria</li>
+                        </ul>
+                        <div class="impact-meter">
+                            <div class="impact-fill" style="width: 75%;"></div>
+                        </div>
+                        <div class="impact-label">Impacto: Médio | Prazo: Curto</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🚀</span>
+                <h2>Programas e Iniciativas de Sucesso</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Diversos programas e iniciativas já demonstraram eficácia na promoção da ocupação periférica no ambiente acadêmico, servindo como modelos para replicação e ampliação.</p>
+
+                <div class="strategy-grid">
+                    <div class="strategy-card">
+                        <span class="strategy-icon">🎓</span>
+                        <h3>Programas de Assistência Estudantil</h3>
+                        <p>Programas estruturados de apoio financeiro e acadêmico que garantem permanência e sucesso.</p>
+                        <ul>
+                            <li><strong>Bolsa Permanência:</strong> R$ 400-600 para estudantes de baixa renda</li>
+                            <li><strong>Auxílio Moradia:</strong> Apoio para estudantes de outras cidades</li>
+                            <li><strong>Restaurante Universitário:</strong> Refeições a R$ 1,00</li>
+                            <li><strong>Apoio Psicopedagógico:</strong> Acompanhamento individualizado</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">📖</span>
+                        <h3>Cursinhos Populares</h3>
+                        <p>Iniciativas comunitárias de preparação vestibular com excelência e identidade social.</p>
+                        <ul>
+                            <li><strong>Educafro:</strong> Rede nacional com 20+ anos</li>
+                            <li><strong>CEV - Curso Escolar:</strong> Modelo de gestão comunitária</li>
+                            <li><strong>Cursinho da USP:</strong> Voluntariado universitário</li>
+                            <li><strong>Projeto Virar o Jogo:</strong> Foco em negros e periféricos</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">🏛️</span>
+                        <h3>Iniciativas Governamentais</h3>
+                        <p>Políticas públicas que democratizam o acesso e apoiam a permanência estudantil.</p>
+                        <ul>
+                            <li><strong>FIES:</strong> Financiamento estudantil com juros zero</li>
+                            <li><strong>Prouni:</strong> Bolsas em instituições privadas</li>
+                            <li><strong>Pé-de-Meia:</strong> Incentivo para permanência no ensino médio</li>
+                            <li><strong>CadÚnico:</strong> Porta de entrada para benefícios sociais</li>
+                        </ul>
+                    </div>
+
+                    <div class="strategy-card">
+                        <span class="strategy-icon">🔬</span>
+                        <h3>Programas de Iniciação Científica</h3>
+                        <strong>Bolsas de pesquisa que incluem estudantes de origem popular na produção científica.</strong>
+                        <ul>
+                            <li><strong>PIBIC:</strong> Bolsas de iniciação científica</li>
+                            <li><strong>Jovens Cientistas:</strong> Programas para ensino médio</li>
+                            <li><strong>Olimpíadas Científicas:</strong> Identificação de talentos</li>
+                            <li><strong>Feiras de Ciências:</strong> Projetos comunitários</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    <div class="quote-content">
+                        A articulação de políticas públicas ampliou significativamente a escolaridade de estudantes vulneráveis, criando um ciclo virtuoso de desenvolvimento e oportunidades.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>Desafios e Perspectivas Futuras</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Apesar dos avanços significativos, persistem desafios estruturais que precisam ser enfrentados para consolidar uma ocupação periférica massiva e qualificada no ensino superior.</p>
+
+                <h3 style="margin: 25px 0 15px 0; color: var(--primary-color);">🔍 Desafios Identificados:</h3>
+                <div style="display: grid; gap: 15px; margin: 20px 0;">
+                    <div style="background: #fef2f2; padding: 20px; border-left: 4px solid var(--accent-color); border-radius: 8px;">
+                        <h4 style="color: var(--accent-color); margin-bottom: 10px;">📉 Evasão Universitária</h4>
+                        <p style="margin: 0;">Taxa de evasão de 25% nas universidades públicas, com concentração entre estudantes de baixa renda que necessitam trabalhar.</p>
+                    </div>
+
+                    <div style="background: #fefce8; padding: 20px; border-left: 4px solid var(--warning-color); border-radius: 8px;">
+                        <h4 style="color: var(--warning-color); margin-bottom: 10px;">⏰ Dificuldade de Conciliação</h4>
+                        <p style="margin: 0;">60% dos estudantes de baixa renda necessitam trabalhar durante o curso, comprometendo o desempenho acadêmico.</p>
+                    </div>
+
+                    <div style="background: #eff6ff; padding: 20px; border-left: 4px solid var(--primary-color); border-radius: 8px;">
+                        <h4 style="color: var(--primary-color); margin-bottom: 10px;">🌍 Falta de Pertencimento</h4>
+                        <p style="margin: 0;">Sentimento de isolamento e inadequação cultural persiste mesmo após o ingresso na universidade.</p>
+                    </div>
+
+                    <div style="background: #f0fdf4; padding: 20px; border-left: 4px solid var(--success-color); border-radius: 8px;">
+                        <h4 style="color: var(--success-color); margin-bottom: 10px;">💰 Insuficiência de Apoio Financeiro</h4>
+                        <p style="margin: 0;">Os valores dos auxílios frequentemente não cobrem todas as necessidades básicas dos estudantes.</p>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px 0; color: var(--primary-color);">🔮 Perspectivas e Tendências:</h3>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li><strong>Ampliação do Financiamento:</strong> Discussões sobre aumento da bolsa permanência para valores closer à realidade</li>
+                    <li><strong>Tecnologia Educacional:</strong> Uso de IA e plataformas digitais para personalizar o ensino</li>
+                    <li><strong>Modelos Híbridos:</strong> Flexibilização curricular para estudantes trabalhadores</li>
+                    <li><strong>Internacionalização:</strong> Programas de intercâmbio com foco em inclusão social</li>
+                    <li><strong>Sustentabilidade:</strong> Programas de empreendedorismo social e economia solidária</li>
+                </ul>
+
+                <div style="background: linear-gradient(135deg, #f3f4f6, #e5e7eb); padding: 25px; border-radius: 12px; margin-top: 25px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 15px; text-align: center;">🎯 Cenário Ideal para 2030</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">80%+</div>
+                            <div style="color: #6b7280;">Estudantes de Origem Periférica</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">90%+</div>
+                            <div style="color: #6b7280;">Taxa de Conclusão</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">R$ 1.200</div>
+                            <div style="color: #6b7280;">Bolsa Permanência Mínima</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; font-weight: bold; color: var(--success-color);">100%</div>
+                            <div style="color: #6b7280;">Acesso à Tecnologia</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="floating-button" onclick="openSummary()">📋</button>
+
+        <div class="modal" id="summaryModal">
+            <div class="modal-content">
+                <span class="close" onclick="closeSummary()">&times;</span>
+                <h2>📋 Resumo Executivo</h2>
+                <div class="summary-content">
+                    <ul>
+                        <li>A USP atingiu marco histórico com 51,7% de alunos de escola pública em 2021</li>
+                        <li>Universidades federais atendem predominantemente estudantes de baixa renda (>70%)</li>
+                        <li>Lei de Cotas aumentou ingresso em 167% e triplicou estudantes negros</li>
+                        <li>Cotistas apresentam desempenho acadêmico similar aos demais estudantes</li>
+                        <li>Estratégias comunitárias são fundamentais para ocupação periférica qualificada</li>
+                        <li>Fortalecimento da base educacional nas comunidades é ação transformadora</li>
+                        <li>Redes de apoio psicossocial são essenciais para permanência e sucesso</li>
+                        <li>Desafios incluem evasão de 25% e dificuldade de conciliar trabalho e estudos</li>
+                        <li>Programas de assistência estudantil demonstram alta eficácia</li>
+                        <li>Cenário 2030 aponta para democratização massiva do ensino superior</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Centro de Estudos Socioeconômicos. Todos os direitos reservados.</p>
+        <p>Fonte: FONAPRACE, ANDIFES, USP, IBGE, Ministério da Educação</p>
+        <p>Dados atualizados em Dezembro de 2025</p>
+    </footer>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasPlus = text.includes('+');
+                const target = parseFloat(text.replace(/[^0-9.-]/g, ''));
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (text.includes(',')) {
+                            num.innerText = current.toFixed(1).replace('.', ',') + (hasPlus ? '+' : '');
+                        } else if (text.includes('%')) {
+                            num.innerText = Math.floor(current) + '%' + (hasPlus ? '+' : '');
+                        } else {
+                            num.innerText = Math.floor(current).toLocaleString('pt-BR') + (hasPlus ? '+' : '');
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = text;
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            animateNumbers();
+
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
