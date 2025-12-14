@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cenário da Privatização da Educação no Brasil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #3498db;
+            --dark-blue: #2980b9;
+            --secondary-red: #e74c3c;
+            --dark-red: #c0392b;
+            --accent-green: #27ae60;
+            --dark-green: #229954;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --bg-white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            padding: 25px 30px;
+            background: linear-gradient(135deg, var(--secondary-red), var(--dark-red));
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header .icon {
+            font-size: 1.8rem;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .problem-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-green);
+        }
+
+        .problem-card h3 {
+            color: var(--accent-green);
+            margin-bottom: 10px;
+        }
+
+        .privatization-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .privatization-card {
+            background: linear-gradient(135deg, var(--secondary-red), var(--dark-red));
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .privatization-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .privatization-details {
+            text-align: left;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .phase-card {
+            background: linear-gradient(135deg, var(--accent-green), var(--dark-green));
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .phase-number {
+            background: rgba(255,255,255,0.2);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+
+        .phase-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .phase-duration {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .kpi-item {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .kpi-target {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-light);
+            background: var(--bg-white);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-green);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-green);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 15px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .close-modal:hover {
+            color: var(--text-dark);
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .policy-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 6px solid var(--primary-blue);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .policy-card.federal {
+            border-left-color: var(--primary-blue);
+        }
+
+        .policy-card.estadual {
+            border-left-color: var(--accent-green);
+        }
+
+        .policy-card.municipal {
+            border-left-color: var(--secondary-red);
+        }
+
+        .policy-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .policy-icon {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+        }
+
+        .policy-card.federal .policy-icon {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--primary-blue);
+        }
+
+        .policy-card.estadual .policy-icon {
+            background: rgba(39, 174, 96, 0.1);
+            color: var(--accent-green);
+        }
+
+        .policy-card.municipal .policy-icon {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--secondary-red);
+        }
+
+        .policy-title {
+            flex: 1;
+        }
+
+        .policy-title h3 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+        }
+
+        .policy-title p {
+            margin: 5px 0 0 0;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .policy-content h4 {
+            color: var(--text-dark);
+            margin: 20px 0 10px 0;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .policy-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .policy-content li {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .policy-content li:last-child {
+            border-bottom: none;
+        }
+
+        .policy-content li::before {
+            content: "▸";
+            color: var(--primary-blue);
+            font-weight: bold;
+            margin-top: 2px;
+        }
+
+        .implementation-timeline {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-blue));
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .timeline-content h4 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+
+        .timeline-content p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .sistema-s-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .sistema-s-card {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary-red);
+        }
+
+        .sistema-s-card h3 {
+            color: var(--secondary-red);
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Cenário da Privatização da Educação no Brasil</h1>
+            <p>Análise abrangente: desafios dos professores, processos de privatização e impactos na educação básica</p>
+            <p>Relatório de Pesquisa - Dezembro/2025</p>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">77%</div>
+                <div class="stat-label">Professores que citam baixos salários como motivo de abandono</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">33</div>
+                <div class="stat-label">Escolas estaduais privatizadas em SP (processo suspenso)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">204</div>
+                <div class="stat-label">Escolas privatizadas no Paraná</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">R$ 120M</div>
+                <div class="stat-label">Anuais pagos ao Sistema S em Santa Catarina</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">11</div>
+                <div class="stat-label">Instituições do Sistema S no Brasil</div>
+            </div>
+        </section>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">👨‍🏫</span> Cenário dos Professores da Educação Básica</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>💰 Desvalorização Salarial e Carreira</h3>
+                <ul>
+                    <li><strong>Salários Baixos:</strong> Brasil entre os piores salários de professores do mundo</li>
+                    <li><strong>Descumprimento do Piso:</strong> Municípios e estados descumprem o piso salarial nacional</li>
+                    <li><strong>Reajustes Insuficientes:</strong> Propostas de 13% a 31% até 2026 são rejeitadas por estar abaixo da inflação</li>
+                    <li><strong>Falta de Perspectiva:</strong> 77% acreditam que salários e planos de carreira levam à desistência</li>
+                </ul>
+
+                <h3>😰 Saúde Mental e Condições de Trabalho</h3>
+                <ul>
+                    <li><strong>Sobrecarga:</strong> 75% afirmam que questões psicológicas afetam o trabalho</li>
+                    <li><strong>Greve Contínua:</strong> Professores em greve por melhores condições</li>
+                    <li><strong>Falta de Apoio:</strong> Ausência de programas de saúde mental específicos</li>
+                    <li><strong>Condições Precárias:</strong> Infraestrutura inadequada nas escolas públicas</li>
+                </ul>
+
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <h3>📊 Realidade Salarial</h3>
+                        <ul>
+                            <li>Salários iniciais一般在 R$ 2.000 - R$ 3.500</li>
+                            <li>Meta superior à inflação nas negociações</li>
+                            <li>Reajuste federal de 9% para docentes</li>
+                            <li>Diferenças salariais entre estados/municípios</li>
+                            <li>Impacto direto na qualidade de vida</li>
+                        </ul>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>🏫 Estrutura Educacional</h3>
+                        <ul>
+                            <li>Escolas com infraestrutura precária</li>
+                            <li>Falta de materiais didáticos adequados</li>
+                            <li>Superlotação de salas de aula</li>
+                            <li>Violência nas escolas</li>
+                            <li>Orçamentos insuficientes para manutenção</li>
+                        </ul>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>🎯 Formação e Capacitação</h3>
+                        <ul>
+                            <li>Exigência de formação continuada sem remuneração</li>
+                            <li>Cursos pagos pelos próprios professores</li>
+                            <li>Falta de tempo para capacitação adequada</li>
+                            <li>Distância entre teoria acadêmica e prática</li>
+                            <li>Atualização tecnológica necessária</li>
+                        </ul>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>⚖️ Direitos e Segurança</h3>
+                        <ul>
+                            <li>Instabilidade no emprego público</li>
+                            <li>Ameaças de reformas previdenciárias</li>
+                            <li>Segurança insuficiente nas escolas</li>
+                            <li>Respeito à autoridade docente em declínio</li>
+                            <li>Burocracia excessiva em processos administrativos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">🔧</span> Processos de Privatização em Andamento</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>🏢 São Paulo: O Maior Processo de Privatização</h3>
+                <ul>
+                    <li><strong>Governo Tarcísio de Freitas:</strong> Proposta de privatizar gestão e manutenção de 143 escolas</li>
+                    <li><strong>Leilão de 33 Escolas:</strong> Transformação da educação em "atrativo para investidores"</li>
+                    <li><strong>Critério Seleção:</strong> Escolas com melhor desempenho acadêmico e infraestrutura</li>
+                    <li><strong>Suspensão Judicial:</strong> Justiça anulou leilões por ilegalidade em março/2025</li>
+                    <li><strong>BNDES Envolvido:</strong> Banco engajado em desenhar PPPs na educação</li>
+                </ul>
+
+                <h3>🌾 Paraná: Modelo de Referência na Privatização</h3>
+                <ul>
+                    <li><strong>Lei 22.006/24:</strong> Sancionada pelo governador Ratinho Júnior</li>
+                    <li><strong>204 Escolas:</strong> Previsão de gestão privatizada de 204 das 2.090 escolas estaduais</li>
+                    <li><strong>Argumento Oficial:</strong> Melhoria na gestão administrativa e infraestrutura</li>
+                    <li><strong>Modelo Expansivo:</strong> Pretensão de expandir para mais escolas</li>
+                </ul>
+
+                <div class="privatization-grid">
+                    <div class="privatization-card">
+                        <div class="privatization-title">🎯 Gestão Compartilhada</div>
+                        <div class="privatization-details">
+                            <ul>
+                                <li>Empresas privadas administram atividades não pedagógicas</li>
+                                <li>Limpeza, segurança, alimentação e manutenção</li>
+                                <li>Recebimento per capita do governo</li>
+                                <li>Lucro sobre serviços públicos</li>
+                                <li>Potencial expansão para áreas pedagógicas</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="privatization-card">
+                        <div class="privatization-title">🏗️ PPPs Educacionais</div>
+                        <div class="privatization-details">
+                            <ul>
+                                <li>Parcerias Público-Privadas financiadas pelo BNDES</li>
+                                <li>Construção e operação de escolas</li>
+                                <li>Contratos de longo prazo (20-30 anos)</li>
+                                <li>Garantias governamentais</li>
+                                <li>Transferência de recursos públicos para setor privado</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="privatization-card">
+                        <div class="privatization-title">📚 Sistema S</div>
+                        <div class="privatization-details">
+                            <ul>
+                                <li>11 instituições privadas com recursos públicos</li>
+                                <li>Senai, Sesi, Senac, Sesc como principais</li>
+                                <li>Acesso a recursos do Fundeb</li>
+                                <li>Concorrência direta com escolas públicas</li>
+                                <li>Ex: Santa Catarina paga R$ 120M anuais</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">⚠️</span> Problemas da Privatização da Educação</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>👨‍🏫 Impactos Diretos nos Professores</h3>
+                <ul>
+                    <li><strong>Concursos em Risco:</strong> Empresas podem contratar sem concurso público</li>
+                    <li><strong>Precarização:</strong> Priorização na redução de custos em vez da qualidade</li>
+                    <li><strong>Perda de Direitos:</strong> Benefícios e estabilidade reduzidos</li>
+                    <li><strong>Sindicatos Enfraquecidos:</strong> Dificuldade de organização coletiva</li>
+                    <li><strong>Substituição por Terceirizados:</strong> Demissão e contratação mais barata</li>
+                </ul>
+
+                <h3>👫 Impactos nos Estudantes</h3>
+                <ul>
+                    <li><strong>Desigualdade:</strong> Escolas selecionadas por desempenho, privilégio já privilegiados</li>
+                    <li><strong>Exclusão:</strong> Risco de exclusão de alunos com dificuldades</li>
+                    <li><strong>Foco em Lucro:</strong> Educação vista como produto, não direito</li>
+                    <li><strong>Padronização:</strong> Perda de autonomia pedagógica local</li>
+                    <li><strong>Falta de Controle Social:</strong> Menos participação da comunidade</li>
+                </ul>
+
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <h3>💸 Viés Econômico</h3>
+                        <ul>
+                            <li>Transformação da educação em negócio lucrativo</li>
+                            <li>Custos aumentados no longo prazo</li>
+                            <li>Opacidade na gestão financeira</li>
+                            <li>Priorização de eficiência sobre qualidade</li>
+                            <li>Transferência de verbas para setor privado</li>
+                        </ul>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>🏫 Perda de Controle Público</h3>
+                        <ul>
+                            <li>Menor transparência administrativa</li>
+                            <li>Dificuldade de fiscalização</li>
+                            <li>Redução da autonomia escolar</li>
+                            <li>Imposição de modelos externos</li>
+                            <li>Risco de abandono de escolas menos rentáveis</li>
+                        </ul>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>⚖️ Aspectos Legais e Constitucionais</h3>
+                        <ul>
+                            <li>Conflito com o Art. 205 da Constituição</li>
+                            <li>Duvidosa legalidade dos contratos</li>
+                            <li>Suspensões judiciais frequentes</li>
+                            <li>Desrespeito ao PNE (Plano Nacional de Educação)</li>
+                            <li>Violação do direito humano à educação</li>
+                        </ul>
+                    </div>
+
+                    <div class="problem-card">
+                        <h3>📊 Qualidade Pedagógica</h3>
+                        <ul>
+                            <li>Foco em métricas quantitativas</li>
+                            <li>Redução da inovação pedagógica</li>
+                            <li>Padronização curricular excessiva</li>
+                            <li>Menos atenção às necessidades locais</li>
+                            <li>Potencial queda na qualidade real do ensino</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">🏛️</span> O Sistema S e o Vazamento de Recursos</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p><strong>Contexto:</strong> O Sistema S é um conjunto de 11 serviços sociais autônomos que, embora privados, recebem recursos públicos significativos, concorrendo diretamente com a educação pública e criando um mercado paralelo.</p>
+
+                <div class="sistema-s-grid">
+                    <div class="sistema-s-card">
+                        <h3>🏭 SENAI (Serviço Nacional de Aprendizagem Industrial)</h3>
+                        <ul>
+                            <li>Educação profissional industrial</li>
+                            <li>Financiamento compulsório das indústrias</li>
+                            <li>Recursos do Fundeb (novo benefício)</li>
+                            <li>Concorrência com escolas técnicas públicas</li>
+                            <li>Rede com centenas de unidades</li>
+                        </ul>
+                    </div>
+
+                    <div class="sistema-s-card">
+                        <h3>👥 SESI (Serviço Social da Indústria)</h3>
+                        <ul>
+                            <li>Educação básica e programas sociais</li>
+                            <li>Escolas de ensino fundamental e médio</li>
+                            <li>Recursos públicos e das indústrias</li>
+                            <li>Alta qualidade em contraste com escolas públicas</li>
+                            <li>Acesso privilegiado a melhores condições</li>
+                        </ul>
+                    </div>
+
+                    <div class="sistema-s-card">
+                        <h3>💼 SENAC (Serviço Nacional de Aprendizagem Comercial)</h3>
+                        <ul>
+                            <li>Educação profissional comercial</li>
+                            <li>Financiamento do comércio</li>
+                            <li>Ampla rede de cursos técnicos</li>
+                            <li>Concorrência direta com IFETs</li>
+                            <li>Marketing agressivo e apelo moderno</li>
+                        </ul>
+                    </div>
+
+                    <div class="sistema-s-card">
+                        <h3>🎭 SESC (Serviço Social do Comércio)</h3>
+                        <ul>
+                            <li>Atividades culturais e educacionais</li>
+                            <li>Programas de educação não-formal</li>
+                            <li>Infraestrutura de primeira linha</li>
+                            <li>Recursos públicos e do comércio</li>
+                            <li>Modelo de "excelência" exacerbada</li>
+                        </ul>
+                    </div>
+
+                    <div class="sistema-s-card">
+                        <h3>🚜 SENAR (Serviço Nacional de Aprendizagem Rural)</h3>
+                        <ul>
+                            <li>Educação profissional rural</li>
+                            <li>Recursos do setor agrícola</li>
+                            <li>Programas extensionistas</li>
+                            <li>Fortíssima presença no interior</li>
+                            <li>Influência política significativa</li>
+                        </ul>
+                    </div>
+
+                    <div class="sistema-s-card">
+                        <h3>🚛 SEST/SENAT (Transporte)</h3>
+                        <ul>
+                            <li>Educação para o setor de transportes</li>
+                            <li>Recursos das empresas de transporte</li>
+                            <li>Programas de formação de motoristas</li>
+                            <li>Escolas especializadas</li>
+                            <li>Alta empregabilidade dos formados</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; padding: 20px; background: rgba(231, 76, 60, 0.1); border-radius: 10px; border-left: 5px solid var(--secondary-red);">
+                    <h3>⚠️ Problemas Estruturais do Sistema S</h3>
+                    <ul>
+                        <li><strong>Vazamento de Recursos:</strong> Bilhões em recursos públicos desviados da educação pública</li>
+                        <li><strong>Dupla Financiação:</strong> Recursos públicos + compulsório empresarial</li>
+                        <li><strong>Acesso ao Fundeb:</strong> Mudança legislativa permite acesso a recursos da educação básica</li>
+                        <li><strong>Concorrência Desleal:</strong> Condições superiores às escolas públicas</li>
+                        <li><strong>Falta de Transparência:</strong> Gestão privada com dinheiro público</li>
+                        <li><strong>Impacto Regional:</strong> Ex: Santa Catarina paga R$ 120 milhões anuais</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">💡</span> Propostas de Soluções e Alternativas</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>🛡️ Defesa da Educação Pública</h3>
+                <p>A solução não está na privatização, mas no fortalecimento estrutural da educação pública, garantindo recursos adequados e gestão democrática.</p>
+
+                <div class="policy-grid">
+                    <div class="policy-card federal">
+                        <div class="policy-header">
+                            <div class="policy-icon">🇧🇷</div>
+                            <div class="policy-title">
+                                <h3>Políticas Federais de Fortalecimento</h3>
+                                <p>Ações Estratégicas Nacionais</p>
+                            </div>
+                        </div>
+                        <div class="policy-content">
+                            <h4>💰 Financiamento Adequado</h4>
+                            <ul>
+                                <li><strong>Aumento do Investimento:</strong> 10% do PIB para educação (constitucional)</li>
+                                <li><strong>Fundeb Ampliado:</strong> Mais recursos e menos condicionalidades</li>
+                                <li><strong>Fundo de Manutenção:</strong> Recursos específicos para infraestrutura escolar</li>
+                                <li><strong>Piso Salarial Nacional:</strong> Cumprimento efetivo e ampliado</li>
+                                <li><strong>Redistribuição de Recursos:</strong> Menos privilégios, mais igualdade</li>
+                            </ul>
+
+                            <h4>🏗️ Infraestrutura e Qualidade</h4>
+                            <ul>
+                                <li><strong>Programa Nacional de Reformas:</strong> Todas as escolas adequadas até 2030</li>
+                                <li><strong>Tecnologia Educacional:</strong> Band larga, equipamentos, formação digital</li>
+                                <li><strong>Bibliotecas e Laboratórios:</strong> Equipamentos completos para todas as escolas</li>
+                                <li><strong>Segurança Escolar:</strong> Programa de prevenção e proteção</li>
+                                <li><strong>Transporte e Alimentação:</strong> Universalização com qualidade</li>
+                            </ul>
+
+                            <h4>👨‍🏫 Valorização Docente</h4>
+                            <ul>
+                                <li><strong>Plano Nacional de Carreira:</strong> Progressão clara e remuneratória</li>
+                                <li><strong>Bolsa-Formação:</strong> Remuneração para capacitação contínua</li>
+                                <li><strong>Saúde do Professor:</strong> Programa nacional de atenção integral</li>
+                                <li><strong>Tempo Integral:</strong> Redução de carga horária com manutenção salarial</li>
+                                <li><strong>Auxílios Específicos:</strong> Transporte, material, tecnologia</li>
+                            </ul>
+
+                            <h4>📋 Regulação e Controle</h4>
+                            <ul>
+                                <li><strong>Proibição de Privatizações:</strong> Lei federal proibindo terceirização educacional</li>
+                                <li><strong>Fim do Acesso do Sistema S ao Fundeb:</strong> Revogação das alterações</li>
+                                <li><strong>Auditoria Permanente:</strong> Controle social dos recursos educacionais</li>
+                                <li><strong>Participação Social:</strong> Fortalecimento dos conselhos escolares</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-card estadual">
+                        <div class="policy-header">
+                            <div class="policy-icon">🏢</div>
+                            <div class="policy-title">
+                                <h3>Políticas Estaduais de Inovação</h3>
+                                <p>Modelos Alternativos de Gestão</p>
+                            </div>
+                        </div>
+                        <div class="policy-content">
+                            <h4>🏫 Gestão Democrática</h4>
+                            <ul>
+                                <li><strong>Autonomia Escolar Real:</strong> Orçamento próprio e gestão participativa</li>
+                                <li><strong>Conselhos Comunitários:</strong> Pais, alunos e professores na gestão</li>
+                                <li><strong>Redes Colaborativas:</strong> Escolas se apoiando mutuamente</li>
+                                <li><strong>Inovação Pedagógica:</strong> Apoio a projetos criativos locais</li>
+                                <li><strong>Resultados Compartilhados:</strong> Aprendizado entre escolas</li>
+                            </ul>
+
+                            <h4>💼 Parcerias Públicas</h4>
+                            <ul>
+                                <li><strong>Universidades-Escolas:</strong> Formação continuada em serviço</li>
+                                <li><strong>Empresas Responsáveis:</strong> Apoio voluntário (não lucrativo)</li>
+                                <li><strong>ONGs Especializadas:</strong> Complementação pedagógica específica</li>
+                                <li><strong>Cooperativas Docentes:</strong> Modelo cooperativo de gestão</li>
+                                <li><strong>Comunidades Locais:</strong> Fortalecimento do vínculo escola-comunidade</li>
+                            </ul>
+
+                            <h4>🎓 Desenvolvimento Profissional</h4>
+                            <ul>
+                                <li><strong>Academias Estaduais:</strong> Formação contínua com qualidade</li>
+                                <li><strong>Programa Mentor:</strong> Professores experientes orientando novatos</li>
+                                <li><strong>Intercâmbios Pedagógicos:</strong> Experiências entre redes</li>
+                                <li><strong>Salas de Aula Inovadoras:</strong> Espaços para experimentação</li>
+                                <li><strong>Pesquisa Ação:</strong> Professores como pesquisadores</li>
+                            </ul>
+
+                            <h4>📊 Tecnologia e Inovação</h4>
+                            <ul>
+                                <li><strong>Plataformas Estaduais:</strong> Recursos digitais compartilhados</li>
+                                <li><strong>Laboratórios Virtuais:</strong> Simulações e experimentos digitais</li>
+                                <li><strong>Inteligência Artificial Educativa:</strong> Apoio personalizado ao aluno</li>
+                                <li><strong>Big Data Educacional:</strong> Análise para melhoria contínua</li>
+                                <li><strong>Games Educativos:</strong> Aprendizagem lúdica e engajadora</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-card municipal">
+                        <div class="policy-header">
+                            <div class="policy-icon">🏘️</div>
+                            <div class="policy-title">
+                                <h3>Políticas Municipais de Transformação</h3>
+                                <p>Ações Concretas e Inovadoras</p>
+                            </div>
+                        </div>
+                        <div class="policy-content">
+                            <h4>🏘️ Escola Comunidade</h4>
+                            <ul>
+                                <li><strong>Portas Abertas:</strong> Escola como centro comunitário</li>
+                                <li><strong>Serviços Integrados:</strong> Saúde, assistência, cultura na escola</li>
+                                <li><strong>Projetos Locais:</strong> Escola trabalhando questões da comunidade</li>
+                                <li><strong>Participação Ativa:</strong> Pais e comunidade na gestão escolar</li>
+                                <li><strong>Rede de Apoio:</strong> Voluntários locais na educação</li>
+                            </ul>
+
+                            <h4>🌱 Inovação Curricular</h4>
+                            <ul>
+                                <li><strong>Projetos Interdisciplinares:</strong> Aprendizagem contextualizada</li>
+                                <li><strong>Cultura Local:</strong> História e saberes da comunidade</li>
+                                <li><strong>Aprendizagem Baseada em Problemas:</strong> Resolução de desafios reais</li>
+                                <li><strong>Educação Integral:</strong> Múltiplas linguagens e saberes</li>
+                                <li><strong>Sustentabilidade:</strong> Escola como modelo sustentável</li>
+                            </ul>
+
+                            <h4>💰 Recursos Criativos</h4>
+                            <ul>
+                                <li><strong>Fundo Municipal:</strong> Contribuição de empresas locais (voluntária)</li>
+                                <li><strong>Campanhas Comunitárias:</strong> Arrecadação para melhorias</li>
+                                <li><strong>Parcerias Inovadoras:</strong> Troca de serviços</li>
+                                <li><strong>Economia Circular:</strong> Escolas gerando recursos próprios</li>
+                                <li><strong>Incubadoras Escolares:</strong> Empreendedorismo juvenil</li>
+                            </ul>
+
+                            <h4>🤝 Articulação Intersecretarial</h4>
+                            <ul>
+                                <li><strong>Educação-Saúde:</strong> Atendimento integral ao estudante</li>
+                                <li><strong>Educação-Cultura:</strong> Programas artísticos e culturais</li>
+                                <li><strong>Educação-Esporte:</strong> Esporte educacional inclusivo</li>
+                                <li><strong>Educação-Assistência:</strong> Apoio a famílias vulneráveis</li>
+                                <li><strong>Educação-Trabalho:</strong> Educação profissional local</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">🚀</span> Propostas de Implementação</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <div class="phase-title">Fortalecimento Imediato</div>
+                        <div class="phase-duration">0-12 meses</div>
+                        <ul style="text-align: left; margin-top: 15px;">
+                            <li>Piso salarial efetivo</li>
+                            <li>Reparos emergenciais</li>
+                            <li>Programa de saúde docente</li>
+                            <li>Suspensão privatizações</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <div class="phase-title">Estruturação e Qualidade</div>
+                        <div class="phase-duration">12-24 meses</div>
+                        <ul style="text-align: left; margin-top: 15px;">
+                            <li>Reforma completa de escolas</li>
+                            <li>Tecnologia educacional</li>
+                            <li>Formação continuada</li>
+                            <li>Gestão democrática</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <div class="phase-title">Excelência e Inovação</div>
+                        <div class="phase-duration">24-36 meses</div>
+                        <ul style="text-align: left; margin-top: 15px;">
+                            <li>Modelos pedagógicos inovadores</li>
+                            <li>Integração comunidade-escola</li>
+                            <li>Liderança educacional</li>
+                            <li>Sustentabilidade do sistema</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">📊</span> KPIs e Métricas de Sucesso</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="kpi-grid">
+                    <div class="kpi-item">
+                        <div class="kpi-target">+100%</div>
+                        <div>Aumento Real nos Salários Docentes</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">-90%</div>
+                        <div>Processos de Privatização</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">100%</div>
+                        <div>Escolas com Infraestrutura Adequada</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">↑↑↑</div>
+                        <div>Satisfação e Saúde dos Professores</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">+200%</div>
+                        <div>Investimento por Aluno/Ano</div>
+                    </div>
+                    <div class="kpi-item">
+                        <div class="kpi-target">0</div>
+                        <div>Escolas Privatizadas</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="icon">🎯</span> Impacto Transformador Esperado</h2>
+                <span class="toggle-icon">▼</span>
+            </div>
+            <div class="section-content">
+                <p>As propostas apresentadas visam transformar radicalmente a educação brasileira, beneficiando:</p>
+
+                <h3>👨‍🏫 Professores e Educação</h3>
+                <ul>
+                    <li>Salários dignos e carreira valorizada</li>
+                    <li>Condições de trabalho adequadas</li>
+                    <li>Desenvolvimento profissional contínuo</li>
+                    <li>Saúde física e mental protegida</li>
+                    <li>Reconhecimento social da profissão</li>
+                </ul>
+
+                <h3>👶 Estudantes e Comunidade</h3>
+                <ul>
+                    <li>Educação de qualidade para todos</li>
+                    <li>Escolas seguras e adequadas</li>
+                    <li>Desenvolvimento integral</li>
+                    <li>Preparação para cidadania e trabalho</li>
+                    <li>Inclusão e igualdade de oportunidades</li>
+                </ul>
+
+                <h3>🌍 Sociedade e Brasil</h3>
+                <ul>
+                    <li>Desenvolvimento sustentável</li>
+                    <li>Redução das desigualdades</li>
+                    <li>Democracia e participação social</li>
+                    <li>Inovação e competitividade</li>
+                    <li>Soberania e desenvolvimento nacional</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>Relatório elaborado com base em pesquisa extensiva sobre a realidade educacional brasileira</p>
+            <p>Para mais informações ou discussões sobre implementação, entre em contato</p>
+            <p><strong>Referências:</strong> Sindicatos de Professores, Ministério da Educação, Conselhos de Educação, Academia, Meios de Comunicação</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div id="summaryModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeSummary()">&times;</span>
+            <h2>🎯 Resumo Executivo</h2>
+            <p><strong>Alerta:</strong> A educação brasileira enfrenta um processo acelerado de privatização que ameaça a educação pública e a dignidade dos professores, exigindo ações urgentes e integradas para reversão.</p>
+
+            <h3>📊 Cenário Crítico</h3>
+            <ul>
+                <li>77% dos professores abandonam a carreira por salários baixos</li>
+                <li>São Paulo: 33 escolas privatizadas (processo suspenso judicialmente)</li>
+                <li>Paraná: 204 escolas privatizadas pela Lei 22.006/24</li>
+                <li>Sistema S recebe bilhões em recursos públicos</li>
+                <li>Brasil entre os piores salários de professores do mundo</li>
+            </ul>
+
+            <h3>⚠️ Problemas da Privatização</h3>
+            <p>A privatização representa grave ameaça à educação como direito social, transformando-a em negócio lucrativo, prejudicando professores e estudantes, e desviando recursos públicos.</p>
+
+            <h3>💡 Proposta de Transformação</h3>
+            <p>Fortalecimento radical da educação pública com investimentos adequados, gestão democrática, valorização docente e inovação pedagógica, garantindo educação de qualidade para todos.</p>
+
+            <h3>📈 Impacto Esperado</h3>
+            <ul>
+                <li>+100% nos salários docentes reais</li>
+                <li>-90% dos processos de privatização</li>
+                <li>100% das escolas com infraestrutura adequada</li>
+                <li>Satisfação e saúde melhoradas</li>
+                <li>Educação como direito universal e de qualidade</li>
+            </ul>
+
+            <h3>🤖 Ação Urgente</h3>
+            <ol>
+                <li>Proibição federal de privatizações educacionais</li>
+                <li>Cumprimento efetivo do piso salarial nacional</li>
+                <li>Revogação do acesso do Sistema S ao Fundeb</li>
+                <li>Investimento massivo em infraestrutura escolar</li>
+                <li>Programa nacional de valorização docente</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allContents = document.querySelectorAll('.section-content');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Close all other sections
+            allContents.forEach(item => {
+                if (item !== content && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(item => {
+                if (item !== header && item.classList.contains('active')) {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Toggle current section
+            content.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'block';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Animate numbers on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const numbers = document.querySelectorAll('.stat-number');
+
+            numbers.forEach(number => {
+                const target = number.innerText;
+                if (!target.includes('%') && !target.includes('M') && !target.includes('R$') && !target.includes('+')) {
+                    const numTarget = parseInt(target.replace(/[^0-9]/g, ''));
+                    let current = 0;
+                    const increment = numTarget / 50;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= numTarget) {
+                            number.innerText = target;
+                            clearInterval(timer);
+                        } else {
+                            number.innerText = Math.floor(current).toLocaleString('pt-BR');
+                        }
+                    }, 30);
+                }
+            });
+
+            // Open first section by default
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // Add smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
