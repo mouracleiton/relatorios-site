@@ -590,7 +590,9 @@
             </div>
 
             <div class="alert alert-danger" style="margin-top: 20px; padding: 15px; border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; display: none;" id="alertBox">
-                <strong>⚠️ Nota Importante:</strong> Este sistema simula a análise de dados públicos do Instagram para fins demonstrativos. Os dados são estimados com base em padrões e estatísticas da plataforma.
+                <strong>⚠️ Importante:</strong> Devido às políticas de segurança do Instagram (CORS), a extração direta de dados não é possível no navegador. Este sistema utiliza algoritmos avançados de estimativa baseados em padrões estatísticos reais da plataforma para fornecer uma análise demonstrativa.
+                <br><br>
+                <strong>Como funciona:</strong> Análise do username + padrões de mercado + distribuição estatística para gerar métricas realistas.
             </div>
         </div>
 
@@ -718,20 +720,9 @@
 
             async fetchFromHTML(username) {
                 try {
-                    const response = await fetch(`${this.baseURL}/${username}/`, {
-                        headers: this.headers
-                    });
-
-                    if (!response.ok) return null;
-
-                    const html = await response.text();
-
-                    // Extract data from script tags
-                    const scriptData = this.extractScriptData(html);
-                    if (scriptData) {
-                        return this.parseProfileData(scriptData, username);
-                    }
-
+                    // Instagram blocks CORS requests from browsers
+                    // This method would work only with server-side proxy or CORS bypass
+                    console.log('Direct scraping blocked by Instagram CORS policy');
                     return null;
 
                 } catch (error) {
@@ -1292,10 +1283,11 @@
 
             const barChart = document.getElementById('barChart');
             barChart.innerHTML = chartData.map(item => {
-                const height = (item.value / item.max) * 250;
+                const height = (Number(item.value) / item.max) * 250;
+                const displayValue = typeof item.value === 'number' ? item.value.toFixed(1) : '0.0';
                 return `
                     <div class="bar" style="height: ${height}px;">
-                        <div class="bar-value">${item.value.toFixed(1)}</div>
+                        <div class="bar-value">${displayValue}</div>
                         <div class="bar-label">${item.label}</div>
                     </div>
                 `;
@@ -1330,7 +1322,7 @@
                     `${(indicator.value * 100).toFixed(1)}%` :
                     typeof indicator.value === 'number' && indicator.value < 10 ?
                         `${indicator.value.toFixed(2)}%` :
-                        `${indicator.value.toFixed(0)}`;
+                        `${Number(indicator.value).toFixed(1)}%`;
 
                 return `
                     <div class="performance-indicator ${status}">
