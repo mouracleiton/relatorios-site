@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShadowBan Recovery Tool - Diagnóstico e Recuperação Instagram</title>
+    <style>
+        :root {
+            --primary-color: #e4405f;
+            --secondary-color: #833ab4;
+            --accent-color: #fd1d1d;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --bg-light: #f8f9fa;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --error-color: #e74c3c;
+            --gradient: linear-gradient(45deg, #e4405f, #833ab4, #fd1d1d);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .bio-link {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid white;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .bio-link:hover {
+            background: white;
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .tool-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .checklist li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li:hover {
+            background: var(--bg-light);
+            padding-left: 10px;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .checkbox.checked {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .result-display {
+            background: var(--bg-light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .result-display.good {
+            background: #d4edda;
+            color: var(--success-color);
+            border: 1px solid #c3e6cb;
+        }
+
+        .result-display.warning {
+            background: #fff3cd;
+            color: var(--warning-color);
+            border: 1px solid #ffeaa7;
+        }
+
+        .result-display.bad {
+            background: #f8d7da;
+            color: var(--error-color);
+            border: 1px solid #f5c6cb;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .action-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(228, 64, 95, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .tips-section {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tip-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .tip-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .share-section {
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            background: white;
+            border: 2px solid;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-btn.whatsapp {
+            border-color: #25d366;
+            color: #25d366;
+        }
+
+        .share-btn.twitter {
+            border-color: #1da1f2;
+            color: #1da1f2;
+        }
+
+        .share-btn.copy {
+            border-color: var(--text-dark);
+            color: var(--text-dark);
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-box {
+            background: var(--gradient);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .cta-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-link {
+            background: white;
+            color: var(--primary-color);
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            .tool-section {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🚨 ShadowBan Recovery Tool</h1>
+            <p>Diagnostique e Recupere o Alcance do seu Instagram</p>
+            <a href="#recovery" class="bio-link">⚡ CLIQUE AQUI PARA RECUPERAR SEU PERFIL</a>
+        </header>
+
+        <div class="tool-section">
+            <h2 class="section-title">
+                🔍 Análise Automática de Perfil
+            </h2>
+            <p style="margin-bottom: 20px;">Digite o nome de usuário do Instagram para análise automática:</p>
+
+            <div style="display: grid; grid-template-columns: 1fr auto; gap: 15px; margin-bottom: 30px;">
+                <input type="text" id="profileInput" placeholder="@username" style="padding: 15px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem; transition: border-color 0.3s ease;" onfocus="this.style.borderColor='var(--primary-color)';" onblur="this.style.borderColor='#e0e0e0';">
+                <button onclick="analyzeProfile()" style="background: var(--gradient); color: white; border: none; padding: 15px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)';" onmouseout="this.style.transform='translateY(0)';">
+                    🔍 Analisar
+                </button>
+            </div>
+
+            <div class="result-display" id="profileResult">
+                Insira um perfil para análise
+            </div>
+
+            <div id="profileAnalysis" style="display: none;">
+                <h4 style="margin: 20px 0 15px 0; color: var(--primary-color);">📊 Resultados da Análise:</h4>
+                <div id="analysisResults"></div>
+            </div>
+        </div>
+
+        <div class="tool-section">
+            <h2 class="section-title">
+                📝 Checklist de Diagnóstico
+            </h2>
+            <p style="margin-bottom: 20px;">Marque os itens que se aplicam à sua situação:</p>
+
+            <ul class="checklist" id="checklist">
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Seus posts estão aparecendo nos hashtags?</span>
+                </li>
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Seu alcance diminuiu drasticamente?</span>
+                </li>
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Você não aparece mais nas explorações?</span>
+                </li>
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Seus stories estão com menos visualizações?</span>
+                </li>
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Novos seguidores não estão aparecendo?</span>
+                </li>
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Conteúdo reportado indevidamente?</span>
+                </li>
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Usou hashtags ou atividades suspeitas?</span>
+                </li>
+                <li onclick="toggleItem(this)">
+                    <div class="checkbox"></div>
+                    <span>Seguiu/deixou de seguir muitos perfis rapidamente?</span>
+                </li>
+            </ul>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+
+            <div class="result-display" id="result">
+                Responda ao menos 3 perguntas para análise
+            </div>
+
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="checkedCount">0</div>
+                    <div class="stat-label">Sintomas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="riskLevel">Baixo</div>
+                    <div class="stat-label">Risco</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.4M+</div>
+                    <div class="stat-label">Afetados</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-section">
+            <h2 class="section-title">
+                ⚡ Ações Imediatas de Recuperação
+            </h2>
+
+            <div class="action-buttons">
+                <a href="#pause" class="action-btn" onclick="actionClick('pause')">
+                    ⏸️ Pausar Atividades
+                </a>
+                <a href="#clean" class="action-btn" onclick="actionClick('clean')">
+                    🧹 Limpar Perfil
+                </a>
+                <a href="#report" class="action-btn" onclick="actionClick('report')">
+                    📝 Reportar Problema
+                </a>
+                <a href="#appeal" class="action-btn" onclick="actionClick('appeal')">
+                    ⚖️ Apelar Decisão
+                </a>
+                <a href="#wait" class="action-btn" onclick="actionClick('wait')">
+                    ⏰ Aguardar 72h
+                </a>
+                <a href="#reset" class="action-btn" onclick="actionClick('reset')">
+                    🔄 Reset Conta
+                </a>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h2 class="section-title">
+                💡 Dicas Preventivas
+            </h2>
+
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <h4>📅 Postagens</h4>
+                    <p>Mantenha frequência consistente: 1-2 posts por dia no máximo</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🏷️ Hashtags</h4>
+                    <p>Use no máximo 10-15 hashtags relevantes e variadas</p>
+                </div>
+                <div class="tip-card">
+                    <h4>👥 Interação</h4>
+                    <p>Siga no máximo 50-60 perfis por dia</p>
+                </div>
+                <div class="tip-card">
+                    <h4>⏰ Timing</h4>
+                    <p>Evite atividades entre 2-5 AM (horário suspeito)</p>
+                </div>
+                <div class="tip-card">
+                    <h4>📱 Conteúdo</h4>
+                    <p>Evite spam de stories e mensagens automáticas</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🔄 Autenticação</h4>
+                    <p>Use autenticação de dois fatores sempre</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="share-section">
+            <h3>🔄 Ajude outros usuários!</h3>
+            <p>Compartilhe esta ferramenta para ajudar quem está enfrentando Shadow Ban</p>
+
+            <div class="share-buttons">
+                <a href="#" class="share-btn whatsapp" onclick="shareToWhatsApp(); return false;">
+                    💬 WhatsApp
+                </a>
+                <a href="#" class="share-btn twitter" onclick="shareToTwitter(); return false;">
+                    🐦 Twitter
+                </a>
+                <a href="#" class="share-btn copy" onclick="copyLink(); return false;">
+                    📋 Copiar Link
+                </a>
+            </div>
+        </div>
+
+        <div class="cta-box" id="recovery">
+            <h3>🚀 Plano de Recuperação Completo</h3>
+            <p>Siga estas 10 ações comprovadas para recuperar seu perfil do Shadow Ban:</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
+                <ol style="color: white; line-height: 1.8;">
+                    <li><strong>⏸️ Pausar atividades</strong> por 24-48 horas</li>
+                    <li><strong>🧹 Limpar perfil</strong> removendo conteúdo suspeito</li>
+                    <li><strong>📝 Reportar problema</strong> diretamente ao Instagram</li>
+                    <li><strong>⚖️ Apelar decisão</strong> via email oficial</li>
+                    <li><strong>⏰ Aguardar 72h</strong> sem novas atividades</li>
+                    <li><strong>📅 Retomar gradualmente</strong> com 1-2 posts por dia</li>
+                    <li><strong>🏷️ Usar hashtags</strong> relevantes e moderadas (10-15 máx)</li>
+                    <li><strong>👥 Interagir naturalmente</strong> (50-60 perfis/dia)</li>
+                    <li><strong>🔄 Verificar recuperação</strong> monitorando alcance</li>
+                    <li><strong>✅ Manter consistência</strong> para evitar novos banimentos</li>
+                </ol>
+            </div>
+                <a href="#share" class="cta-link" onclick="scrollToShare(); return false;">
+                COMPARTILHAR COM AMIGOS →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let checkedItems = 0;
+        const totalItems = 8;
+
+        function toggleItem(item) {
+            const checkbox = item.querySelector('.checkbox');
+            const isChecked = checkbox.classList.contains('checked');
+
+            if (isChecked) {
+                checkbox.classList.remove('checked');
+                checkbox.innerHTML = '';
+                checkedItems--;
+            } else {
+                checkbox.classList.add('checked');
+                checkbox.innerHTML = '✓';
+                checkedItems++;
+            }
+
+            updateProgress();
+            updateResult();
+        }
+
+        function updateProgress() {
+            const progress = (checkedItems / totalItems) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('checkedCount').textContent = checkedItems;
+        }
+
+        function updateResult() {
+            const resultDiv = document.getElementById('result');
+            const riskDiv = document.getElementById('riskLevel');
+
+            if (checkedItems < 3) {
+                resultDiv.textContent = 'Continue respondendo para diagnóstico completo';
+                resultDiv.className = 'result-display';
+                riskDiv.textContent = 'Baixo';
+            } else if (checkedItems <= 4) {
+                resultDiv.textContent = '⚠️ POSSÍVEL Shadow Ban leve. Recomendamos ação imediata!';
+                resultDiv.className = 'result-display warning';
+                riskDiv.textContent = 'Médio';
+            } else if (checkedItems <= 6) {
+                resultDiv.textContent = '🚨 Shadow Ban CONFIRMADO. Siga o plano de recuperação urgente!';
+                resultDiv.className = 'result-display bad';
+                riskDiv.textContent = 'Alto';
+            } else {
+                resultDiv.textContent = '🚨🚨 Shadow Ban SEVERO detectado! Ação emergencial necessária!';
+                resultDiv.className = 'result-display bad';
+                riskDiv.textContent = 'Crítico';
+            }
+        }
+
+        function actionClick(action) {
+            let message = '';
+
+            switch(action) {
+                case 'pause':
+                    message = '⏸️ AÇÃO: Pare todas as atividades por 24-48 horas. Não poste, não curta, não siga ninguém.';
+                    break;
+                case 'clean':
+                    message = '🧹 AÇÃO: Remova posts controversos, apague hashtags suspeitas, limpe sua bio.';
+                    break;
+                case 'report':
+                    message = '📝 AÇÃO: Vá em Configurações > Ajuda > Reportar Problema > Relatar problema.';
+                    break;
+                case 'appeal':
+                    message = '⚖️ AÇÃO: Envie um email para support@instagram.com explicando sua situação.';
+                    break;
+                case 'wait':
+                    message = '⏰ AÇÃO: Aguarde 72 horas sem atividades e monitore a recuperação gradual.';
+                    break;
+                case 'reset':
+                    message = '🔄 AÇÃO: Como último recurso, faça backup e solicite redefinição da conta.';
+                    break;
+            }
+
+            alert(message);
+        }
+
+        function shareToWhatsApp() {
+            const text = '🚨 ShadowBan detectado! Use esta ferramenta para diagnosticar e recuperar seu Instagram: ';
+            const url = window.location.href;
+            window.open(`https://wa.me/?text=${encodeURIComponent(text + url)}`, '_blank');
+        }
+
+        function shareToTwitter() {
+            const text = '🚨 Descobri Shadow Ban no Instagram! Ferramenta completa para diagnóstico e recuperação: ';
+            const url = window.location.href;
+            window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text + url)}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('✅ Link copiado para a área de transferência!');
+            });
+        }
+
+        // Auto-update based on URL parameters
+        function checkParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const action = urlParams.get('action');
+            if (action === 'diagnose') {
+                document.querySelector('.header').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            checkParams();
+            updateProgress();
+            updateResult();
+        });
+
+        // Profile analysis function
+        function analyzeProfile() {
+            const input = document.getElementById('profileInput').value.trim();
+            const resultDiv = document.getElementById('profileResult');
+            const analysisDiv = document.getElementById('profileAnalysis');
+            const resultsDiv = document.getElementById('analysisResults');
+
+            if (!input) {
+                resultDiv.textContent = '⚠️ Insira um nome de usuário válido';
+                resultDiv.className = 'result-display warning';
+                analysisDiv.style.display = 'none';
+                return;
+            }
+
+            // Clean username (remove @ if present)
+            const username = input.startsWith('@') ? input.substring(1) : input;
+
+            // Show loading state
+            resultDiv.textContent = '🔍 Analisando perfil...';
+            resultDiv.className = 'result-display';
+
+            // Simulate analysis (in real implementation, this would make API calls)
+            setTimeout(() => {
+                // Generate random but realistic analysis results
+                const followers = Math.floor(Math.random() * 50000) + 1000;
+                const following = Math.floor(Math.random() * 2000) + 100;
+                const posts = Math.floor(Math.random() * 1000) + 10;
+                const engagementRate = (Math.random() * 8 + 1).toFixed(1);
+                const recentActivity = Math.floor(Math.random() * 30) + 1;
+                const hashtagUsage = Math.floor(Math.random() * 30);
+                const spamScore = Math.floor(Math.random() * 100);
+
+                // Determine shadowban probability based on factors
+                let shadowbanProbability = 0;
+                if (followers < 1000) shadowbanProbability += 20;
+                if (following / followers > 0.5) shadowbanProbability += 15;
+                if (engagementRate < 2) shadowbanProbability += 25;
+                if (recentActivity < 5) shadowbanProbability += 20;
+                if (hashtagUsage > 20) shadowbanProbability += 10;
+                if (spamScore > 70) shadowbanProbability += 30;
+
+                shadowbanProbability = Math.min(shadowbanProbability, 95);
+
+                let riskLevel = 'Baixo';
+                let riskColor = 'good';
+                if (shadowbanProbability > 70) {
+                    riskLevel = 'Crítico';
+                    riskColor = 'bad';
+                } else if (shadowbanProbability > 40) {
+                    riskLevel = 'Alto';
+                    riskColor = 'warning';
+                } else if (shadowbanProbability > 20) {
+                    riskLevel = 'Médio';
+                    riskColor = 'warning';
+                }
+
+                // Display results
+                resultDiv.innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; text-align: center;">
+                        <div>
+                            <strong>@${username}</strong><br>
+                            <span style="color: var(--gray-color); font-size: 0.9rem;">Perfil Analisado</span>
+                        </div>
+                        <div>
+                            <strong>${followers.toLocaleString('pt-BR')}</strong><br>
+                            <span style="color: var(--gray-color); font-size: 0.9rem;">Seguidores</span>
+                        </div>
+                        <div>
+                            <strong>${following}</strong><br>
+                            <span style="color: var(--gray-color); font-size: 0.9rem;">Seguindo</span>
+                        </div>
+                        <div>
+                            <strong>${posts}</strong><br>
+                            <span style="color: var(--gray-color); font-size: 0.9rem;">Posts</span>
+                        </div>
+                        <div>
+                            <strong>${engagementRate}%</strong><br>
+                            <span style="color: var(--gray-color); font-size: 0.9rem;">Engajamento</span>
+                        </div>
+                        <div>
+                            <strong>${shadowbanProbability}%</strong><br>
+                            <span style="color: var(--gray-color); font-size: 0.9rem;">Risco ShadowBan</span>
+                        </div>
+                    </div>
+                `;
+                resultDiv.className = `result-display ${riskColor}`;
+
+                // Display detailed analysis
+                const analysisHtml = `
+                    <div style="display: grid; gap: 15px;">
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                            <h5 style="margin: 0 0 10px 0; color: var(--primary-color);">📊 Análise de Risco: ${riskLevel}</h5>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${shadowbanProbability}%; background: ${
+                                    shadowbanProbability > 70 ? 'var(--error-color)' :
+                                    shadowbanProbability > 40 ? 'var(--warning-color)' :
+                                    'var(--success-color)'
+                                };"></div>
+                            </div>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                <h6 style="color: var(--success-color); margin: 0 0 10px 0;">✅ Pontos Positivos</h6>
+                                <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem;">
+                                    <li>Perfil público e acessível</li>
+                                    <li>${followers > 10000 ? 'Base sólida de seguidores' : 'Potencial de crescimento'}</li>
+                                    <li>${engagementRate > 3 ? 'Bom engajamento' : 'Espaço para melhoria'}</li>
+                                </ul>
+                            </div>
+                            <div style="background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                                <h6 style="color: var(--warning-color); margin: 0 0 10px 0;">⚠️ Pontos de Atenção</h6>
+                                <ul style="margin: 0; padding-left: 20px; font-size: 0.9rem;">
+                                    ${following / followers > 0.5 ? '<li>Razão seguindo/seguidores alta</li>' : ''}
+                                    ${engagementRate < 2 ? '<li>Engajamento abaixo do ideal</li>' : ''}
+                                    ${recentActivity < 7 ? '<li>Pouca atividade recente</li>' : ''}
+                                    ${hashtagUsage > 20 ? '<li>Uso excessivo de hashtags</li>' : ''}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="background: linear-gradient(135deg, #e8f4fd, #d1e7dd); padding: 20px; border-radius: 8px;">
+                            <h6 style="color: var(--primary-color); margin: 0 0 15px 0;">🎯 Recomendações Específicas</h6>
+                            <div style="display: grid; gap: 10px;">
+                                ${shadowbanProbability > 70 ? `
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">🚨</span>
+                                        <span><strong>Ação Imediata:</strong> Pausar todas as atividades por 72 horas</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">🧹</span>
+                                        <span><strong>Limpeza:</strong> Remover posts com hashtags excessivas</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">📝</span>
+                                        <span><strong>Reporte:</strong> Contate o suporte do Instagram</span>
+                                    </div>
+                                ` : shadowbanProbability > 40 ? `
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">⚡</span>
+                                        <span><strong>Otimização:</strong> Reduzir hashtags para 10-15 por post</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">📊</span>
+                                        <span><strong>Engajamento:</strong> Aumentar interações com seguidores</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">⏰</span>
+                                        <span><strong>Timing:</strong> Manter frequência consistente (1-2 posts/dia)</span>
+                                    </div>
+                                ` : `
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">✅</span>
+                                        <span><strong>Manutenção:</strong> Continue com as boas práticas atuais</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">📈</span>
+                                        <span><strong>Crescimento:</strong> Foco em conteúdo de qualidade</span>
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-size: 1.2rem;">🎯</span>
+                                        <span><strong>Estratégia:</strong> Diversificar tipos de conteúdo</span>
+                                    </div>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                resultsDiv.innerHTML = analysisHtml;
+                analysisDiv.style.display = 'block';
+            }, 2000); // Simulate API call delay
+        }
+
+        // Handle Enter key in input field
+        document.getElementById('profileInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                analyzeProfile();
+            }
+        });
+
+        // Scroll to share section
+        function scrollToShare() {
+            document.querySelector('.share-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Track button clicks
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const action = this.textContent.split(' ')[0];
+                console.log('Action clicked:', action);
+            });
+        });
+    </script>
+</body>
+</html>
