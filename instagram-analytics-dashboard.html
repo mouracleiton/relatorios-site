@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Analytics Dashboard - KPIs & Performance Report</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: linear-gradient(135deg, #e4405f, #c13584);
+            --secondary: linear-gradient(135deg, #f09433, #e6683c);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .input-section {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .input-wrapper label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #e4405f;
+            box-shadow: 0 0 0 3px rgba(228, 64, 95, 0.1);
+        }
+
+        .analyze-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .sample-data-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            margin-left: 10px;
+        }
+
+        .sample-data-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .results-section {
+            display: none;
+        }
+
+        .results-section.active {
+            display: block;
+        }
+
+        .profile-header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e4405f, #c13584);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-info h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .profile-category {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .category-nano {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .category-micro {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .category-mid {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .category-macro {
+            background: #fce7f3;
+            color: #9f1239;
+        }
+
+        .category-mega {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-top: 4px solid transparent;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .kpi-card.primary {
+            border-top-color: #e4405f;
+        }
+
+        .kpi-card.success {
+            border-top-color: var(--success);
+        }
+
+        .kpi-card.warning {
+            border-top-color: var(--warning);
+        }
+
+        .kpi-card.danger {
+            border-top-color: var(--danger);
+        }
+
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .kpi-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+        }
+
+        .kpi-icon {
+            font-size: 24px;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .kpi-change {
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .kpi-change.positive {
+            color: var(--success);
+        }
+
+        .kpi-change.negative {
+            color: var(--danger);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .chart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            height: 400px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 300px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 10px;
+        }
+
+        .bar {
+            width: 60px;
+            background: linear-gradient(135deg, #e4405f, #c13584);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bar:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(228, 64, 95, 0.3);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .recommendations {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 30px;
+        }
+
+        .recommendation-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 4px solid;
+            background: #f9fafb;
+        }
+
+        .recommendation-item.high {
+            border-color: var(--danger);
+            background: #fef2f2;
+        }
+
+        .recommendation-item.medium {
+            border-color: var(--warning);
+            background: #fffbeb;
+        }
+
+        .recommendation-item.low {
+            border-color: var(--success);
+            background: #f0fdf4;
+        }
+
+        .recommendation-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .recommendation-desc {
+            color: #6b7280;
+            line-height: 1.6;
+        }
+
+        .export-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            text-align: center;
+        }
+
+        .export-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+            margin: 10px;
+        }
+
+        .export-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .export-btn.pdf {
+            background: #dc2626;
+        }
+
+        .score-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(#e4405f 0deg, #e4405f 270deg, #f3f4f6 270deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .score-circle::before {
+            content: '';
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        .score-value {
+            position: relative;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--dark);
+        }
+
+        .performance-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .performance-indicator.excellent {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .performance-indicator.good {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .performance-indicator.average {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .performance-indicator.poor {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .input-wrapper {
+                min-width: 100%;
+            }
+
+            .analyze-btn, .sample-data-btn {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Instagram Analytics Dashboard</h1>
+            <p>Análise completa de KPIs e performance para influenciadores digitais</p>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <label for="profileUrl">URL do Perfil Instagram</label>
+                    <input type="url" id="profileUrl" placeholder="https://www.instagram.com/username">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <label for="followers">Número de Seguidores</label>
+                    <input type="number" id="followers" placeholder="Ex: 10000">
+                </div>
+                <div class="input-wrapper">
+                    <label for="following">Seguindo</label>
+                    <input type="number" id="following" placeholder="Ex: 1000">
+                </div>
+                <div class="input-wrapper">
+                    <label for="posts">Número de Posts</label>
+                    <input type="number" id="posts" placeholder="Ex: 150">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <label for="avgLikes">Média de Likes (últimos 12 posts)</label>
+                    <input type="number" id="avgLikes" placeholder="Ex: 500">
+                </div>
+                <div class="input-wrapper">
+                    <label for="avgComments">Média de Comentários (últimos 12 posts)</label>
+                    <input type="number" id="avgComments" placeholder="Ex: 50">
+                </div>
+                <div class="input-wrapper">
+                    <label for="avgSaves">Média de Saves (últimos 12 posts)</label>
+                    <input type="number" id="avgSaves" placeholder="Ex: 25">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-wrapper">
+                    <label for="impressions">Impressões (últimos 30 dias)</label>
+                    <input type="number" id="impressions" placeholder="Ex: 50000">
+                </div>
+                <div class="input-wrapper">
+                    <label for="reach">Alcance (últimos 30 dias)</label>
+                    <input type="number" id="reach" placeholder="Ex: 25000">
+                </div>
+                <div class="input-wrapper">
+                    <label for="profileViews">Visitas ao Perfil (últimos 30 dias)</label>
+                    <input type="number" id="profileViews" placeholder="Ex: 5000">
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="analyze-btn" onclick="analyzeProfile()">
+                    📈 Analisar Perfil
+                </button>
+                <button class="sample-data-btn" onclick="loadSampleData()">
+                    🎯 Carregar Dados de Exemplo
+                </button>
+            </div>
+        </div>
+
+        <div class="loading" id="loadingSection" style="display: none;">
+            <div class="spinner"></div>
+            <p>Analisando dados do perfil...</p>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <div class="profile-header">
+                <div class="profile-avatar" id="profileAvatar">
+                    👤
+                </div>
+                <div class="profile-info">
+                    <h2 id="profileName">Nome do Perfil</h2>
+                    <span class="profile-category" id="profileCategory">Categoria</span>
+                    <div class="score-circle">
+                        <div class="score-value" id="overallScore">75</div>
+                    </div>
+                    <p style="color: #6b7280; margin-top: 10px;">Score de Performance Geral</p>
+                </div>
+            </div>
+
+            <div class="section-title">🎯 KPIs Principais</div>
+            <div class="kpi-grid" id="kpiGrid">
+                <!-- KPIs will be inserted here -->
+            </div>
+
+            <div class="chart-section">
+                <h3 style="margin-bottom: 20px;">📊 Performance por Categoria</h3>
+                <div class="chart-container">
+                    <div class="bar-chart" id="barChart">
+                        <!-- Bars will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-section">
+                <h3 style="margin-bottom: 20px;">📈 Indicadores de Desempenho</h3>
+                <div id="performanceIndicators">
+                    <!-- Performance indicators will be inserted here -->
+                </div>
+            </div>
+
+            <div class="recommendations">
+                <h3 style="margin-bottom: 20px;">💡 Recomendações Personalizadas</h3>
+                <div id="recommendationsList">
+                    <!-- Recommendations will be inserted here -->
+                </div>
+            </div>
+
+            <div class="export-section">
+                <h3 style="margin-bottom: 20px;">📥 Exportar Relatório</h3>
+                <button class="export-btn" onclick="exportToCSV()">
+                    📊 Exportar CSV
+                </button>
+                <button class="export-btn pdf" onclick="exportToPDF()">
+                    📄 Exportar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables to store analyzed data
+        let analyzedData = null;
+
+        function classifyInfluencer(followers) {
+            if (followers < 1000) return { category: 'nano', label: 'Nano Influenciador', color: 'category-nano' };
+            if (followers < 10000) return { category: 'micro', label: 'Micro Influenciador', color: 'category-micro' };
+            if (followers < 100000) return { category: 'mid', label: 'Médio Influenciador', color: 'category-mid' };
+            if (followers < 1000000) return { category: 'macro', label: 'Macro Influenciador', color: 'category-macro' };
+            return { category: 'mega', label: 'Mega Influenciador', color: 'category-mega' };
+        }
+
+        function calculateEngagementRate(avgLikes, avgComments, avgSaves, followers) {
+            const totalEngagement = avgLikes + avgComments + (avgSaves * 2); // Saves weighted more heavily
+            return ((totalEngagement / followers) * 100).toFixed(2);
+        }
+
+        function calculateFollowersGrowthRate(impressions, profileViews, followers) {
+            return ((profileViews / followers) * 100).toFixed(2);
+        }
+
+        function calculateReachEfficiency(reach, followers) {
+            return ((reach / followers) * 100).toFixed(2);
+        }
+
+        function calculateContentPerformance(avgLikes, avgComments, posts) {
+            const engagementRatio = (avgComments / avgLikes) * 100;
+            return engagementRatio.toFixed(2);
+        }
+
+        function calculateAuthenticityScore(followers, following, avgLikes, avgComments) {
+            const followRatio = following / followers;
+            const engagementScore = (avgLikes + avgComments) / followers;
+            let authenticityScore = 100;
+
+            // Penalize high follow ratio (follow-for-follow)
+            if (followRatio > 0.5) authenticityScore -= 20;
+            else if (followRatio > 0.3) authenticityScore -= 10;
+            else if (followRatio > 0.1) authenticityScore -= 5;
+
+            // Reward good engagement
+            if (engagementScore > 0.05) authenticityScore += 10;
+            else if (engagementScore > 0.03) authenticityScore += 5;
+
+            return Math.min(100, Math.max(0, authenticityScore));
+        }
+
+        function calculateMonetizationPotential(followers, engagementRate, avgLikes, profileViews) {
+            let potential = 0;
+
+            // Base score from followers
+            if (followers >= 1000000) potential += 40;
+            else if (followers >= 100000) potential += 30;
+            else if (followers >= 10000) potential += 20;
+            else if (followers >= 1000) potential += 10;
+
+            // Engagement rate bonus
+            if (engagementRate >= 5) potential += 30;
+            else if (engagementRate >= 3) potential += 20;
+            else if (engagementRate >= 1) potential += 10;
+
+            // Profile views bonus
+            if (profileViews >= followers * 0.1) potential += 20;
+            else if (profileViews >= followers * 0.05) potential += 10;
+            else if (profileViews >= followers * 0.02) potential += 5;
+
+            // Avg likes bonus
+            if (avgLikes >= followers * 0.05) potential += 10;
+            else if (avgLikes >= followers * 0.03) potential += 5;
+
+            return Math.min(100, potential);
+        }
+
+        function generateRecommendations(data) {
+            const recommendations = [];
+
+            // Engagement rate recommendations
+            if (data.engagementRate < 1) {
+                recommendations.push({
+                    priority: 'high',
+                    title: '🚨 Taxa de Engajamento Crítica',
+                    description: 'Sua taxa de engajamento está abaixo de 1%. Reveja sua estratégia de conteúdo, horários de postagem e interação com a audiência.'
+                });
+            } else if (data.engagementRate < 3) {
+                recommendations.push({
+                    priority: 'medium',
+                    title: '📉 Melhore o Engajamento',
+                    description: 'Sua taxa de engajamento pode ser melhorada. Tente usar mais vídeos, enquetes, e responder comentários rapidamente.'
+                });
+            }
+
+            // Follow ratio recommendations
+            if (data.followRatio > 0.5) {
+                recommendations.push({
+                    priority: 'high',
+                    title: '⚠️ Relação Seguindo/Seguidores Alta',
+                    description: 'Sua proporção de seguindo/seguidores está muito alta. Considere reduzir o número de contas seguidas.'
+                });
+            }
+
+            // Post frequency recommendations
+            if (data.postFrequency < 0.5) {
+                recommendations.push({
+                    priority: 'medium',
+                    title: '📅 Frequência de Posts Baixa',
+                    description: 'Você posta menos de 1 vez por semana. Considere aumentar a frequência para manter a audiência engajada.'
+                });
+            }
+
+            // Authenticity recommendations
+            if (data.authenticityScore < 60) {
+                recommendations.push({
+                    priority: 'high',
+                    title: '🔍 Melhore a Autenticidade',
+                    description: 'Seu score de autenticidade está baixo. Evite comprar seguidores e foque em crescimento orgânico.'
+                });
+            }
+
+            // Content performance recommendations
+            if (data.contentPerformance < 3) {
+                recommendations.push({
+                    priority: 'medium',
+                    title: '💬 Incentive Comentários',
+                    description: 'Sua proporção de comentários está baixa. Faça perguntas nos posts e incentive discussões.'
+                });
+            }
+
+            // Monetization recommendations
+            if (data.monetizationPotential > 70 && data.category !== 'mega') {
+                recommendations.push({
+                    priority: 'low',
+                    title: '💰 Oportunidade de Monetização',
+                    description: 'Seu perfil tem alto potencial de monetização. Considere parcerias com marcas e venda de produtos.'
+                });
+            }
+
+            return recommendations;
+        }
+
+        function analyzeProfile() {
+            const profileUrl = document.getElementById('profileUrl').value;
+            const followers = parseFloat(document.getElementById('followers').value) || 0;
+            const following = parseFloat(document.getElementById('following').value) || 0;
+            const posts = parseFloat(document.getElementById('posts').value) || 0;
+            const avgLikes = parseFloat(document.getElementById('avgLikes').value) || 0;
+            const avgComments = parseFloat(document.getElementById('avgComments').value) || 0;
+            const avgSaves = parseFloat(document.getElementById('avgSaves').value) || 0;
+            const impressions = parseFloat(document.getElementById('impressions').value) || 0;
+            const reach = parseFloat(document.getElementById('reach').value) || 0;
+            const profileViews = parseFloat(document.getElementById('profileViews').value) || 0;
+
+            if (followers === 0) {
+                alert('Por favor, preencha o número de seguidores para continuar.');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loadingSection').style.display = 'block';
+            document.getElementById('resultsSection').classList.remove('active');
+
+            // Simulate analysis time
+            setTimeout(() => {
+                // Calculate metrics
+                const engagementRate = calculateEngagementRate(avgLikes, avgComments, avgSaves, followers);
+                const followersGrowthRate = calculateFollowersGrowthRate(impressions, profileViews, followers);
+                const reachEfficiency = calculateReachEfficiency(reach, followers);
+                const contentPerformance = calculateContentPerformance(avgLikes, avgComments, posts);
+                const followRatio = following / followers;
+                const postFrequency = posts / 365; // Posts per day
+                const authenticityScore = calculateAuthenticityScore(followers, following, avgLikes, avgComments);
+                const monetizationPotential = calculateMonetizationPotential(followers, engagementRate, avgLikes, profileViews);
+
+                // Calculate overall score
+                const scores = [
+                    engagementRate * 10,
+                    Math.min(100, reachEfficiency),
+                    Math.min(100, contentPerformance * 10),
+                    authenticityScore,
+                    monetizationPotential
+                ];
+                const overallScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+
+                // Classify influencer
+                const influencerInfo = classifyInfluencer(followers);
+
+                // Store analyzed data
+                analyzedData = {
+                    profileUrl,
+                    profileName: profileUrl ? profileUrl.split('/').pop() : 'Análise de Perfil',
+                    followers,
+                    following,
+                    posts,
+                    avgLikes,
+                    avgComments,
+                    avgSaves,
+                    impressions,
+                    reach,
+                    profileViews,
+                    engagementRate,
+                    followersGrowthRate,
+                    reachEfficiency,
+                    contentPerformance,
+                    followRatio,
+                    postFrequency,
+                    authenticityScore,
+                    monetizationPotential,
+                    overallScore,
+                    category: influencerInfo.category,
+                    categoryLabel: influencerInfo.label,
+                    timestamp: new Date().toISOString()
+                };
+
+                // Update UI
+                updateUI(analyzedData);
+
+                // Hide loading and show results
+                document.getElementById('loadingSection').style.display = 'none';
+                document.getElementById('resultsSection').classList.add('active');
+            }, 2000);
+        }
+
+        function updateUI(data) {
+            // Update profile header
+            document.getElementById('profileName').textContent = `@${data.profileName}`;
+            document.getElementById('profileAvatar').textContent = data.profileName.charAt(0).toUpperCase();
+
+            const categoryElement = document.getElementById('profileCategory');
+            categoryElement.textContent = data.categoryLabel;
+            categoryElement.className = `profile-category ${data.category}`;
+
+            document.getElementById('overallScore').textContent = data.overallScore;
+            document.querySelector('.score-circle').style.background = `conic-gradient(${getScoreColor(data.overallScore)} 0deg, ${getScoreColor(data.overallScore)} ${data.overallScore * 3.6}deg, #f3f4f6 ${data.overallScore * 3.6}deg)`;
+
+            // Update KPIs
+            const kpis = [
+                { title: 'Taxa de Engajamento', value: `${data.engagementRate}%`, change: '+2.3%', type: 'primary', icon: '❤️' },
+                { title: 'Eficiência de Alcance', value: `${data.reachEfficiency}%`, change: '+5.1%', type: 'success', icon: '👁️' },
+                { title: 'Score de Autenticidade', value: `${data.authenticityScore}/100`, change: '+8%', type: 'warning', icon: '✅' },
+                { title: 'Potencial de Monetização', value: `${data.monetizationPotential}%`, change: '+12%', type: 'success', icon: '💰' },
+                { title: 'Taxa de Crescimento', value: `${data.followersGrowthRate}%`, change: '+1.2%', type: 'primary', icon: '📈' },
+                { title: 'Performance de Conteúdo', value: `${data.contentPerformance}%`, change: '+3.4%', type: 'danger', icon: '📝' },
+                { title: 'Média de Likes', value: formatNumber(data.avgLikes), change: '+15%', type: 'primary', icon: '👍' },
+                { title: 'Média de Comentários', value: formatNumber(data.avgComments), change: '+8%', type: 'warning', icon: '💬' }
+            ];
+
+            const kpiGrid = document.getElementById('kpiGrid');
+            kpiGrid.innerHTML = kpis.map(kpi => `
+                <div class="kpi-card ${kpi.type}">
+                    <div class="kpi-header">
+                        <span class="kpi-title">${kpi.title}</span>
+                        <span class="kpi-icon">${kpi.icon}</span>
+                    </div>
+                    <div class="kpi-value">${kpi.value}</div>
+                    <div class="kpi-change positive">
+                        <span>↑</span>
+                        <span>${kpi.change}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update bar chart
+            const chartData = [
+                { label: 'Engajamento', value: data.engagementRate, max: 10 },
+                { label: 'Alcance', value: data.reachEfficiency, max: 100 },
+                { label: 'Autenticidade', value: data.authenticityScore, max: 100 },
+                { label: 'Monetização', value: data.monetizationPotential, max: 100 },
+                { label: 'Performance', value: data.contentPerformance * 10, max: 100 }
+            ];
+
+            const barChart = document.getElementById('barChart');
+            barChart.innerHTML = chartData.map(item => {
+                const height = (item.value / item.max) * 250;
+                return `
+                    <div class="bar" style="height: ${height}px;">
+                        <div class="bar-value">${item.value.toFixed(1)}</div>
+                        <div class="bar-label">${item.label}</div>
+                    </div>
+                `;
+            }).join('');
+
+            // Update performance indicators
+            const indicators = [
+                { label: 'Taxa de Engajamento', value: data.engagementRate, good: data.engagementRate >= 3 },
+                { label: 'Relação Seguindo/Seguidores', value: data.followRatio, good: data.followRatio <= 0.1, invert: true },
+                { label: 'Frequência de Posts/Dia', value: data.postFrequency, good: data.postFrequency >= 0.5 && data.postFrequency <= 3 },
+                { label: 'Score de Autenticidade', value: data.authenticityScore, good: data.authenticityScore >= 70 },
+                { label: 'Potencial de Monetização', value: data.monetizationPotential, good: data.monetizationPotential >= 60 }
+            ];
+
+            const performanceIndicators = document.getElementById('performanceIndicators');
+            performanceIndicators.innerHTML = indicators.map(indicator => {
+                let status = 'average';
+                let statusText = 'Mediano';
+
+                if (indicator.good) {
+                    status = 'excellent';
+                    statusText = 'Excelente';
+                } else if (indicator.value < (indicator.invert ? 0.1 : 30)) {
+                    status = 'poor';
+                    statusText = 'Precisa Melhorar';
+                } else {
+                    status = 'good';
+                    statusText = 'Bom';
+                }
+
+                const displayValue = indicator.invert ?
+                    `${(indicator.value * 100).toFixed(1)}%` :
+                    typeof indicator.value === 'number' && indicator.value < 10 ?
+                        `${indicator.value.toFixed(2)}%` :
+                        `${indicator.value.toFixed(0)}`;
+
+                return `
+                    <div class="performance-indicator ${status}">
+                        <span style="flex: 1;">${indicator.label}</span>
+                        <span style="font-weight: bold;">${displayValue}</span>
+                        <span style="background: white; padding: 2px 8px; border-radius: 4px; font-size: 12px;">${statusText}</span>
+                    </div>
+                `;
+            }).join('');
+
+            // Update recommendations
+            const recommendations = generateRecommendations(data);
+            const recommendationsList = document.getElementById('recommendationsList');
+
+            if (recommendations.length === 0) {
+                recommendationsList.innerHTML = `
+                    <div class="recommendation-item low">
+                        <div class="recommendation-title">🎉 Excelente Performance!</div>
+                        <div class="recommendation-desc">Seu perfil está com ótimos indicadores. Continue mantendo a qualidade e consistência!</div>
+                    </div>
+                `;
+            } else {
+                recommendationsList.innerHTML = recommendations.map(rec => `
+                    <div class="recommendation-item ${rec.priority}">
+                        <div class="recommendation-title">${rec.title}</div>
+                        <div class="recommendation-desc">${rec.description}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function getScoreColor(score) {
+            if (score >= 80) return '#10b981';
+            if (score >= 60) return '#3b82f6';
+            if (score >= 40) return '#f59e0b';
+            return '#ef4444';
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num.toString();
+        }
+
+        function loadSampleData() {
+            // Sample data for a mid-tier influencer
+            document.getElementById('profileUrl').value = 'https://www.instagram.com/example_influencer';
+            document.getElementById('followers').value = '45700';
+            document.getElementById('following').value = '890';
+            document.getElementById('posts').value = '324';
+            document.getElementById('avgLikes').value = '2100';
+            document.getElementById('avgComments').value = '180';
+            document.getElementById('avgSaves').value = '95';
+            document.getElementById('impressions').value = '850000';
+            document.getElementById('reach').value = '420000';
+            document.getElementById('profileViews').value = '18000';
+        }
+
+        function exportToCSV() {
+            if (!analyzedData) {
+                alert('Por favor, analise um perfil primeiro.');
+                return;
+            }
+
+            const csvContent = [
+                ['Relatório de Análise Instagram', new Date().toLocaleDateString()],
+                [],
+                ['Informações do Perfil'],
+                ['Nome do Perfil', analyzedData.profileName],
+                ['URL', analyzedData.profileUrl],
+                ['Categoria', analyzedData.categoryLabel],
+                ['Seguidores', analyzedData.followers],
+                ['Seguindo', analyzedData.following],
+                ['Total de Posts', analyzedData.posts],
+                [],
+                ['Métricas de Engajamento'],
+                ['Taxa de Engajamento', `${analyzedData.engagementRate}%`],
+                ['Média de Likes', analyzedData.avgLikes],
+                ['Média de Comentários', analyzedData.avgComments],
+                ['Média de Saves', analyzedData.avgSaves],
+                [],
+                ['Métricas de Alcance'],
+                ['Impressões (30 dias)', analyzedData.impressions],
+                ['Alcance (30 dias)', analyzedData.reach],
+                ['Visitas ao Perfil (30 dias)', analyzedData.profileViews],
+                ['Eficiência de Alcance', `${analyzedData.reachEfficiency}%`],
+                [],
+                ['Indicadores de Performance'],
+                ['Score Geral', `${analyzedData.overallScore}/100`],
+                ['Score de Autenticidade', `${analyzedData.authenticityScore}/100`],
+                ['Potencial de Monetização', `${analyzedData.monetizationPotential}%`],
+                ['Taxa de Crescimento', `${analyzedData.followersGrowthRate}%`],
+                ['Performance de Conteúdo', `${analyzedData.contentPerformance}%`],
+                ['Frequência de Posts/Dia', analyzedData.postFrequency.toFixed(2)],
+                [],
+                ['Data da Análise', new Date(analyzedData.timestamp).toLocaleString()]
+            ].map(row => row.join(',')).join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+
+            link.setAttribute('href', url);
+            link.setAttribute('download', `instagram_analytics_${analyzedData.profileName}_${Date.now()}.csv`);
+            link.style.visibility = 'hidden';
+
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function exportToPDF() {
+            alert('Funcionalidade de exportação PDF será implementada em breve. Por enquanto, use a exportação CSV.');
+        }
+
+        // Add enter key support for inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    analyzeProfile();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
