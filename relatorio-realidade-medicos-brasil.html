@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Verdadeira Realidade dos Médicos no Brasil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #0066cc;
+            --dark-primary: #004499;
+            --secondary-color: #00a86b;
+            --dark-secondary: #008552;
+            --accent-color: #ff6b6b;
+            --dark-accent: #ff5252;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #ecf0f1;
+            --bg-white: #ffffff;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-indicator {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 102, 204, 0.1);
+            color: var(--primary-color);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .section.active {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header .emoji {
+            font-size: 1.8rem;
+        }
+
+        .expand-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 25px;
+        }
+
+        .section.active .section-content {
+            max-height: 2000px;
+            padding: 25px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .policy-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px;
+            border-radius: 12px;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .policy-card:nth-child(1) { border-left-color: var(--primary-color); }
+        .policy-card:nth-child(2) { border-left-color: var(--secondary-color); }
+        .policy-card:nth-child(3) { border-left-color: var(--accent-color); }
+
+        .policy-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .policy-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .policy-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .phase-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .phase-number {
+            display: none;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .phase-card h3 {
+            color: var(--primary-color);
+            margin: 15px 0 20px 0;
+            font-size: 1.2rem;
+        }
+
+        .phase-card ul {
+            text-align: left;
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .phase-card li {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            background: var(--accent-color);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 15px 0 15px;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            background: var(--dark-accent);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+            color: white;
+            padding: 20px 25px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .summary-content {
+            padding: 25px;
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary-content li {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            margin-bottom: 15px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .summary-content li:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+            color: var(--text-light);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 168, 107, 0.1));
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            margin: 20px 0;
+        }
+
+        .highlight strong {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 40px 15px;
+            }
+
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .floating-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚕️ A Verdadeira Realidade dos Médicos no Brasil</h1>
+            <p class="subtitle">Desafios, salários e condições de trabalho na medicina brasileira</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number">575.930</span>
+                <div class="stat-label">Médicos ativos no Brasil</div>
+                <div class="stat-indicator">2,81 por mil habitantes</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">33%</span>
+                <div class="stat-label">Têm emprego formal</div>
+                <div class="stat-indicator">Maior informalidade</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">R$ 22.933</span>
+                <div class="stat-label">Renda média líquida mensal</div>
+                <div class="stat-indicator">Varia por especialidade</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">30%</span>
+                <div class="stat-label">Vagas de residência ociosas</div>
+                <div class="stat-indicator">Crise na especialização</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">48%</span>
+                <div class="stat-label">Médicos no interior</div>
+                <div class="stat-indicator">77% da população está lá</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number">50,9%</span>
+                <div class="stat-label">Serão mulheres em 2025</div>
+                <div class="stat-indicator">Feminilização da profissão</div>
+            </div>
+        </div>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">💰</span>
+                <h2>Salários e Remuneração</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A remuneração médica no Brasil apresenta uma das maiores discrepâncias do mercado profissional. Enquanto a população geralmente percebe salários elevados, a realidade é bem mais complexa e desafiadora.</p>
+
+                <div class="highlight">
+                    <strong>Realidade Salarial:</strong> O piso recomendado pela FENAM é de R$ 19.404,13, mas a média salarial no SUS é de apenas R$ 5.866,43 para 29 horas semanais - uma diferença abismal.
+                </div>
+
+                <h3>Setor Privado x Público</h3>
+                <ul>
+                    <li><strong>Setor Privado:</strong> Médicos CLT e PJ com remunerações mais elevadas, especialmente em especialidades cirúrgicas</li>
+                    <li><strong>Setor Público (SUS):</strong> Estabilidade, mas remuneração significativamente inferior</li>
+                    <li><strong>Trabalho Múltiplo:</strong> Muitos médicos acumlam 2-3 empregos para compensar salários individuais baixos</li>
+                    <li><strong>Variação Regional:</strong> Distrito Federal tem a maior média (R$ 44.663), enquanto estados do Norte pagam menos</li>
+                </ul>
+
+                <h3>Especialidades Mais Valorizadas</h3>
+                <ul>
+                    <li>Cirurgias plástica, cardíaca e neurológica</li>
+                    <li>Radiologia e diagnóstico por imagem</li>
+                    <li>Anestesiologia</li>
+                    <li>Oftalmologia</li>
+                </ul>
+
+                <p><strong>Estagnação Salarial:</strong> Comparado com 2012 (R$ 39 mil), houve redução real para R$ 36 mil, considerando inflação de 91% no período.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚖️</span>
+                <h2>Desafios na Carreira Médica</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A carreira médica no Brasil enfrenta desafios estruturais crônicos que afetam diretamente a qualidade de vida dos profissionais e, consequentemente, a assistência à população.</p>
+
+                <h3>Crise na Residência Médica</h3>
+                <ul>
+                    <li>30% das vagas de residência médica estão ociosas</li>
+                    <li>Longas jornadas de trabalho (até 60 horas semanais)</li>
+                    <li>Assédio moral e desgaste físico e emocional</li>
+                    <li>Remuneração inadequada durante a especialização</li>
+                    <li>Crescente desistência de programas de residência</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>Formação vs. Especialização:</strong> Aumento de 25% nas vagas de graduação, mas crescimento insuficiente nas vagas de residência, criando um gargalo perigoso no sistema.
+                </div>
+
+                <h3>Distribuição Desigual</h3>
+                <ul>
+                    <li>Sudeste: 3,76 médicos por mil habitantes</li>
+                    <li>Norte: Apenas 1,73 médicos por mil habitantes</li>
+                    <li>Concentração excessiva em capitais e grandes centros</li>
+                    <li>Interior com 77% da população mas apenas 48% dos médicos</li>
+                </ul>
+
+                <h3>Sobrecarga e Burnout</h3>
+                <ul>
+                    <li>Jornadas duplas ou triplas são comuns</li>
+                    <li>Plantões noturnos frequentes</li>
+                    <li>Pressão por produtividade no setor privado</li>
+                    <li>Falta de estrutura adequada no setor público</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏛️</span>
+                <h2>Políticas e Iniciativas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Diante dos desafios, várias políticas públicas e iniciativas têm sido implementadas para melhorar as condições dos médicos e a assistência à saúde no Brasil.</p>
+
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <span class="policy-icon">🏛️</span>
+                        <h3>Nível Federal</h3>
+                        <p>O governo federal implementa programas como o Mais Médicos, focado na distribuição de profissionais em áreas desassistidas, e regulamenta as residências médicas. Recentemente, houve aumento significativo de vagas em faculdades de medicina.</p>
+                    </div>
+                    <div class="policy-card">
+                        <span class="policy-icon">🏢</span>
+                        <h3>Nível Estadual</h3>
+                        <p>Estados criam planos de carreira e programas de fixação de médicos no interior, com bônus e benefícios para quem atua em regiões remotas. Alguns estabelecem pisos salariais estaduais acima do recomendado.</p>
+                    </div>
+                    <div class="policy-card">
+                        <span class="policy-icon">🏘️</span>
+                        <h3>Nível Municipal</h3>
+                        <p>Municípios investem em estruturas de saúde, contratam profissionais via concurso público e estabelecem parcerias com hospitais privados. Muitos criam programas de saúde da família para fixar médicos locais.</p>
+                    </div>
+                </div>
+
+                <h3>Iniciativas Privadas</h3>
+                <ul>
+                    <li>Hospitais filantrópicos com programas de residência</li>
+                    <li>Planos de carreira em redes privadas</li>
+                    <li>Programas de bem-estar e saúde mental</li>
+                    <li>Investimento em tecnologia e telemedicina</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📈</span>
+                <h2>Cenário Futuro e Perspectivas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>O futuro da medicina no Brasil apresenta cenários contrastantes, com avanços quantitativos significativos mas desafios persistentes que precisam ser endereçados.</p>
+
+                <h3>Projeções até 2035</h3>
+                <ul>
+                    <li><strong>Dobro de Médicos:</strong> Previsão de dobrar o número de profissionais no país</li>
+                    <li><strong>Maioria Feminina:</strong> Mulheres serão 50,9% dos médicos em 2025</li>
+                    <li><strong>Envelhecimento:</strong> Média de idade dos profissionais aumentando</li>
+                    <li><strong>Evolução Tecnológica:</strong> Mais telemedicina e IA no diagnóstico</li>
+                </ul>
+
+                <div class="highlight">
+                    <strong>Paradoxo Preocupante:</strong> Apesar do aumento no número de médicos, a dificuldade na especialização e má distribuição geográfica persistem como desafios críticos.
+                </div>
+
+                <h3>Pontos Críticos a Serem Endereçados</h3>
+                <ul>
+                    <li><strong>Valorização Profissional:</strong> Reajustes salariais reais e condições de trabalho dignas</li>
+                    <li><strong>Expansão da Residência:</strong> Mais vagas e melhor estrutura nos programas</li>
+                    <li><strong>Distribuição Equitativa:</strong> Políticas eficazes de fixação no interior</li>
+                    <li><strong>Saúde Mental:</strong> Programas de prevenção e tratamento de burnout</li>
+                    <li><strong>Tecnologia:</strong> Integração de ferramentas digitais na prática clínica</li>
+                </ul>
+
+                <p><strong>Perspectiva Otimista:</strong> Com as políticas corretas e investimento contínuo, é possível reverter o quadro atual e criar um sistema mais equilibrado, valorizando os profissionais e garantindo melhor assistência à população.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🔧</span>
+                <h2>Fases de Melhoria</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Para melhorar a realidade dos médicos no Brasil, propomos uma abordagem estruturada em fases, abordando os principais desafios de forma organizada e sustentável.</p>
+
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <span class="phase-number">1</span>
+                        <h3>Estruturação Salarial</h3>
+                        <ul>
+                            <li>Implementar pisos salariais dignos</li>
+                            <li>Correção de inflação acumulada</li>
+                            <li>Reajustes periódicos automáticos</li>
+                            <li>Equidade entre público e privado</li>
+                            <li>Bonificações por especialização</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <span class="phase-number">2</span>
+                        <h3>Expansão da Residência</h3>
+                        <ul>
+                            <li>Aumentar 50% das vagas atuais</li>
+                            <li>Melhorar estrutura hospitalar</li>
+                            <li>Implementar programas de bem-estar</li>
+                            <li>Reduzir jornadas de trabalho</li>
+                            <li>Combater o assédio moral</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <span class="phase-number">3</span>
+                        <h3>Distribuição Geográfica</h3>
+                        <ul>
+                            <li>Programas de fixação efetivos</li>
+                            <li>Incentivos fiscais para interior</li>
+                            <li>Investimento em infraestrutura local</li>
+                            <li>Telemedicina para regiões remotas</li>
+                            <li>Capacitação contínua regional</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <span class="phase-number">4</span>
+                        <h3>Saúde Mental e Bem-estar</h3>
+                        <ul>
+                            <li>Programas de prevenção ao burnout</li>
+                            <li>Apoio psicológico disponível</li>
+                            <li>Limite de horas semanais</li>
+                            <li>Pausas obrigatórias entre plantões</li>
+                            <li>Cultura organizacional saudável</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Relatórios Brasil. Todos os direitos reservados.</p>
+            <p>Fonte: CFM, FENAM, Demografia Médica Brasil 2024, Ministério da Saúde</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <div class="modal-header">
+                <h2>📋 Resumo Executivo</h2>
+            </div>
+            <div class="summary-content">
+                <ul>
+                    <li><strong>575.930 médicos ativos</strong> no Brasil (2,81 por mil habitantes) - crescimento recorde mas com má distribuição geográfica persistente</li>
+                    <li><strong>Apenas 33% têm emprego formal</strong>, indicando alta precarização e necessidade de múltiplos empregos para renda adequada</li>
+                    <li><strong>R$ 22.933 de renda média líquida</strong>, mas com grande variação - SUS paga R$ 5.866 enquanto Distrito Federal chega a R$ 44.663</li>
+                    <li><strong>30% das vagas de residência ociosas</strong> revelam crise estrutural na formação médica especializada no país</li>
+                    <li><strong>Distribuição desigual</strong>: Sudeste tem 3,76 médicos/mil habitantes vs Norte com apenas 1,73, e interior concentra apenas 48% dos médicos</li>
+                    <li><strong>Previsão de dobrar o número de médicos até 2035</strong>, mas necessárias políticas para distribuição e valorização profissional</li>
+                    <li><strong>Feminilização crescente</strong>: mulheres serão 50,9% dos médicos em 2025, mudando o perfil da profissão</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+
+            numbers.forEach(num => {
+                const originalText = num.innerText;
+                const target = parseFloat(originalText.replace(/[^0-9.-]/g, ''));
+                const hasDecimal = originalText.includes('.');
+                const hasPercentage = originalText.includes('%');
+                const isMonetary = originalText.includes('R$');
+
+                let increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (isMonetary) {
+                            num.innerText = `R$ ${Math.floor(current).toLocaleString('pt-BR')}`;
+                        } else if (hasPercentage) {
+                            num.innerText = `${Math.floor(current)}%`;
+                        } else if (hasDecimal) {
+                            num.innerText = current.toFixed(1).replace('.', ',');
+                        } else {
+                            num.innerText = Math.floor(current).toLocaleString('pt-BR');
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = originalText;
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
