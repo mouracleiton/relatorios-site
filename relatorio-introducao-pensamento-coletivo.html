@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introdução ao Pensamento Coletivo: Da Teoria à Prática</title>
+    <style>
+        :root {
+            --primary-color: #5E35B1; /* Violeta profundo */
+            --dark-primary: #4527A0;
+            --secondary-color: #00ACC1; /* Ciano */
+            --dark-secondary: #00838F;
+            --accent-color: #FF6F00; /* Laranja vibrante */
+            --dark-accent: #E65100;
+            --tertiary-color: #43A047; /* Verde */
+            --dark-tertiary: #2E7D32;
+            --shadow: 0 2px 10px rgba(94, 53, 177, 0.1);
+            --shadow-hover: 0 5px 20px rgba(94, 53, 177, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content .emoji {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .concept-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .concept-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .concept-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .concept-description {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .definition-banner {
+            background: linear-gradient(135deg, rgba(94, 53, 177, 0.1), rgba(0, 172, 193, 0.1));
+            border-left: 5px solid var(--primary-color);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .definition-banner h2 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+
+        .definition-banner p {
+            font-size: 1.2em;
+            line-height: 1.7;
+            color: #444;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .section-header h2 {
+            flex: 1;
+            font-size: 1.4em;
+        }
+
+        .expand-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content strong {
+            color: var(--accent-color);
+        }
+
+        .timeline-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-container h3 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-date {
+            flex: 0 0 120px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -30px;
+        }
+
+        .theorist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .theorist-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .theorist-name {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .theorist-era {
+            color: var(--secondary-color);
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .theorist-contribution {
+            margin-bottom: 10px;
+        }
+
+        .theorist-quote {
+            background: rgba(94, 53, 177, 0.05);
+            padding: 15px;
+            border-left: 3px solid var(--primary-color);
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .principle-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .principle-card:hover {
+            transform: scale(1.05);
+        }
+
+        .principle-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .principle-title {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .example-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .example-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .example-icon {
+            font-size: 2em;
+            margin-right: 15px;
+            color: var(--tertiary-color);
+        }
+
+        .example-title {
+            color: var(--tertiary-color);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .example-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, rgba(67, 160, 71, 0.1), rgba(94, 53, 177, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--tertiary-color);
+        }
+
+        .benefit-title {
+            color: var(--tertiary-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .challenge-card {
+            background: linear-gradient(135deg, rgba(255, 111, 0, 0.1), rgba(198, 40, 40, 0.1));
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .challenge-title {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .steps-container {
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .step-item::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-title {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 999;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            background: var(--dark-accent);
+        }
+
+        footer {
+            background: white;
+            color: #666;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .theorist-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .principles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 1.2em;
+            }
+
+            .section-content {
+                padding: 20px;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 60px;
+            }
+
+            .timeline-date {
+                flex: 0 0 80px;
+                font-size: 0.9em;
+            }
+
+            .timeline-content::before {
+                left: -50px !important;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .concept-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .theorist-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">🤝🧠</span>
+                <h1>Introdução ao Pensamento Coletivo</h1>
+                <p>Da filosofia à prática: como a inteligência colaborativa transforma sociedades e organizações</p>
+            </div>
+        </header>
+
+        <div class="concept-grid">
+            <div class="concept-card">
+                <div class="concept-icon">🤝</div>
+                <div class="concept-title">Colaboração</div>
+                <div class="concept-description">A força que emerge quando indivíduos se unem em torno de objetivos comuns</div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🌐</div>
+                <div class="concept-title">Rede Social</div>
+                <div class="concept-description">Conexões que formam sistemas complexos de interação e conhecimento compartilhado</div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">💡</div>
+                <div class="concept-title">Inteligência Emergente</div>
+                <div class="concept-description">Sabedoria coletiva que supera a soma das inteligências individuais</div>
+            </div>
+
+            <div class="concept-card">
+                <div class="concept-icon">🎯</div>
+                <div class="concept-title">Objetivo Comum</div>
+                <div class="concept-description">Propósito compartilhado que direciona e unifica esforços coletivos</div>
+            </div>
+        </div>
+
+        <div class="definition-banner">
+            <h2>O que é Pensamento Coletivo?</h2>
+            <p>
+                <strong>Pensamento coletivo</strong> é o processo cognitivo que emerge da interação, colaboração e sinergia entre múltiplos indivíduos,
+                resultando em soluções, insights e capacidades que transcendem o que qualquer pessoa poderia alcançar individualmente.
+                É a manifestação da inteligência distribuída através de redes humanas e sistemas colaborativos.
+            </p>
+        </div>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📚</span>
+                <h2>Fundamentos Filosóficos</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Origens Históricas do Pensamento Coletivo</h3>
+
+                <div class="theorist-grid">
+                    <div class="theorist-card">
+                        <div class="theorist-name">Platão</div>
+                        <div class="theorist-era">428-348 a.C.</div>
+                        <div class="theorist-contribution">
+                            <strong>Diálogo Dialético:</strong> O conhecimento emerge da interação entre múltiplas perspectivas através do diálogo socrático.
+                        </div>
+                        <div class="theorist-quote">
+                            "O diálogo é a única forma real de pensar juntos."
+                        </div>
+                    </div>
+
+                    <div class="theorist-card">
+                        <div class="theorist-name">Aristóteles</div>
+                        <div class="theorist-era">384-322 a.C.</div>
+                        <div class="theorist-contribution">
+                            <strong>Polis e Felicidade Coletiva:</strong> A comunidade política como espaço para realização humana plena.
+                        </div>
+                        <div class="theorist-quote">
+                            "O homem é um animal político por natureza."
+                        </div>
+                    </div>
+
+                    <div class="theorist-card">
+                        <div class="theorist-name">Thomas Hobbes</div>
+                        <div class="theorist-era">1588-1679</div>
+                        <div class="theorist-contribution">
+                            <strong>Contrato Social:</strong> Indivíduos cedem autonomia em favor de segurança e ordem coletiva.
+                        </div>
+                        <div class="theorist-quote">
+                            "A autoridade política deriva do consentimento dos governados."
+                        </div>
+                    </div>
+
+                    <div class="theorist-card">
+                        <div class="theorist-name">Jean-Jacques Rousseau</div>
+                        <div class="theorist-era">1712-1778</div>
+                        <div class="theorist-contribution">
+                            <strong>Vontade Geral:</strong> O interesse comum que transcende a soma dos interesses individuais.
+                        </div>
+                        <div class="theorist-quote">
+                            "A vontade geral tende sempre para o bem comum."
+                        </div>
+                    </div>
+
+                    <div class="theorist-card">
+                        <div class="theorist-name">Karl Marx</div>
+                        <div class="theorist-era">1818-1883</div>
+                        <div class="theorist-contribution">
+                            <strong>Consciência de Classe:</strong> Identidade coletiva emerge de condições materiais compartilhadas.
+                        </div>
+                        <div class="theorist-quote">
+                            "A filosofia dos proletários é a consciência da prática revolucionária."
+                        </div>
+                    </div>
+
+                    <div class="theorist-card">
+                        <div class="theorist-name">Émile Durkheim</div>
+                        <div class="theorist-era">1858-1917</div>
+                        <div class="theorist-contribution">
+                            <strong>Fato Social:</strong> Formas de pensar e agir que existem fora do indivíduo e exercem poder coercitivo.
+                        </div>
+                        <div class="theorist-quote">
+                            "A sociedade não é uma simples soma de indivíduos."
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Principais Correntes Teóricas:</h3>
+                <ul>
+                    <li><strong>Funcionalismo:</strong> A sociedade como organismo integrado, cada parte contribuindo para o todo</li>
+                    <li><strong>Construtivismo Social:</strong> Realidade construída através da interação social e comunicação</li>
+                    <li><strong>Sistemas Complexos:</strong> Propriedades emergentes de sistemas compostos por agentes interagentes</li>
+                    <li><strong>Cognição Distribuída:</strong> Conhecimento e cognição estendidos além do indivíduo</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <h3>Evolução do Pensamento Coletivo</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Antiguidade</div>
+                    <div class="timeline-content">
+                        <h4>Agora Grega</h4>
+                        <p>Espaço público de debate democrático e tomada de decisões coletivas em Atenas.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Idade Média</div>
+                    <div class="timeline-content">
+                        <h4>Corporações e Guildas</h4>
+                        <p>Organizações coletivas de ofício com conhecimento compartilhado e proteção mútua.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Iluminismo</div>
+                    <div class="timeline-content">
+                        <h4>Salões Literários</h4>
+                        <p>Espaços de debate intelectual que formaram a opinião pública européia.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Século XIX</div>
+                    <div class="timeline-content">
+                        <h4>Movimentos Sociais</h4>
+                        <p>Sindicatos, feminismo e abolição como primeiros grandes movimentos de consciência coletiva.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Século XX</div>
+                    <div class="timeline-content">
+                        <h4>Cibernética e Sistemas</h4>
+                        <p>Teorias sobre feedback, auto-organização e inteligência artificial.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Século XXI</div>
+                    <div class="timeline-content">
+                        <h4>Era Digital</h4>
+                        <p>Redes sociais, crowdfunding, wikis e inteligência coletiva em escala global.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🎯</span>
+                <h2>Princípios do Pensamento Coletivo</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="principles-grid">
+                    <div class="principle-card">
+                        <div class="principle-icon">🌟</div>
+                        <div class="principle-title">Diversidade</div>
+                        <p>Diferentes perspectivas, experiências e conhecimentos criam soluções mais robustas</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-icon">🔗</div>
+                        <div class="principle-title">Conexão</div>
+                        <p>Redes de comunicação efetivas permitem fluxo de informação e conhecimento</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-icon">🎯</div>
+                        <div class="principle-title">Alinhamento</div>
+                        <p>Objetivos compartilhados direcionam esforços individuais para resultados coletivos</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-icon">🔄</div>
+                        <div class="principle-title">Feedback</div>
+                        <p>Sistemas de retroalimentação contínua permitem aprendizado e adaptação</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-icon">⚖️</div>
+                        <div class="principle-title">Confiança</div>
+                        <p>Relações de confiança mútua permitem colaboração eficaz e vulnerabilidade</p>
+                    </div>
+
+                    <div class="principle-card">
+                        <div class="principle-icon">🌱</div>
+                        <div class="principle-title">Emergência</div>
+                        <p>Soluções e padrões emergem espontaneamente da interação local</p>
+                    </div>
+                </div>
+
+                <h3>Leis Fundamentais:</h3>
+                <ul>
+                    <li><strong>Lei da Diversidade:</strong> Quanto mais diverso o grupo, maior a capacidade criativa coletiva</li>
+                    <li><strong>Lei da Conexão:</strong> Densidade de conexões determina velocidade e qualidade do pensamento coletivo</li>
+                    <li><strong>Lei da Sinergia:</strong> Resultado coletivo > soma dos resultados individuais</li>
+                    <li><strong>Lei da Escala:</strong> Capacidade coletiva cresce exponencialmente com o tamanho da rede</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">💼</span>
+                <h2>Exemplos Práticos de Pensamento Coletivo</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="examples-grid">
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-icon">🌐</div>
+                            <div class="example-title">Wikipedia</div>
+                        </div>
+                        <div class="example-description">
+                            Enciclopédia global criada e mantida por milhões de voluntários. Demonstra como conhecimento coletivo pode superar obras criadas por especialistas individuais.
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-icon">🐧</div>
+                            <div class="example-title">Linux</div>
+                        </div>
+                        <div class="example-description">
+                            Sistema operacional desenvolvido colaborativamente por milhares de programadores mundialmente. Prova a eficiência do modelo de desenvolvimento distribuído.
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-icon">💰</div>
+                            <div class="example-title">Crowdfunding</div>
+                        </div>
+                        <div class="example-description">
+                            Financiamento coletivo de projetos através de pequenas contribuições de muitas pessoas. Democratiza acesso a recursos e capital.
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-icon">🧬</div>
+                            <div class="example-title">Projeto Genoma Humano</div>
+                        </div>
+                        <div class="example-description">
+                            Colaboração internacional de cientistas que mapeou o DNA humano. Exemplo máximo de cooperação científica global.
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-icon">🚗</div>
+                            <div class="example-title">Waze</div>
+                        </div>
+                        <div class="example-description">
+                            Aplicativo de navegação que usa dados em tempo real dos usuários para otimizar rotas. Inteligência coletiva aplicada ao trânsito urbano.
+                        </div>
+                    </div>
+
+                    <div class="example-card">
+                        <div class="example-header">
+                            <div class="example-icon">🎨</div>
+                            <div class="example-title">Creative Commons</div>
+                        </div>
+                        <div class="example-description">
+                            Movimento global por direitos autorais flexíveis que permite compartilhamento e remixagem criativa. Transforma a propriedade intelectual.
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Casos Brasileiros:</h3>
+                <ul>
+                    <li><strong>Media Lab Brasil:</strong> Laboratório de inovação colaborativa comunitária</li>
+                    <li><strong>Casa do Mestre:</strong> Plataforma de aprendizado compartilhado de ofícios tradicionais</li>
+                    <li><strong>Coletivos Culturais:</strong> Organizações que produzem arte e cultura de forma colaborativa</li>
+                    <li><strong>Rede de Economia Solidária:</strong> Sistemas de troca e financiamento alternativo</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">✅</span>
+                <h2>Benefícios do Pensamento Coletivo</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-title">🚀 Inovação Acelerada</div>
+                        <p>Combinação de perspectivas diversas gera soluções criativas que indivíduos isolados não desenvolveriam</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-title">💪 Resiliência</div>
+                        <p>Sistemas coletivos são mais robustos e adaptáveis a mudanças e perturbações</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-title">🎯 Tomada de Decisão</div>
+                        <p>Decisões coletivas tendem a ser mais equilibradas e considerar múltiplos pontos de vista</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-title">📚 Aprendizado Ampliado</div>
+                        <p>Conhecimento compartilhado acelera aprendizagem e capacitação de todos os participantes</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-title">⚡ Eficiência</div>
+                        <p>Distribuição de tarefas permite execução mais rápida de projetos complexos</p>
+                    </div>
+
+                    <div class="benefit-card">
+                        <div class="benefit-title">🌍 Impacto Social</div>
+                        <p>Soluções coletivas tendem a ser mais inclusivas e responder melhor a necessidades sociais</p>
+                    </div>
+                </div>
+
+                <h3>Estudos de Caso de Sucesso:</h3>
+                <ul>
+                    <li><strong>Toyota Production System:</strong> Melhoria contínua através de sugestões dos operários</li>
+                    <li><strong>3M Innovation:</strong> Cultura de colaboração que gerou produtos como Post-it Notes</li>
+                    <li><strong>Netflix Culture Deck:</strong> Documento criado coletivamente que define cultura organizacional</li>
+                    <li><strong>Movimentos Open Source:</strong> Software de alta qualidade desenvolvido colaborativamente</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚠️</span>
+                <h2>Desafios e Limitações</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="challenges-grid">
+                    <div class="challenge-card">
+                        <div class="challenge-title">🐑 Pensamento de Grupo</div>
+                        <p>Tendência à conformidade que suprime dissidência e pensamento crítico</p>
+                    </div>
+
+                    <div class="challenge-card">
+                        <div class="challenge-title">🐢 Burocracia</div>
+                        <p>Processos coletivos podem se tornar lentos e ineficientes</p>
+                    </div>
+
+                    <div class="challenge-card">
+                        <div class="challenge-title">🎭 Falso Consenso</div>
+                        <p>Pressão social para concordar mesmo discordando internamente</p>
+                    </div>
+
+                    <div class="challenge-card">
+                        <div class="challenge-title">🌀 Complexidade</div>
+                        <p>Dificuldade em coordenar grandes grupos e alinhar interesses diversos</p>
+                    </div>
+
+                    <div class="challenge-card">
+                        <div class="challenge-title">⚖️ Diluição de Responsabilidade</div>
+                        <p>Ninguém se sente pessoalmente responsável quando todos são responsáveis</p>
+                    </div>
+
+                    <div class="challenge-card">
+                        <div class="challenge-title">🔊 Dominância</div>
+                        <p>Vozes mais altas ou poderosas podem silenciar perspectivas minoritárias</p>
+                    </div>
+                </div>
+
+                <h3>Estratégias de Mitigação:</h3>
+                <ul>
+                    <li><strong>Facilitação Profissional:</strong> Mediadores neutros para garantir participação equitativa</li>
+                    <li><strong>Técnicas de Brainstorming Estruturado:</strong> Métodos que evitam críticas prematuras</li>
+                    <li><strong>Diversidade Consciente:</strong> Busca ativa por diferentes perspectivas</li>
+                    <li><strong>Mecanismos de Feedback:</strong> Canais para críticas construtivas e revisão</li>
+                    <li><strong>Liderança Rotativa:</strong> Diferentes pessoas liderando diferentes aspectos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🛠️</span>
+                <h2>Como Implementar Pensamento Coletivo</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Guia Prático Passo a Passo:</h3>
+
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-title">Defina o Propósito Compartilhado</div>
+                        <p>Estabeleça um objetivo claro e inspirador que una todos os participantes em torno de uma causa ou propósito maior que os interesses individuais.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-title">Crie um Ambiente de Segurança Psicológica</div>
+                        <p>Desenvolva um espaço onde todos se sintam seguros para compartilhar ideias, fazer perguntas e expressar vulnerabilidades sem medo de julgamento.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-title">Estabeleça Regras Claras de Comunicação</div>
+                        <p>Defina protocolos de interação que garantam escuta ativa, respeito mútuo e tempo equitativo de fala para todos os participantes.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-title">Promova a Diversidade de Perspectivas</div>
+                        <p>Busque ativamente incluir pessoas com diferentes experiências, conhecimentos, origens e pontos de vista para enriquecer as discussões.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-title">Use Ferramentas Colaborativas</div>
+                        <p>Implemente plataformas digitais e métodos facilitadores que permitam trabalho síncrono e assíncrono, documentação compartilhada e tomada de decisões coletiva.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-title">Pratique a Escuta Ativa</div>
+                        <p>Desenvolva a capacidade de ouvir para compreender verdadeiramente, suspender julgamentos e estar presente nas conversas dos outros.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-title">Celebre Pequenas Vitórias</div>
+                        <p>Reconheça e comemore progressos e conquistas coletivas para manter motivação e reforçar o valor do trabalho em equipe.</p>
+                    </div>
+
+                    <div class="step-item">
+                        <div class="step-title">Crie Sistema de Feedback Contínuo</div>
+                        <p>Estabeleça ciclos regulares de reflexão e avaliação onde o grupo possa analisar seus processos, resultados e relacionamentos.</p>
+                    </div>
+                </div>
+
+                <h3>Ferramentas e Metodologias:</h3>
+                <ul>
+                    <li><strong>World Café:</strong> Método de conversação em pequenos grupos rotativos</li>
+                    <li><strong>Open Space Technology:</strong> Conferências auto-organizadas</li>
+                    <li><strong>Design Thinking Coletivo:</strong> Processo de inovação centrado no usuário</li>
+                    <li><strong>Scrum e Agile:</strong> Metodologias de trabalho colaborativo</li>
+                    <li><strong>Retrospectivas:</strong> Reuniões de reflexão e melhoria contínua</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🔮</span>
+                <h2>O Futuro do Pensamento Coletivo</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Tendências Emergentes:</h3>
+                <ul>
+                    <li><strong>Inteligência Artificial Colaborativa:</strong> Humanos e IA trabalhando sinergicamente</li>
+                    <li><strong>Organizações Híbridas:</strong> Combinação de estrutura hierárquica e redes colaborativas</li>
+                    <li><strong>Governança Distribuída:</strong> Sistemas de tomada de decisão baseados em blockchain</li>
+                    <li><strong>Aprendizagem Contínua:</strong> Organizações que aprendem e se adaptam constantemente</li>
+                    <li><strong>Economia Colaborativa:</strong> Plataformas que conectam recursos e necessidades globalmente</li>
+                </ul>
+
+                <h3>Habilidades Essenciais para o Futuro:</h3>
+                <ul>
+                    <li><strong>Inteligência Emocional Coletiva:</strong> Capacidade de entender e gerenciar emoções grupais</li>
+                    <li><strong>Pensamento Sistêmico:</strong> Compreensão de interconexões e padrões complexos</li>
+                    <li><strong>Adaptabilidade e Flexibilidade:</strong> Habilidade de mudar rapidamente em resposta a novos dados</li>
+                    <li><strong>Liderança Servidora:</strong> Lideres que capacitam outros em vez de controlar</li>
+                    <li><strong>Comunicação Multidimensional:</strong> Uso de múltiplos canais e formatos de comunicação</li>
+                </ul>
+
+                <h3>Preparando-se para a Era Colaborativa:</h3>
+                <ul>
+                    <li><strong>Educação Collaborativa:</strong> Escolas e universidades ensinando trabalho em equipe</li>
+                    <li><strong>Cultura Organizacional Aberta:</strong> Empresas valorizando transparência e participação</li>
+                    <li><strong>Tecnologia Habilitadora:</strong> Ferramentas digitais que facilitam colaboração remota</li>
+                    <li><strong>Estruturas Flexíveis:</strong> Organizações que se adaptam rapidamente a mudanças</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Instituto de Pensamento Coletivo. Todos os direitos reservados.</p>
+            <p>Este relatório é uma introdução aos conceitos fundamentais do pensamento coletivo, explorando desde suas raízes filosóficas até aplicações práticas contemporâneas.</p>
+            <p><strong>Nota:</strong> O pensamento coletivo é uma jornada contínua de aprendizado e adaptação. Comece pequeno, pratique regularmente e celebre o poder da colaboração.</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo: Pensamento Coletivo</h2>
+            <div class="summary-content">
+                <h3>🎯 Conceito Central:</h3>
+                <p>Pensamento coletivo é o processo cognitivo que emerge da interação entre múltiplos indivíduos, resultando em soluções e capacidades que transcendem o que qualquer pessoa poderia alcançar individualmente.</p>
+
+                <h3>📚 Fundamentos Históricos:</h3>
+                <ul>
+                    <li>Platão: Diálogo dialético como forma de pensar juntos</li>
+                    <li>Rousseau: Vontade geral que transcende interesses individuais</li>
+                    <li>Durkheim: Fatos sociais e consciência coletiva</li>
+                    <li>Marx: Consciência de classe e práxis revolucionária</li>
+                </ul>
+
+                <h3>🎯 Princípios Fundamentais:</h3>
+                <ul>
+                    <li><strong>Diversidade:</strong> Diferentes perspectivas criam soluções robustas</li>
+                    <li><strong>Conexão:</strong> Redes efetivas permitem fluxo de conhecimento</li>
+                    <li><strong>Alinhamento:</strong> Objetivos compartilhados direcionam esforços</li>
+                    <li><strong>Feedback:</strong> Sistemas de aprendizado e adaptação contínua</li>
+                    <li><strong>Confiança:</strong> Relações que permitem vulnerabilidade e colaboração</li>
+                </ul>
+
+                <h3>💼 Exemplos Práticos:</h3>
+                <ul>
+                    <li>Wikipedia: Conhecimento colaborativo superando enciclopédias tradicionais</li>
+                    <li>Linux: Software open-source desenvolvido globalmente</li>
+                    <li>Crowdfunding: Financiamento coletivo de projetos e startups</li>
+                    <li>Waze: Inteligência coletiva aplicada ao trânsito urbano</li>
+                </ul>
+
+                <h3>✅ Benefícios Principais:</h3>
+                <ul>
+                    <li>Inovação acelerada através de perspectivas diversas</li>
+                    <li>Resiliência e adaptabilidade sistêmica</li>
+                    <li>Tomada de decisão mais equilibrada e inclusiva</li>
+                    <li>Aprendizado ampliado e capacitação mútua</li>
+                    <li>Impacto social e ambiental positivo</li>
+                </ul>
+
+                <h3>⚠️ Desafios a Superar:</h3>
+                <ul>
+                    <li>Pensamento de grupo e conformidade excessiva</li>
+                    <li>Burocracia e lentidão processual</li>
+                    <li>Diluição de responsabilidade individual</li>
+                    <li>Dominância de vozes mais poderosas</li>
+                </ul>
+
+                <h3>🛠️ Implementação Prática (8 Passos):</h3>
+                <ol>
+                    <li>Definir propósito compartilhado claro e inspirador</li>
+                    <li>Criar ambiente de segurança psicológica</li>
+                    <li>Estabelecer regras de comunicação equitativas</li>
+                    <li>Promover ativamente a diversidade de perspectivas</li>
+                    <li>Usar ferramentas colaborativas adequadas</li>
+                    <li>Praticar escuta ativa e profunda</li>
+                    <li>Celebrar vitórias e progressos coletivos</li>
+                    <li>Implementar sistemas de feedback contínuo</li>
+                </ol>
+
+                <h3>🔮 Tendências Futuras:</h3>
+                <ul>
+                    <li>Inteligência artificial colaborativa (humanos + IA)</li>
+                    <li>Organizações híbridas (hierarquia + redes)</li>
+                    <li>Governança distribuída com blockchain</li>
+                    <li>Aprendizagem organizacional contínua</li>
+                </ul>
+
+                <p><strong>Mensagem Final:</strong> O pensamento coletivo não é apenas uma ferramenta, mas uma nova forma de compreender e organizar a sociedade humana. Requer prática constante, humildade e compromisso com o bem comum.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle de Seções
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+        }
+
+        // Animação do Timeline
+        function animateTimeline() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineItems.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(item);
+            });
+        }
+
+        // Controle do Modal
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima timeline quando visível
+            animateTimeline();
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section.active');
+            if (firstSection) {
+                firstSection.classList.add('active');
+            }
+        });
+
+        // Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
