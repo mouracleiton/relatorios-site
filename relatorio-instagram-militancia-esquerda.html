@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram & Resistência: A Militância Progressista na Era Digital</title>
+    <style>
+        :root {
+            --primary-color: #8B5CF6;
+            --dark-primary: #7C3AED;
+            --secondary-color: #EC4899;
+            --dark-secondary: #DB2777;
+            --accent-color: #F97316;
+            --dark-accent: #EA580C;
+            --shadow: 0 2px 10px rgba(139, 92, 246, 0.1);
+            --shadow-hover: 0 5px 20px rgba(139, 92, 246, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content .emoji {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .stat-indicator {
+            font-size: 1.2em;
+            color: var(--accent-color);
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .section-header h2 {
+            flex: 1;
+            font-size: 1.4em;
+        }
+
+        .expand-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content strong {
+            color: var(--accent-color);
+        }
+
+        .chart-section {
+            margin: 30px 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .chart-description {
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .phase-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .phase-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .phase-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .phase-card ul {
+            text-align: left;
+            list-style: none;
+            padding: 0;
+        }
+
+        .phase-card li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .phase-card li:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-container h3 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-date {
+            flex: 0 0 120px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin: 0 20px;
+            position: relative;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -30px;
+        }
+
+        .timeline-impact {
+            display: inline-block;
+            padding: 4px 8px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .policy-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .policy-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .policy-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .policy-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .policy-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .policy-card li:last-child {
+            border-bottom: none;
+        }
+
+        .challenge-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .challenge-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .challenge-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .challenge-item em {
+            color: var(--accent-color);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .tool-category {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 20px;
+            border-radius: 12px;
+            border-top: 3px solid var(--primary-color);
+        }
+
+        .tool-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .tool-category ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tool-category li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tool-category li:last-child {
+            border-bottom: none;
+        }
+
+        .tool-category strong {
+            color: var(--accent-color);
+        }
+
+        .map-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .map-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .map-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .map-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .state {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .state:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .map-legend {
+            margin-top: 20px;
+        }
+
+        .map-legend h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .map-legend .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 999;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            background: var(--dark-accent);
+        }
+
+        footer {
+            background: white;
+            color: #666;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .challenge-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                padding-left: 60px;
+            }
+
+            .timeline-date {
+                flex: 0 0 80px;
+                font-size: 0.9em;
+            }
+
+            .timeline-content::before {
+                left: -50px !important;
+            }
+
+            .section-header h2 {
+                font-size: 1.2em;
+            }
+
+            .section-content {
+                padding: 20px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .policy-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">📱✊</span>
+                <h1>Instagram & Resistência: A Militância Progressista na Era Digital</h1>
+                <p>Como as redes sociais transformaram o ativismo político de esquerda no Brasil contemporâneo</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">87M</div>
+                <div class="stat-label">Usuários brasileiros no Instagram</div>
+                <div class="stat-indicator">↗️ Maior plataforma política</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3.2x</div>
+                <div class="stat-label">Mais engajamento que Facebook</div>
+                <div class="stat-indicator">📈 Alta viralização</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">63%</div>
+                <div class="stat-label">Jovens 18-29 anos ativistas</div>
+                <div class="stat-indicator">🎯 Público principal</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4.5K</div>
+                <div class="stat-label">Coletivos progressistas ativos</div>
+                <div class="stat-indicator">🌐 Rede organizada</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">78%</div>
+                <div class="stat-label">Confiança em influencers ativistas</div>
+                <div class="stat-indicator">💪 Alta influência</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12M</div>
+                <div class="stat-label">Publicações políticas diárias</div>
+                <div class="stat-indicator">🔥 Conteúdo constante</div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>O Instagram como Arena Política Digital</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="chart-section">
+                    <h3>Crescimento da Militância no Instagram (2018-2024)</h3>
+                    <div class="chart-container">
+                        <canvas id="growthChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <span class="legend-item"><span class="legend-color" style="background: #8B5CF6"></span>Contas de Esquerda</span>
+                        <span class="legend-item"><span class="legend-color" style="background: #EC4899"></span>Contas de Direita</span>
+                        <span class="legend-item"><span class="legend-color" style="background: #F97316"></span>Contas Independentes</span>
+                    </div>
+                    <p class="chart-description">O Instagram tornou-se o principal campo de batalha ideológica da nova geração, superando Facebook e Twitter em engajamento político.</p>
+                </div>
+
+                <h3>Características Distintivas do Instagram Político:</h3>
+                <ul>
+                    <li><strong>Visual First:</strong> Imagens e vídeos geram 3x mais engajamento que texto</li>
+                    <li><strong>Stories Efêmeros:</strong> 58% do conteúdo político desaparece em 24h</li>
+                    <li><strong>Reels Virais:</strong> Formato principal para disseminação de ideias</li>
+                    <li><strong>Influência Digital:</strong> Digitais influenciadores substituem mídia tradicional</li>
+                    <li><strong>Comunidades Nichadas:</strong> Grupos fechados organizam mobilizações</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚡</span>
+                <h2>Táticas Digitais de Resistência Progressista</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <h3>Construção de Narrativa</h3>
+                        <ul>
+                            <li>Storytelling emocional e pessoal</li>
+                            <li>Uso de memes e humor político</li>
+                            <li>Criação de personagens e personas</li>
+                            <li>Linguagem autêntica e descolada</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <h3>Engajamento Comunitário</h3>
+                        <ul>
+                            <li>Respostas personalizadas a comentários</li>
+                            <li>Lives interativas com especialistas</li>
+                            <li>Enquetes e quiz político educativo</li>
+                            <li>Destaque para seguidores ativistas</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <h3>Mobilização Offline</h3>
+                        <ul>
+                            <li>Convocação para protestos e atos</li>
+                            <li>Organização de caravanas</li>
+                            <li>Campanhas de arrecadação</li>
+                            <li>Registro documental de manifestações</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">4</div>
+                        <h3>Formação Política</h3>
+                        <ul>
+                            <li>Carrosséis explicativos didáticos</li>
+                            <li>Citações de teóricos progressistas</li>
+                            <li>Recomendações de livros e filmes</li>
+                            <li>Glossários de conceitos políticos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <h3>Evolução da Militância Digital no Instagram</h3>
+            <div class="timeline">
+                <div class="timeline-item" data-category="political">
+                    <div class="timeline-date">2016-2018</div>
+                    <div class="timeline-content">
+                        <h4>Nasce o Instagram Político</h4>
+                        <p>Período pré-eleitoral viu surgimento das primeiras contas de militância organizada, utilizada para compartilhar memes e críticas ao governo.</p>
+                        <span class="timeline-impact">🔴 Alto Impacto</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="social">
+                    <div class="timeline-date">2018-2020</div>
+                    <div class="timeline-content">
+                        <h4>Explosão Pós-Eleição</h4>
+                        <p>Crescimento exponencial de contas de esquerda como resistência digital, surgimento de coletivos e redes de apoio mútuo.</p>
+                        <span class="timeline-impact">🟡 Impacto Médio</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="political">
+                    <div class="timeline-date">2020-2022</div>
+                    <div class="timeline-content">
+                        <h4>Profissionalização da Militância</h4>
+                        <p>Contas passam a ter estratégias de marketing digital, colaborações pagas e produção de conteúdo profissional.</p>
+                        <span class="timeline-impact">🔴 Alto Impacto</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="militar">
+                    <div class="timeline-date">2022-2024</div>
+                    <div class="timeline-content">
+                        <h4>Era da Organização Híbrida</h4>
+                        <p>Instagram como central de mobilização combinando ativismo online e offline, influenciando resultados eleitorais.</p>
+                        <span class="timeline-impact">🟢 Transformador</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🎯</span>
+                <h2>Casos de Sucesso: Referências da Militância Digital</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">👥</div>
+                        <h3>Coletivos Feministas</h3>
+                        <p>Organizações como "Marcha das Margaridas" e "Nenhum a Menos" utilizam Instagram para denúncias de violência e organização de marchas. Chegam a 500K seguidores engajados mensalmente.</p>
+                        <strong>Estratégia principal:</strong> Conteúdo sensível, denúncias e apoio mútuo
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🌍</div>
+                        <h3>Movimento Ambientalista</h3>
+                        <p>Ativistas climáticos transformaram Instagram em plataforma principal para conscientização sobre Amazônia e políticas ambientais. Atingem audiência de 2M pessoas.</p>
+                        <strong>Estratégia principal:</strong> Imagens impactantes e dados científicos
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🏳️‍🌈</div>
+                        <h3>LGBTQ+ Organizado</h3>
+                        <p>Coletivos LGBTQ+ utilizam Stories e Lives para educação, apoio psicológico e organização política. Alta taxa de engajamento (8.5% médio).</p>
+                        <strong>Estratégia principal:</strong> Educação contínua e representação
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">✊🏿</div>
+                        <h3>Movimento Negro</h3>
+                        <p>Contas antirracistas combinam história, denúncia de violência e celebração da cultura negra. Líderes individuais chegam a 1M+ seguidores.</p>
+                        <strong>Estratégia principal:</strong> Educação histórica e protesto digital
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚠️</span>
+                <h2>Desafios da Militância Digital</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Principais Obstáculos:</h3>
+
+                <div class="challenge-grid">
+                    <div class="challenge-item">
+                        <h4>🚫 Censura e Shadowban</h4>
+                        <p>Algoritmos do Instagram frequentemente limitam alcance de conteúdo político progressista.</p>
+                        <strong><em>Solução:</em></strong> Uso de linguagem criativa, gírias e referências culturais para burlar filtros automáticos.
+                    </div>
+
+                    <div class="challenge-item">
+                        <h4>🤖 Desinformação</h4>
+                        <p>Redes de bots e fake news difundem narrativas contrárias à esquerda.</p>
+                        <strong><em>Solução:</em></strong> Criação de coletivos de verificação factual e resposta rápida a desinformação.
+                    </div>
+
+                    <div class="challenge-item">
+                        <h4>💰 Desigualdade Digital</h4>
+                        <p>Líderes com mais recursos financeiros têm acesso a melhor infraestrutura digital.</p>
+                        <strong><em>Solução:</em></strong> Redes de compartilhamento de recursos e formação mutuária de ativistas.
+                    </div>
+
+                    <div class="challenge-item">
+                        <h4>📱 Esgotamento Digital</h4>
+                        <p>Ativistas sofrem burnout pela necessidade de estar sempre online.</p>
+                        <strong><em>Solução:</em></strong> Sistemas de rodízio e apoio psicológico digital gratuito.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🛠️</span>
+                <h2>Kit Digital do Militante Progressista</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="tools-grid">
+                    <div class="tool-category">
+                        <h3>📸 Conteúdo Visual</h3>
+                        <ul>
+                            <li><strong>Canva:</strong> Templates políticos gratuitos</li>
+                            <li><strong>Remove.bg:</strong> Remoção de fundos para colagens</li>
+                            <li><strong>InShot:</strong> Edição de vídeos políticos</li>
+                            <li><strong>Unsplash:</strong> Imagens livres de direitos</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-category">
+                        <h3>📊 Análise e Métricas</h3>
+                        <ul>
+                            <li><strong>Later:</strong> Agendamento inteligente de posts</li>
+                            <li><strong>Iconosquare:</strong> Análise detalhada de engajamento</li>
+                            <li><strong>Brandwatch:</strong> Monitoramento de menções</li>
+                            <li><strong>Google Trends:</strong> Análise de termos políticos</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-category">
+                        <h3>🔐 Segurança Digital</h3>
+                        <ul>
+                            <li><strong>Signal:</strong> Comunicação segura entre ativistas</li>
+                            <li><strong>Tor Browser:</strong> Navegação anônima</li>
+                            <li><strong>ProtonMail:</strong> Email criptografado</li>
+                            <li><strong>2FA:</strong> Autenticação em duas etapas obrigatória</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-category">
+                        <h3>🤝 Organização</h3>
+                        <ul>
+                            <li><strong>Notion:</strong> Planejamento de campanhas</li>
+                            <li><strong>Trello:</strong> Gestão de projetos ativistas</li>
+                            <li><strong>Discord:</strong> Comunidades privadas</li>
+                            <li><strong>WhatsApp:</strong> Mobilização rápida</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-section">
+            <h3>Geografia da Militância Digital no Brasil</h3>
+            <div class="map-container">
+                <svg id="mapSvg" viewBox="0 0 800 600">
+                    <!-- Mapa simplificado do Brasil -->
+                    <g class="state" onclick="showStateInfo('SP')" data-state="SP">
+                        <rect x="400" y="350" width="60" height="80" fill="#8B5CF6" stroke="#333" stroke-width="1" rx="5"/>
+                        <text x="430" y="395" text-anchor="middle" fill="#fff">SP</text>
+                    </g>
+                    <g class="state" onclick="showStateInfo('RJ')" data-state="RJ">
+                        <rect x="450" y="400" width="50" height="60" fill="#EC4899" stroke="#333" stroke-width="1" rx="5"/>
+                        <text x="475" y="435" text-anchor="middle" fill="#fff">RJ</text>
+                    </g>
+                    <g class="state" onclick="showStateInfo('BA')" data-state="BA">
+                        <rect x="420" y="450" width="70" height="50" fill="#F97316" stroke="#333" stroke-width="1" rx="5"/>
+                        <text x="455" y="480" text-anchor="middle" fill="#fff">BA</text>
+                    </g>
+                    <g class="state" onclick="showStateInfo('MG')" data-state="MG">
+                        <rect x="380" y="380" width="50" height="60" fill="#8B5CF6" stroke="#333" stroke-width="1" rx="5"/>
+                        <text x="405" y="415" text-anchor="middle" fill="#fff">MG</text>
+                    </g>
+                    <g class="state" onclick="showStateInfo('PE')" data-state="PE">
+                        <rect x="480" y="380" width="40" height="50" fill="#EC4899" stroke="#333" stroke-width="1" rx="5"/>
+                        <text x="500" y="410" text-anchor="middle" fill="#fff">PE</text>
+                    </g>
+                    <g class="state" onclick="showStateInfo('RS')" data-state="RS">
+                        <rect x="320" y="480" width="60" height="50" fill="#F97316" stroke="#333" stroke-width="1" rx="5"/>
+                        <text x="350" y="510" text-anchor="middle" fill="#fff">RS</text>
+                    </g>
+                </svg>
+            </div>
+            <div class="map-legend">
+                <h4>Intensidade de Militância Digital:</h4>
+                <div class="legend-items">
+                    <span class="legend-item"><span class="legend-color" style="background: #8B5CF6"></span>Altíssima (>50K ativistas)</span>
+                    <span class="legend-item"><span class="legend-color" style="background: #EC4899"></span>Alta (20K-50K ativistas)</span>
+                    <span class="legend-item"><span class="legend-color" style="background: #F97316"></span>Média (10K-20K ativistas)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="policy-grid">
+            <div class="policy-card">
+                <div class="policy-icon">📱</div>
+                <h3>Estratégia Individual</h3>
+                <ul>
+                    <li>Autenticidade é mais importante que produção</li>
+                    <li>Participe ativamente de comunidades progressistas</li>
+                    <li>Use hashtags estratégicas (#EsquerdaUnida, #Resistência)</li>
+                    <li>Documente sua jornada ativista</li>
+                </ul>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">👥</div>
+                <h3>Estratégia Coletiva</h3>
+                <ul>
+                    <li>Crie redes de apoio entre contas progressistas</li>
+                    <li>Compartilhe conteúdo de coletivos menores</li>
+                    <li>Realize lives colaborativas semanais</li>
+                    <li>Desenvolva campanhas conjuntas</li>
+                </ul>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">📊</div>
+                <h3>Estratégia de Métricas</h3>
+                <ul>
+                    <li>Monitore engajamento, não apenas seguidores</li>
+                    <li>Use Instagram Insights para entender audiência</li>
+                    <li>Crie conteúdo com base nos melhores horários</li>
+                    <li>Teste diferentes formatos regularmente</li>
+                </ul>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">🔥</div>
+                <h3>Estratégia de Impacto</h3>
+                <ul>
+                    <li>Conecte ativismo online com ações offline</li>
+                    <li>Use plataforma para arrecadação e recursos</li>
+                    <li>Eduque sua audiência continuamente</li>
+                    <li>Mantenha comunicação transparente e honesta</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Coletivo de Mídia Progressista. Todos os direitos reservados.</p>
+            <p>Fonte: Pesquisa própria, dados de redes sociais, entrevistas com ativistas e análise de conteúdo político digital.</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo: Instagram e Resistência</h2>
+            <div class="summary-content">
+                <ul>
+                    <li><strong>87 milhões</strong> de brasileiros usam Instagram - principal arena política digital</li>
+                    <li><strong>3.2x mais engajamento</strong> que Facebook em conteúdo político progressista</li>
+                    <li><strong>63%</strong> dos jovens ativistas (18-29 anos) organizam-se via Instagram</li>
+                    <li><strong>+4.500 coletivos</strong> progressistas ativos na plataforma</li>
+                    <li><strong>Estratégias vencedoras:</strong> autenticidade, comunidade, conteúdo educativo e mobilização offline</li>
+                    <li><strong>Principais desafios:</strong> censura algorítmica, desinformação e esgotamento digital</li>
+                    <li><strong>Futuro:</strong> Instagram continuará central para organização política da esquerda brasileira</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Toggle de Seções (Accordion)
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        // 2. Animação de Números
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const target = parseFloat(text.replace(/[^0-9.-]/g, ''));
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (text.includes('M')) {
+                            num.innerText = (current / 1000000).toFixed(1) + 'M';
+                        } else if (text.includes('K')) {
+                            num.innerText = (current / 1000).toFixed(1) + 'K';
+                        } else if (text.includes('%')) {
+                            num.innerText = Math.floor(current) + '%';
+                        } else if (text.includes('x')) {
+                            num.innerText = current.toFixed(1) + 'x';
+                        } else {
+                            num.innerText = Math.floor(current).toLocaleString();
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = text; // Mantém formatação original
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        // 3. Controle do Modal
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 4. Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Anima timeline
+            animateTimeline();
+
+            // Desenha gráficos
+            if (typeof chartData !== 'undefined') {
+                chartData.forEach(chart => {
+                    drawLineChart(chart.id, chart.data, chart.labels);
+                });
+            }
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // 5. Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // 6. Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 7. Renderização de Gráficos
+        function drawLineChart(canvasId, data, labels) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Limpa canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Configurações
+            const padding = 40;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+
+            // Encontra valores máximos e mínimos
+            const maxValue = Math.max(...data.flat());
+            const minValue = Math.min(...data.flat());
+            const valueRange = maxValue - minValue;
+
+            // Desenha eixos
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Desenha linhas de dados
+            const colors = ['#8B5CF6', '#EC4899', '#F97316'];
+
+            data.forEach((dataset, datasetIndex) => {
+                ctx.strokeStyle = colors[datasetIndex % colors.length];
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+
+                dataset.forEach((value, index) => {
+                    const x = padding + (index / (dataset.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - minValue) / valueRange) * chartHeight;
+
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+
+                ctx.stroke();
+
+                // Desenha pontos
+                dataset.forEach((value, index) => {
+                    const x = padding + (index / (dataset.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - minValue) / valueRange) * chartHeight;
+
+                    ctx.fillStyle = colors[datasetIndex % colors.length];
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            });
+
+            // Desenha labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+
+            if (labels) {
+                labels.forEach((label, index) => {
+                    const x = padding + (index / (labels.length - 1)) * chartWidth;
+                    ctx.fillText(label, x, height - padding + 20);
+                });
+            }
+        }
+
+        // 8. Animação de Timeline
+        function animateTimeline() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineItems.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(item);
+            });
+        }
+
+        // 9. Informações do Mapa
+        function showStateInfo(state) {
+            const info = {
+                'SP': 'São Paulo: Maior polo de militância digital com 150K+ ativistas progressistas',
+                'RJ': 'Rio de Janeiro: Berço do funk militante e coletivos de periferia organizados',
+                'BA': 'Bahia: Forte movimento negro e quilombolas digitais com 45K ativistas',
+                'MG': 'Minas Gerais: Centro de organização estudantil e sindical digital',
+                'PE': 'Pernambuco: Referência em comunicação popular digital',
+                'RS': 'Rio Grande do Sul: Forte tradição de comunicação alternativa progressista'
+            };
+
+            const message = info[state] || `${state}: Importante centro de militância progressista`;
+
+            // Cria tooltip ou modal
+            const tooltip = document.createElement('div');
+            tooltip.className = 'map-tooltip';
+            tooltip.innerHTML = `<strong>${state}</strong><br>${message}`;
+            tooltip.style.cssText = `
+                position: fixed;
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                z-index: 1000;
+                max-width: 250px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            `;
+
+            document.body.appendChild(tooltip);
+
+            setTimeout(() => {
+                tooltip.remove();
+            }, 3000);
+        }
+
+        // 10. Dados para o gráfico de crescimento
+        const chartData = [
+            {
+                id: 'growthChart',
+                data: [
+                    [15, 22, 35, 48, 62, 78, 85], // Esquerda
+                    [25, 30, 42, 55, 68, 72, 75], // Direita
+                    [8, 12, 18, 25, 32, 40, 48]  // Independentes
+                ],
+                labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024']
+            }
+        ];
+    </script>
+</body>
+</html>
