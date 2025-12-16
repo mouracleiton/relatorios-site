@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seus Direitos Trabalhistas - Guia Fácil</title>
+    <style>
+        :root {
+            --primary-color: #2ecc71;
+            --secondary-color: #27ae60;
+            --accent-color: #3498db;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        header p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .quick-access {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .quick-access h2 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.5em;
+        }
+
+        .quick-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .quick-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .right-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .right-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .right-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+            display: block;
+        }
+
+        .right-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+        }
+
+        .right-card p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .simple-explanation {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .simple-explanation strong {
+            color: var(--secondary-color);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .calculator-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .calculator-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .calculator-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark-color);
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .calculate-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .calculate-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .result {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: var(--primary-color);
+        }
+
+        .emergency-section {
+            background: var(--danger-color);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .emergency-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .emergency-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .emergency-item strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.2em;
+        }
+
+        .tips-section {
+            background: var(--warning-color);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .tips-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .tip-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .tip-icon {
+            font-size: 2em;
+        }
+
+        .faq-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-section h2 {
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .faq-item {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            background: #f8f9fa;
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #e9ecef;
+        }
+
+        .faq-question h3 {
+            margin: 0;
+            color: var(--dark-color);
+            font-size: 1.1em;
+        }
+
+        .faq-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 15px;
+            max-height: 500px;
+        }
+
+        .footer {
+            background: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            background: var(--secondary-color);
+        }
+
+        .floating-help {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-help:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .quick-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .rights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group input, .form-group select {
+                padding: 10px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .print-button {
+            background: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            background: var(--dark-color);
+        }
+
+        .important-alert {
+            background: #fff3cd;
+            border: 2px solid var(--warning-color);
+            color: #856404;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .step-by-step {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .step-by-step h2 {
+            color: var(--dark-color);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 1.8em;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: var(--dark-color);
+            margin-bottom: 8px;
+        }
+
+        .step-content p {
+            color: #666;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <span class="emoji">👷‍♂️</span>
+            <h1>Seus Direitos Trabalhistas</h1>
+            <p>Guia fácil e simples para entender todos os seus direitos como trabalhador(a)</p>
+            <button class="print-button" onclick="window.print()">🖨️ Imprimir Guia</button>
+        </header>
+
+        <div class="quick-access">
+            <h2>🚀 Acesso Rápido</h2>
+            <div class="quick-buttons">
+                <button class="quick-btn" onclick="scrollToSection('basic-rights')">
+                    <span>📋</span> Direitos Básicos
+                </button>
+                <button class="quick-btn" onclick="scrollToSection('calculator')">
+                    <span>🧮</span> Calculadora
+                </button>
+                <button class="quick-btn" onclick="scrollToSection('emergency')">
+                    <span>🚨</span> Urgência
+                </button>
+                <button class="quick-btn" onclick="scrollToSection('tips')">
+                    <span>💡</span> Dicas
+                </button>
+            </div>
+        </div>
+
+        <div class="important-alert">
+            <strong>⚠️ ATENÇÃO IMPORTANTE!</strong><br>
+            Seus direitos são garantidos por lei! Não permita que seu empregador desrespeite qualquer um dos itens abaixo.
+        </div>
+
+        <div class="rights-grid" id="basic-rights">
+            <div class="right-card">
+                <span class="right-icon">💰</span>
+                <h3>Salário Mínimo</h3>
+                <p>Valor mínimo que deve ser pago ao trabalhador. Em 2025, o salário mínimo é de R$ 1.412,00.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    Ninguém pode receber menos que R$ 1.412 por mês trabalhando 8 horas por dia.
+                </div>
+            </div>
+
+            <div class="right-card">
+                <span class="right-icon">🕐</span>
+                <h3>Jornada de Trabalho</h3>
+                <p>Limitada a 8 horas diárias e 44 horas semanais. Qualquer hora extra deve ser paga com acréscimo de 50%.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    Você pode trabalhar no máximo 8 horas por dia. Se trabalhar mais, deve receber 50% a mais por essas horas.
+                </div>
+            </div>
+
+            <div class="right-card">
+                <span class="right-icon">🏖️</span>
+                <h3>Férias Remuneradas</h3>
+                <p>Após 12 meses de trabalho, você tem direito a 30 dias de férias com acréscimo de 1/3 do salário.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    A cada ano trabalhado, você ganha 30 dias de descanso e recebe seu salário completo mais um terço (33%) a mais.
+                </div>
+            </div>
+
+            <div class="right-card">
+                <span class="right-icon">🎄</span>
+                <h3>13º Salário</h3>
+                <p>Salário extra pago em duas parcelas: uma em novembro e outra em dezembro de cada ano.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    Você recebe seu salário duas vezes por ano como bônus (metade em novembro, metade em dezembro).
+                </div>
+            </div>
+
+            <div class="right-card">
+                <span class="right-icon">🚌</span>
+                <h3>Vale-Transporte</h3>
+                <p>Auxílio para custear o deslocamento casa-trabalho. O empregador pode descontar até 6% do salário.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    Sua empresa ajuda a pagar o transporte. Você paga no máximo 6% do seu salário, o resto a empresa paga.
+                </div>
+            </div>
+
+            <div class="right-card">
+                <span class="right-icon">💊</span>
+                <h3>FGTS</h3>
+                <p>Fundo de garantia onde a empresa deposita 8% do seu salário mensalmente. Serve para comprar casa ou em caso de demissão.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    Todo mês sua empresa guarda 8% do seu salário numa conta especial para você. É seu dinheiro!
+                </div>
+            </div>
+
+            <div class="right-card">
+                <span class="right-icon">🏥</span>
+                <h3>INSS</h3>
+                <p>Contribuição para aposentadoria e benefícios como auxílio-doença e maternidade.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    Parte do seu salário vai para o governo para garantir sua aposentadoria e ajudar em caso de doença.
+                </div>
+            </div>
+
+            <div class="right-card">
+                <span class="right-icon">🍼</span>
+                <h3>Licença Maternidade/Paternidade</h3>
+                <p>Mães têm direito a 120 dias de licença. Pais têm direito a 5 dias de licença.</p>
+                <div class="simple-explanation">
+                    <strong>💡 Explicação Simples:</strong>
+                    Mães podem ficar 4 meses em casa após o nascimento com salário garantido. Pais têm 5 dias.
+                </div>
+            </div>
+        </div>
+
+        <div class="calculator-section" id="calculator">
+            <h2>🧮 Calculadora de Direitos Trabalhistas</h2>
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="salary">Seu Salário Bruto:</label>
+                    <input type="number" id="salary" placeholder="Ex: 1500" step="0.01">
+                </div>
+
+                <div class="form-group">
+                    <label for="extra-hours">Horas Extras por Mês:</label>
+                    <input type="number" id="extra-hours" placeholder="Ex: 10" step="1">
+                </div>
+
+                <div class="form-group">
+                    <label for="work-time">Tempo de Trabalho:</label>
+                    <select id="work-time">
+                        <option value="">Selecione...</option>
+                        <option value="less-than-1">Menos de 1 ano</option>
+                        <option value="1-to-5">1 a 5 anos</option>
+                        <option value="more-than-5">Mais de 5 anos</option>
+                    </select>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateRights()">Calcular Meus Direitos</button>
+
+                <div class="result" id="result">
+                    <div class="result-item">
+                        <span>Salário Base:</span>
+                        <span id="base-salary">R$ 0,00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Horas Extras (50% a mais):</span>
+                        <span id="extra-hours-value">R$ 0,00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>13º Salário (mensal):</span>
+                        <span id="thirteenth-salary">R$ 0,00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Férias (1/3 a mais):</span>
+                        <span id="vacations">R$ 0,00</span>
+                    </div>
+                    <div class="result-item">
+                        <span>FGTS (8% mensal):</span>
+                        <span id="fgts">R$ 0,00</span>
+                    </div>
+                    <div class="result-item">
+                        <span><strong>Total Mensal de Benefícios:</strong></span>
+                        <span id="total-benefits">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-by-step">
+            <h2>📋 O que Fazer em Caso de Demissão</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Peça a Rescisão</h3>
+                    <p>Exija o termo de rescisão contratual no dia da demissão. A empresa tem até 10 dias para pagar tudo.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Verifique os Valores</h3>
+                    <p>Confira se recebeu: saldo de salário, férias proporcionais, 13º proporcional, multa do FGTS (40% se sem justa causa).</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Saque o FGTS</h3>
+                    <p>Vá até uma agência da Caixa ou use o aplicativo FGTS para sacar o dinheiro e a multa rescisória.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Peça o Seguro-Desemprego</h3>
+                    <p>Se foi demitido sem justa causa, peça o seguro-desemprego. Pode receber de 3 a 5 parcelas.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h3>Atualize a Carteira</h3>
+                    <p>Leve sua carteira de trabalho para a nova empresa registrar o término do contrato anterior.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="emergency-section" id="emergency">
+            <h2>🚨 Onde Denunciar Problemas</h2>
+            <div class="emergency-item">
+                <strong>🏢 Ministério do Trabalho e Emprego</strong>
+                Telefone: 158 (gratuito)<br>
+                Denuncie trabalho infantil, trabalho escravo, falta de registro e outras irregularidades.
+            </div>
+            <div class="emergency-item">
+                <strong>⚖️ Superintendência Regional do Trabalho</strong>
+                Procure o órgão mais próximo de você para registrar reclamações trabalhistas.
+            </div>
+            <div class="emergency-item">
+                <strong>📞 Disque 100</strong>
+                Direitos Humanos - Denuncie violações e assédio moral no trabalho.
+            </div>
+            <div class="emergency-item">
+                <strong>🏛️ Ministério Público do Trabalho (MPT)</strong>
+                (62) 3213-8000 (Brasília) ou procure o MPT do seu estado.
+            </div>
+        </div>
+
+        <div class="tips-section" id="tips">
+            <h2>💡 Dicas Importantes</h2>
+            <div class="tip-item">
+                <span class="tip-icon">📝</span>
+                <div>
+                    <strong>Mantenha Tudo Registrado</strong>
+                    Guarde comprovantes de pagamento, contratos, e-mails e qualquer documento importante.
+                </div>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">📚</span>
+                <div>
+                    <strong>Leia Antes de Assinar</strong>
+                    Nunca assine documentos sem ler e entender tudo. Peça ajuda se tiver dúvidas.
+                </div>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">⏰</span>
+                <div>
+                    <strong>Cuide dos Prazos</strong>
+                    A maioria das reclamações trabalhistas tem prazo de 2 anos para serem iniciadas.
+                </div>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">🤝</span>
+                <div>
+                    <strong>Busque Ajuda Gratuita</strong>
+                    Existem advogados gratuitos para trabalhadores em sindicatos e defensorias públicas.
+                </div>
+            </div>
+            <div class="tip-item">
+                <span class="tip-icon">💻</span>
+                <div>
+                    <strong>Use a Tecnologia</strong>
+                    Acesse os aplicativos oficiais do FGTS, INSS e Carteira de Trabalho Digital.
+                </div>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>❓ Perguntas Frequentes</h2>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>O que é demissão por justa causa?</h3>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>É quando o empregado comete uma falta grave (como roubo, violência, ou desobediência). Nesse caso, você perde o direito ao aviso prévio, multa do FGTS e seguro-desemprego. A empresa precisa provar a falta.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Posso trabalhar sem carteira assinada?</h3>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Não! Trabalhar sem carteira assinada é ilegal e muito perigoso. Você perde todos os direitos (férias, 13º, FGTS, etc.) e não tem provas do vínculo empregatício. Exija sempre a carteira assinada desde o primeiro dia.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Como saber se estou recebendo horas extras corretamente?</h3>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Horas extras devem ser pagas com 50% a mais em dias normais e 100% a mais em domingos e feriados. Exemplo: se seu salário é R$ 10 por hora, a hora extra deve ser R$ 15 (50% a mais).</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>O que fazer se meu empregador não pagar?</h3>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Primeiro tente resolver conversando. Se não funcionar, procure a Justiça do Trabalho. Existem advogados gratuitos para trabalhadores. Guarde todos os comprovantes e testemunhas.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Como funciona o aviso prévio?</h3>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>É de 30 dias, mas aumenta 3 dias por ano trabalhado (máximo de 90 dias). Se você pede demissão, trabalha mais 30 dias. Se a empresa te demite, ela te paga esses 30 dias.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Quando posso receber seguro-desemprego?</h3>
+                    <span class="faq-arrow">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Somente se for demitido sem justa causa. Precisa ter trabalhado pelo menos 12 meses nos últimos 18. O valor varia mas geralmente é entre R$ 1.412 e R$ 2.230.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p><strong>📚 Este guia é informativo. Para casos específicos, procure um advogado trabalhista.</strong></p>
+            <p>Seus direitos são garantidos por lei! Conheça-os e exija-os!</p>
+            <div class="footer-links">
+                <a href="https://www.gov.br/trabalho-e-emprego/pt-br" target="_blank">Ministério do Trabalho</a>
+                <a href="https://www.tst.jus.br/" target="_blank">Tribunal Superior do Trabalho</a>
+                <a href="https://social.caixa.gov.br/" target="_blank">FGTS e INSS</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                🤖 Criado com assistência de IA | © 2025 Direitos Trabalhistas Fácil
+            </p>
+        </div>
+    </div>
+
+    <button class="floating-help" onclick="showEmergencyHelp()">🆘</button>
+
+    <script>
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function calculateRights() {
+            const salary = parseFloat(document.getElementById('salary').value) || 0;
+            const extraHours = parseInt(document.getElementById('extra-hours').value) || 0;
+            const workTime = document.getElementById('work-time').value;
+
+            if (salary === 0) {
+                alert('Por favor, informe seu salário!');
+                return;
+            }
+
+            // Cálculos
+            const hourlyRate = salary / 220; // média de 220 horas úteis por mês
+            const extraHoursValue = (hourlyRate * 1.5) * extraHours; // 50% a mais
+            const thirteenthSalary = salary / 12; // valor mensal do 13º
+            const vacationsValue = (salary / 12) * 1.33; // 30 dias + 1/3
+            const fgtsValue = salary * 0.08; // 8%
+
+            // Total
+            const totalBenefits = extraHoursValue + thirteenthSalary + vacationsValue + fgtsValue;
+
+            // Atualizar resultado
+            document.getElementById('base-salary').textContent = `R$ ${salary.toFixed(2).replace('.', ',')}`;
+            document.getElementById('extra-hours-value').textContent = `R$ ${extraHoursValue.toFixed(2).replace('.', ',')}`;
+            document.getElementById('thirteenth-salary').textContent = `R$ ${thirteenthSalary.toFixed(2).replace('.', ',')}`;
+            document.getElementById('vacations').textContent = `R$ ${vacationsValue.toFixed(2).replace('.', ',')}`;
+            document.getElementById('fgts').textContent = `R$ ${fgtsValue.toFixed(2).replace('.', ',')}`;
+            document.getElementById('total-benefits').textContent = `R$ ${totalBenefits.toFixed(2).replace('.', ',')}`;
+
+            // Mostrar resultado
+            document.getElementById('result').classList.add('show');
+
+            // Scroll para o resultado
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function toggleFAQ(element) {
+            const faqItem = element.parentElement;
+            const allItems = document.querySelectorAll('.faq-item');
+
+            // Fecha todos os outros
+            allItems.forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha o atual
+            faqItem.classList.toggle('active');
+        }
+
+        function showEmergencyHelp() {
+            const emergencySection = document.getElementById('emergency');
+            emergencySection.scrollIntoView({ behavior: 'smooth' });
+
+            // Destaca a seção
+            emergencySection.style.transform = 'scale(1.02)';
+            setTimeout(() => {
+                emergencySection.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Adicionar formatação de moeda nos inputs
+        document.getElementById('salary').addEventListener('input', function(e) {
+            let value = e.target.value.replace(',', '.');
+            if (value && !isNaN(value)) {
+                e.target.style.borderColor = '#28a745';
+            } else {
+                e.target.style.borderColor = '#ddd';
+            }
+        });
+
+        // Animação simples quando a página carrega
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.right-card, .tip-item, .emergency-item');
+            cards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 100);
+            });
+        });
+
+        // Acessibilidade: permitir navegação por teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Fecha todos os FAQs
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
+        });
+
+        // Função para facilitar impressão
+        window.addEventListener('beforeprint', function() {
+            // Fecha todos os FAQs antes de imprimir
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Mostra todos os resultados
+            document.getElementById('result').classList.add('show');
+        });
+    </script>
+</body>
+</html>
