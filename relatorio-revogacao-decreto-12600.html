@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revogação do Decreto nº 12.600/2025 - Defesa das Águas da Amazônia</title>
+    <style>
+        :root {
+            --primary-color: #1e5128;
+            --dark-primary: #0f2818;
+            --secondary-color: #4e9f3d;
+            --dark-secondary: #3d7a2f;
+            --accent-color: #8fce00;
+            --dark-accent: #7bb800;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header .emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent-color), var(--dark-accent));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .stat-indicator {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            flex: 1;
+        }
+
+        .expand-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            padding: 0 30px;
+        }
+
+        .section.active .section-content {
+            max-height: 2000px;
+            padding: 30px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .policy-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .policy-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .policy-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .phase-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -15px;
+            left: 25px;
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .phase-card h3 {
+            font-size: 1.2rem;
+            margin: 10px 0 15px;
+            color: var(--primary-color);
+        }
+
+        .phase-card ul {
+            margin-left: 20px;
+        }
+
+        .phase-card li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-accent);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .summary-content ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .summary-content li {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .summary-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 20px;
+            font-size: 1.2rem;
+        }
+
+        footer {
+            background: var(--dark-primary);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 30px 20px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .policy-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <span class="emoji">🌊</span>
+            <h1>Revogação do Decreto nº 12.600/2025</h1>
+            <p>Uma luta coletiva pela defesa das águas da Amazônia e dos direitos dos povos originários contra a privatização dos rios Tapajós, Madeira e Tocantins</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Rios amazônicos ameaçados de privatização</div>
+                <div class="stat-indicator">🛑</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Km de hidrovias planejadas para concessão</div>
+                <div class="stat-indicator">⚓</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">28/08</div>
+                <div class="stat-label">Data de assinatura do decreto (2025)</div>
+                <div class="stat-indicator">📅</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Organizações contra a privatização</div>
+                <div class="stat-indicator">🤝</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">COP30</div>
+                <div class="stat-label">Palco das principais manifestações</div>
+                <div class="stat-indicator">🌍</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">PDL 942/25</div>
+                <div class="stat-label">Projeto de decreto legislativo para barrar privatização</div>
+                <div class="stat-indicator">📜</div>
+            </div>
+        </section>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📋</span>
+                <h2>O que é o Decreto nº 12.600/2025?</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>O Decreto nº 12.600, assinado em 28 de agosto de 2025 pelo presidente Luiz Inácio Lula da Silva, dispõe sobre a inclusão de empreendimentos públicos federais do setor hidroviário no Programa Nacional de Desestatização. Na prática, este decreto abre caminho para a privatização de trechos dos rios Tapajós, Madeira e Tocantins na Amazônia.</p>
+
+                <p><strong>Principais disposições:</strong></p>
+                <ul>
+                    <li>Inclui as hidrovias dos rios Tapajós, Madeira e Tocantins no Programa Nacional de Desestatização</li>
+                    <li>Autoriza o Governo Federal a estudar a concessão destas hidrovias para a iniciativa privada</li>
+                    <li>Integra as hidrovias ao chamado Arco Norte para escoamento da produção do agronegócio</li>
+                    <li>Permite dragagens, construção de portos privados e outras intervenções nos cursos d'água</li>
+                </ul>
+
+                <p><strong>Contexto:</strong> O decreto foi publicado sem consulta prévia aos povos indígenas e populações tradicionais que vivem e dependem destes rios, violando convenções internacionais e a Constituição Brasileira.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚠️</span>
+                <h2>Impactos Ambientais e Sociais</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A privatização das hidrovias amazônicas representa uma ameaça existencial para os ecossistemas e as comunidades que dependem destes rios. Os impactos extrapolam a simples questão logística.</p>
+
+                <p><strong>Impactos Ambientais:</strong></p>
+                <ul>
+                    <li><strong>Degradação da biodiversidade:</strong> As dragagens e intervenções alteram o curso natural dos rios, afetando peixes, mamíferos aquáticos e vegetação ciliar</li>
+                    <li><strong>Contaminação das águas:</strong> Aumento do tráfego de embarcações eleva o risco de vazamentos de combustível e outras poluições</li>
+                    <li><strong>Desmatamento nas margens:</strong> A infraestrutura necessária para as hidrovias levará ao corte de áreas de floresta preservadas</li>
+                    <li><strong>Alteração do regime hídrico:</strong> As intervenções podem modificar o fluxo natural dos rios, afetando ciclos de cheia e vazante</li>
+                    <li><strong>Fragmentação de habitats:</strong> As barragens e eclusas dividem os ecossistemas, impedindo a movimentação de espécies</li>
+                </ul>
+
+                <p><strong>Impactos Sociais e Culturais:</strong></p>
+                <ul>
+                    <li><strong>Violação de direitos indígenas:</strong> Falta de consulta prévia, livre e informada conforme Convenção 169 da OIT</li>
+                    <li><strong>Perda de modos de vida:</strong> Comunidades ribeirinhas e indígenas perdem acesso tradicional aos recursos aquáticos</li>
+                    <li><strong>Conflitos territoriais:</strong> Aumento de disputas por terra e recursos naturais</li>
+                    <li><strong>Impacto cultural:</strong> Os rios são centrais na cosmologia e práticas culturais de muitos povos originários</li>
+                    <li><strong>Insegurança alimentar:</strong> Alteração dos estoques pesqueiros afeta a subsistência de milhares de famílias</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🛑</span>
+                <h2>Por que o Decreto Deve ser Revogado?</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A revogação do Decreto nº 12.600/2025 é uma exigência de múltiplos setores da sociedade civil por diversas razões fundamentais:</p>
+
+                <p><strong>Argumentos Jurídicos:</strong></p>
+                <ul>
+                    <li><strong>Inconstitucionalidade:</strong> Viola o direito ao meio ambiente ecologicamente equilibrado (Art. 225)</li>
+                    <li><strong>Violência à Convenção 169 da OIT:</strong> Ausência de consulta prévia aos povos indígenas</li>
+                    <li><strong>Desrespeito ao Estatuto dos Rios:</strong> Trata cursos d'água como meras vias de transporte</li>
+                    <li><strong>Ilegalidade procedimental:</strong> Publicação sem estudos de impacto ambiental adequados</li>
+                </ul>
+
+                <p><strong>Argumentos Ambientais:</strong></p>
+                <ul>
+                    <li><strong>Risco de colapso ecológico:</strong> Os três rios formam sistemas vitais para a Amazônia</li>
+                    <li><strong>Incompatibilidade com metas climáticas:</strong> Aumenta emissões por desmatamento</li>
+                    <li><strong>Destruição de serviços ecossistêmicos:</strong> Perda de regulação climática e ciclo hidrológico</li>
+                    <li><strong>Ameaça à integridade da floresta:</strong> As hidrovias facilitam acesso para exploração predatória</li>
+                </ul>
+
+                <p><strong>Argumentos Sociais e Éticos:</strong></p>
+                <ul>
+                    <li><strong>Colonialismo ambiental:</strong> Impõe modelo desenvolvimentista sem considerar saberes locais</li>
+                    <li><strong>Racismo estrutural:</strong> Afeta desproporcionalmente povos indígenas e comunidades tradicionais</li>
+                    <li><strong>Violação de direitos humanos:</strong> Direito à autodeterminação dos povos</li>
+                    <li><strong>Concentração de benefícios:</strong> Privilegia grandes corporações em detrimento das populações locais</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🤝</span>
+                <h2>Mobilização e Resistência</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Desde a publicação do decreto, uma forte mobilização nacional e internacional tem exigido sua revogação. A resistência inclui diversos atores sociais:</p>
+
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">🏛️</div>
+                        <h3>Povos Indígenas</h3>
+                        <p>O povo Munduruku tem liderado protestos, incluindo ocupação da Blue Zone na COP30. Exigem consulta prévia e respeito a territórios tradicionais.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🌍</div>
+                        <h3>Organizações Ambientais</h3>
+                        <p>Institutos como ISA, Greenpeace e redes socioambientais têm produzido estudos e advocacy contra a privatização das águas.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">📚</div>
+                        <h3>Comunidade Acadêmica</h3>
+                        <p>Pesquisadores e universidades têm alertado para os impactos irreversíveis e a falta de fundamentação técnica do decreto.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">⚖️</div>
+                        <h3>Movimentos Sociais</h3>
+                        <p>MAB, MST, CUT e outras organizações têm se manifestado contra a mercantilização de bens naturais comuns.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🎯</div>
+                        <h3>Parlamento</h3>
+                        <p>Deputados como Sâmia Bomfim e Glauber Braga apresentaram PDL 942/25 para sustar os efeitos do decreto.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🌐</div>
+                        <h3>Solidariedade Internacional</h3>
+                        <p>Organizações globais têm apoiado a causa, destacando a importância da Amazônia para o clima global.</p>
+                    </div>
+                </div>
+
+                <p><strong>Principais ações de resistência:</strong></p>
+                <ul>
+                    <li>Ocupação simbólica da entrada da Blue Zone durante a COP30 em Belém</li>
+                    <li>Manifesto pela Revogação com mais de 500 organizações signatárias</li>
+                    <li>Audiências públicas e pressão no Congresso Nacional</li>
+                    <li>Campanhas nas redes sociais com hashtags como #RevogacaoDecreto12600</li>
+                    <li>Documentários e reportagens sobre os impactos das hidrovias</li>
+                    <li>Ações jurídicas questionando a constitucionalidade do decreto</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🔄</span>
+                <h2>Alternativas e Soluções</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A revogação do decreto é o primeiro passo, mas é preciso construir alternativas viáveis que atendam às necessidades de desenvolvimento sem destruir o ambiente e violar direitos.</p>
+
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <h3>Transporte Sustentável</h3>
+                        <ul>
+                            <li>Investimento em modais não-invasivos</li>
+                            <li>Otimização de rotas existentes</li>
+                            <li>Tecnologia de baixo impacto ambiental</li>
+                            <li>Planejamento participativo com comunidades</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <h3>Economia da Floresta</h3>
+                        <ul>
+                            <li>Fomento a produtos da sociobiodiversidade</li>
+                            <li>Economia circular e agroecologia</li>
+                            <li>Comercialização justa e solidária</li>
+                            <li>Valorização de conhecimentos tradicionais</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <h3>Governança Participativa</h3>
+                        <ul>
+                            <li>Conselhos de bacia hidrográfica</li>
+                            <li>Consulta prévia vinculante</li>
+                            <li>Gestão compartilhada dos recursos</li>
+                            <li>Monitoramento comunitário</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">4</div>
+                        <h3>Tecnologia Social</h3>
+                        <ul>
+                            <li>Mapeamento participativo</li>
+                            <li>Sistemas de alerta precoce</li>
+                            <li>Plataformas digitais comunitárias</li>
+                            <li>Inovaçãoadaptada ao contexto local</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p><strong>Propostas concretas:</strong></p>
+                <ul>
+                    <li><strong>Plano Amazônia Sustentável:</strong> Alternativa integrada de desenvolvimento respeitando limites ecológicos</li>
+                    <li><strong>Fundo de Proteção das Águas:</strong> Recursos para conservação e recuperação de bacias hidrográficas</li>
+                    <li><strong>Marco Legal da Água:</strong> Legislação que reconhece rios como sujeitos de direitos</li>
+                    <li><strong>Infraestrutura apropriada:</strong> Pequenos portos comunitários e embarcações de baixo impacto</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📜</span>
+                <h2>Trabalho Legislativo</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>No Congresso Nacional, diversas iniciativas buscam barrar os efeitos do Decreto nº 12.600/2025 e estabelecer marcos regulatórios mais justos para as águas brasileiras.</p>
+
+                <p><strong>Propostas em tramitação:</strong></p>
+                <ul>
+                    <li><strong>PDL 942/25 - Deputada Sâmia Bomfim:</strong> Susta os efeitos do decreto que inclui hidrovias no PND</li>
+                    <li><strong>Requerimentos de informação:</strong> Exigem detalhamento dos estudos de viabilidade e impacto</li>
+                    <li><strong>Audiências públicas:</strong> Espaços para debate com especialistas e comunidades afetadas</li>
+                    <li><strong>Propostas de emenda constitucional:</strong> Buscam proteger rios como bem comum</li>
+                </ul>
+
+                <p><strong>Estratégias legislativas:</strong></p>
+                <ul>
+                    <li>Articulação partidária para maioria contra a privatização</li>
+                    <li>Pressão popular sobre parlamentares</li>
+                    <li>Parcerias com órgãos de controle (TCU, MP)</li>
+                    <li>Elaboração de marco regulatório alternativo</li>
+                    <li>Monitoramento de votações e posicionamentos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🗣️</span>
+                <h2>Como Apoiar a Causa</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A revogação do Decreto nº 12.600/2025 depende da mobilização de toda a sociedade. Cada pessoa pode contribuir de diversas formas:</p>
+
+                <p><strong>Ações Imediatas:</strong></p>
+                <ul>
+                    <li><strong>Assine o manifesto:</strong> Participe da coleta de assinaturas pela revogação</li>
+                    <li><strong>Divulgue nas redes sociais:</strong> Use hashtags #RevogacaoDecreto12600 #DefesaDasAguas</li>
+                    <li><strong>Contate parlamentares:</strong> Exija posicionamento contra a privatização</li>
+                    <li><strong>Participe de manifestações:</strong> Ações presenciais e virtuais de protesto</li>
+                    <li><strong>Eduque sua rede:</strong> Compartilhe informações sobre os impactos</li>
+                </ul>
+
+                <p><strong>Ações Sustentadas:</strong></p>
+                <ul>
+                    <li><strong>Apoie organizações:</strong> Contribua com ONGs e movimentos sociais</li>
+                    <li><strong>Voluntariado:</strong> Ofereça suas habilidades para a causa</li>
+                    <li><strong>Pesquisa e produção:</strong> Gere conhecimento sobre os temas</li>
+                    <li><strong>Atuação local:</strong> Organize grupos de discussão e ação</li>
+                    <li><strong>Pressão institucional:</strong> Dialogue com escolas, empresas e governo</li>
+                </ul>
+
+                <p><strong>Contatos importantes:</strong></p>
+                <ul>
+                    <li>Congresso Nacional: (61) 3311-2111</li>
+                    <li>Casa Civil: (61) 3411-1000</li>
+                    <li>Ministério dos Povos Indígenas: (61) 2027-7000</li>
+                    <li>Ministério do Meio Ambiente: (61) 2028-1000</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li>O Decreto nº 12.600/2025 ameaça privatizar 3 rios vitais da Amazônia: Tapajós, Madeira e Tocantins</li>
+                    <li>Foi publicado sem consulta prévia aos povos indígenas, violando a Convenção 169 da OIT</li>
+                    <li>Representa risco de colapso ecológico para um dos maiores sistemas de água doce do mundo</li>
+                    <li>Afeta diretamente mais de 200 comunidades indígenas e tradicionais</li>
+                    <li>Facilitará o escoamento de commodities do agronegócio em detrimento da floresta</li>
+                    <li>Movimentos sociais exigem revogação imediata e consulta verdadeira</li>
+                    <li>Alternativas sustentáveis são possíveis e necessárias</li>
+                    <li>A mobilização na COP30 evidenciou a força da resistência indígena</li>
+                    <li>O Congresso discute medidas para barrar os efeitos do decreto</li>
+                    <li>A luta pelas águas da Amazônia é uma luta por clima, democracia e direitos humanos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Coletivo Defesa das Águas da Amazônia. Todos os direitos reservados.</p>
+        <p>Fonte: Pesquisa em fontes oficiais, organizações socioambientais e movimentos indígenas</p>
+        <p>Elaborado com base em informações atualizadas até dezembro de 2024</p>
+    </footer>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasPercentage = text.includes('+') || text.includes('COP') || text.includes('PDL');
+
+                if (!hasPercentage && !isNaN(text)) {
+                    const target = parseFloat(text);
+                    const increment = target / 50;
+                    let current = 0;
+
+                    const updateNumber = () => {
+                        current += increment;
+                        if (current < target) {
+                            num.innerText = Math.floor(current);
+                            requestAnimationFrame(updateNumber);
+                        } else {
+                            num.innerText = target;
+                        }
+                    };
+
+                    updateNumber();
+                }
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            animateNumbers();
+
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
