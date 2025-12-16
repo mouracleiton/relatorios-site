@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economia da Agricultura Familiar: Sustentabilidade e Segurança Alimentar</title>
+    <style>
+        :root {
+            --primary-color: #27ae60;
+            --dark-primary: #229954;
+            --secondary-color: #2ecc71;
+            --accent-color: #e67e22;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-content p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .stat-indicator {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+        }
+
+        .section-header h2 {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header .emoji {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .expand-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .importance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .importance-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .importance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .importance-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .importance-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .program-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .program-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .program-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .challenge-card {
+            background: #fff3cd;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--warning-color);
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            background: #ffeaa7;
+        }
+
+        .challenge-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .challenge-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .opportunity-card {
+            background: #d4edda;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .opportunity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            background: #c3e6cb;
+        }
+
+        .opportunity-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .opportunity-card h3 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .proposals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .proposal-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .proposal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .proposal-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .proposal-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, var(--accent-color), #d35400);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .urgent-box {
+            background: linear-gradient(135deg, var(--danger-color), #c0392b);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .urgent-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .success-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .phase-card {
+            background: white;
+            border: 2px solid var(--secondary-color);
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .phase-card h3 {
+            color: var(--primary-color);
+            margin: 10px 0 20px 0;
+            font-size: 1.3em;
+        }
+
+        .phase-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .phase-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .phase-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            margin-top: 60px;
+            background: var(--dark-color);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            background: var(--dark-primary);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: #d35400;
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-content li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .summary-content li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section.active .section-content {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .importance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .opportunities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .proposals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .importance-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .programs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">🌾</span>
+                <h1>Economia da Agricultura Familiar</h1>
+                <p>Análise abrangente da importância da agricultura familiar para o desenvolvimento sustentável e segurança alimentar do Brasil</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">3,9 milhões</div>
+                <div class="stat-label">Estabelecimentos de agricultura familiar</div>
+                <div class="stat-indicator">67% do total no Brasil</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">70%</div>
+                <div class="stat-label">Dos alimentos consumidos no país</div>
+                <div class="stat-indicator">Produzidos pela agricultura familiar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">80,9 milhões</div>
+                <div class="stat-label">Hectares de área cultivada</div>
+                <div class="stat-indicator">23% do território agrícola</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">R$ 386 bilhões</div>
+                <div class="stat-label">Valor bruto da produção anual</div>
+                <div class="stat-indicator">23% do VBP agrícola</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">67%</div>
+                <div class="stat-label">Da mão de obra rural empregada</div>
+                <div class="stat-indicator">Gerada pela agricultura familiar</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">90%</div>
+                <div class="stat-label">Dos municípios brasileiros</div>
+                <div class="stat-indicator">Com economia dinamizada pela agrofamília</div>
+            </div>
+        </section>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>Importância Estratégica da Agricultura Familiar</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>O Pilar da Soberania Alimentar</h3>
+                <p>A agricultura familiar brasileira representa um dos setores mais estratégicos para o desenvolvimento nacional, sendo fundamental tanto para a segurança alimentar quanto para a economia dos municípios. Com apenas 23% das terras agrícolas, produz 70% dos alimentos que chegam à mesa dos brasileiros.</p>
+
+                <div class="importance-grid">
+                    <div class="importance-card">
+                        <div class="importance-icon">🍽️</div>
+                        <h3>Segurança Alimentar</h3>
+                        <p>Principal responsável pela produção de alimentos básicos como arroz, feijão, mandioca, leite, frutas e hortaliças. Garante o abastecimento interno e reduz a dependência de importações.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">🌱</div>
+                        <h3>Biodiversidade</h3>
+                        <p>Cultiva mais de 200 espécies diferentes, enquanto o agronegócio convencional foca em menos de 20. Essa diversificação é essencial para adaptação climática e resiliência do sistema alimentar.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">🏘️</div>
+                        <h3>Desenvolvimento Rural</h3>
+                        <p>Dinamiza a economia de 90% dos municípios brasileiros, gerando emprego, renda e fixando o homem no campo. Reduz o êxodo rural e fortalece as comunidades locais.</p>
+                    </div>
+                    <div class="importance-card">
+                        <div class="importance-icon">💼</div>
+                        <h3>Geração de Empregos</h3>
+                        <p>Responsável por 67% dos empregos no campo, sendo o maior empregador rural do país. Cada estabelecimento familiar gera em média 2,4 postos de trabalho diretos.</p>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Cultura</th>
+                            <th>Participação da Agrofamília</th>
+                            <th>Importância Social</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mandioca</td>
+                            <td>87%</td>
+                            <td>Base alimentar de milhões de brasileiros</td>
+                        </tr>
+                        <tr>
+                            <td>Feijão</td>
+                            <td>70%</td>
+                            <td>Proteína essencial da dieta brasileira</td>
+                        </tr>
+                        <tr>
+                            <td>Leite</td>
+                            <td>58%</td>
+                            <td>Renda de pequenos produtores</td>
+                        </tr>
+                        <tr>
+                            <td>Hortaliças</td>
+                            <td>60%</td>
+                            <td>Vitaminas e minerais essenciais</td>
+                        </tr>
+                        <tr>
+                            <td>Fumo</td>
+                            <td>94%</td>
+                            <td>Exportação e renda familiar</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏛️</span>
+                <h2>Políticas Públicas Existentes</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Programas Governamentais de Apoio</h3>
+                <div class="programs-grid">
+                    <div class="program-card">
+                        <div class="program-icon">💰</div>
+                        <h3>PRONAF</h3>
+                        <p><strong>Programa Nacional de Fortalecimento da Agricultura Familiar</strong></p>
+                        <p>Principal política pública de crédito rural. Oferece linhas com taxas de juros reduzidas (2-6% ao ano) para investimento e custeio. Orçamento de R$ 89 bilhões para 2024/2025.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">🛒</div>
+                        <h3>PAA</h3>
+                        <p><strong>Programa de Aquisição de Alimentos</strong></p>
+                        <p>Compra da produção familiar com preços justos, abastecendo escolas, hospitais e bancos de alimentos. Garante mercado e renda para pequenos produtores.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">🏫</div>
+                        <h3>PNAE</h3>
+                        <p><strong>Programa Nacional de Alimentação Escolar</strong3>
+                        <p>Exige que 30% dos recursos da merenda escolar sejam comprados da agricultura familiar. Conecta produtores diretamente com 40 milhões de estudantes.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">📜</div>
+                        <h3>Assistência Técnica</h3>
+                        <p><strong>ATER - Assistência Técnica e Extensão Rural</strong></p>
+                        <p>Fornece orientação técnica gratuita para aumentar produtividade, diversificar culturas e adotar práticas sustentáveis. Atende mais de 2 milhões de famílias.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">🏠</div>
+                        <h3>Habitação Rural</h3>
+                        <p><strong>Pronaf Habitação</strong></p>
+                        <p>Financiamento para construção e reforma de moradias na zona rural. Limite de R$ 60 mil com juros de 5% ao ano e prazo de até 30 anos.</p>
+                    </div>
+                    <div class="program-card">
+                        <div class="program-icon">🌱</div>
+                        <h3>Seguro Agrícola</h3>
+                        <p><strong>PSR - Programa de Seguro Rural</strong></p>
+                        <p>Cobertura contra perdas por eventos climáticos e pragas. Subsídio governamental de até 60% do prêmio para agricultores familiares.</p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h3>✅ Avanços Recentes (2024-2025)</h3>
+                    <ul style="list-style: none; padding-left: 0; margin-top: 15px;">
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> PRONAF e Plano Safra tornados políticas permanentes de Estado
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Ampliação do limite do Pronaf Regularização Fundiária para R$ 30 mil
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Novo programa de redução de agrotóxicos com R$ 5 bilhões
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Ampliação do PAA para 50% mais em 2024
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚠️</span>
+                <h2>Desafios Enfrentados</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Principais Obstáculos ao Desenvolvimento</h3>
+                <div class="challenges-grid">
+                    <div class="challenge-card">
+                        <div class="challenge-icon">💸</div>
+                        <h3>Acesso ao Crédito</h3>
+                        <p>Burocracia excessiva e falta de garantias dificultam o acesso ao financiamento. Apenas 30% dos agricultores familiares conseguem crédito adequado, apesar da disponibilidade de recursos.</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-icon">📦</div>
+                        <h3>Logística e Escoamento</h3>
+                        <p>Infraestrutura precária de armazenamento e transporte resulta em perdas de até 30% da produção. Dificuldade em acessar mercados mais rentáveis.</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-icon">📚</div>
+                        <h3>Educação e Capacitação</h3>
+                        <p>Baixo nível educacional limita adoção de novas tecnologias. Apenas 15% dos produtores têm ensino médio completo e menos de 5% formação técnica.</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-icon">🌡️</div>
+                        <h3>Mudanças Climáticas</h3>
+                        <p>Vulnerabilidade elevada a eventos climáticos extremos. Secas e chuvas intensas já causam perdas anuais de R$ 20 bilhões na produção familiar.</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-icon">📄</div>
+                        <h3>Regularização Fundiária</h3>
+                        <p>Cerca de 40% das propriedades familiares não têm título de posse regularizado, dificultando acesso a crédito e políticas públicas.</p>
+                    </div>
+                    <div class="challenge-card">
+                        <div class="challenge-icon">📱</div>
+                        <h3>Tecnologia e Inovação</h3>
+                        <p>Baixa adoção de tecnologias digitais e modernas. Apenas 25% utilizam alguma forma de tecnologia agrícola avançada ou gestão digital.</p>
+                    </div>
+                </div>
+
+                <div class="urgent-box">
+                    <h3>🚨 Ponto Crítico: Sucessão Rural</h3>
+                    <p>A média de idade dos agricultores familiares é de 55 anos, e apenas 20% dos filhos pretendem continuar na atividade rural. Sem políticas eficazes de sucessão, o Brasil corre risco de perder 1 milhão de produtores nos próximos 15 anos, comprometendo a segurança alimentar.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🌟</span>
+                <h2>Oportunidades e Potencialidades</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Caminhos para o Fortalecimento Sustentável</h3>
+                <div class="opportunities-grid">
+                    <div class="opportunity-card">
+                        <div class="opportunity-icon">🌿</div>
+                        <h3>Agricultura Orgânica</h3>
+                        <p>Mercado cresce 20% ao ano. Produtos orgânicos da agricultura familiar podem atingir preços 30-50% superiores, com demandas internacionais em expansão.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <div class="opportunity-icon">🛒</div>
+                        <h3>Circuitos Curtos</h3>
+                        <p>Venda direta ao consumidor elimina intermediários, aumentando margem em 40-60%. Feiras livres, delivery rural e compras coletivas em expansão.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <div class="opportunity-icon">🏷️</div>
+                        <h3>Agroturismo</h3>
+                        <p>Potencial de R$ 10 bilhões/ano. Valorização da experiência rural, culinária tradicional e conexão com a natureza atrai turistas urbanos.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <div class="opportunity-icon">🌾</div>
+                        <h3>Sementes Crioulas</h3>
+                        <p>Preservação da agrobiodiversidade com valor agregado. Mercado sementes crioulas movimenta R$ 500 milhões/ano e cresce 15% anualmente.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <div class="opportunity-icon">☀️</div>
+                        <h3>Energias Renováveis</h3>
+                        <p>Biogás de resíduos agrícolas pode gerar renda extra e energia autônoma. Potencial de 5 GW em propriedades familiares.</p>
+                    </div>
+                    <div class="opportunity-card">
+                        <div class="opportunity-icon">📱</div>
+                        <h3>Agricultura Digital</h3>
+                        <p>Tecnologias 4.0 podem aumentar produtividade em 30% com menor uso de insumos. Aplicações de gestão e mercado acessíveis via celular.</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <h3>💡 Oportunidade Estratégica: Bioeconomia Amazônica</h3>
+                    <p>A agricultura familiar na Amazônia detém conhecimento tradicional de mais de 200 espécies com potencial comercial. A bioeconomia baseada em produtos florestais não madeireiros pode gerar R$ 30 bilhões anuais, mantendo a floresta em pé e distribuindo renda para milhares de famílias.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🚀</span>
+                <h2>Propostas Inovadoras de Fortalecimento</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Estratégias Transformadoras para o Setor</h3>
+                <div class="proposals-grid">
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🏦</div>
+                        <h3>Banco da Agricultura Familiar</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Instituição financeira pública especializada</li>
+                            <li style="padding: 5px 0;">✓ Análise de crédito baseada na capacidade produtiva</li>
+                            <li style="padding: 5px 0;">✓ Microcrédito produtivo rápido e simplificado</li>
+                            <li style="padding: 5px 0;">✓ Taxas de juros subsidiadas de 1-3% ao ano</li>
+                            <li style="padding: 5px 0;">✓ Financiamento para inovação e tecnologia</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">📡</div>
+                        <h3>Plataforma Digital Conecta Rural</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Marketplace integrado para produtos familiares</li>
+                            <li style="padding: 5px 0;">✓ Assistência técnica virtual via aplicativo</li>
+                            <li style="padding: 5px 0;">✓ Informação climática e produtiva em tempo real</li>
+                            <li style="padding: 5px 0;">✓ Gestão financeira simplificada</li>
+                            <li style="padding: 5px 0;">✓ Conexão direta com escolas e restaurantes</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🎓</div>
+                        <h3>Rede de Educação Rural</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Escolas técnicas em cada microrregião</li>
+                            <li style="padding: 5px 0;">✓ Cursos de empreendedorismo rural</li>
+                            <li style="padding: 5px 0;">✓ Programa de intercâmbio de jovens agricultores</li>
+                            <li style="padding: 5px 0;">✓ Certificação em agroecologia</li>
+                            <li style="padding: 5px 0;">✓ Bolsas para sucesso familiar</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🛡️</div>
+                        <h3>Fundo de Garantia Solidário</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Garantia coletiva para crédito rural</li>
+                            <li style="padding: 5px 0;">✓ Seguro contra eventos climáticos extremos</li>
+                            <li style="padding: 5px 0;">✓ Apoio em anos de safra ruim</li>
+                            <li style="padding: 5px 0;">✓ Capital de giro emergencial</li>
+                            <li style="padding: 5px 0;">✓ Gestão participativa dos agricultores</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🌱</div>
+                        <h3>Programa Bioeconomia Familiar</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Valorização de produtos florestais não madeireiros</li>
+                            <li style="padding: 5px 0;">✓ Pagamento por serviços ambientais</li>
+                            <li style="padding: 5px 0;">✓ Certificação de origem e sustentabilidade</li>
+                            <li style="padding: 5px 0;">✓ Acesso a mercados verdes internacionais</li>
+                            <li style="padding: 5px 0;">✓ Preservação de sementes crioulas</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🏘️</div>
+                        <h3>Territórios de Desenvolvimento Rural</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Planejamento territorial participativo</li>
+                            <li style="padding: 5px 0;">✓ Infraestrutura compartilhada de armazenamento</li>
+                            <li style="padding: 5px 0;">✓ Cooperativas de comercialização</li>
+                            <li style="padding: 5px 0;">✓ Indústrias de beneficiamento local</li>
+                            <li style="padding: 5px 0;">✓ Certificação territorial de produtos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h3>🌱 Proposta Transformadora: Agricultura Regenerativa</h3>
+                    <p>Transformar a agricultura familiar em referência global em práticas regenerativas que recuperam solos, sequestram carbono e aumentam a biodiversidade. Com pagamento por serviços ambientais, cada hectare pode gerar R$ 500-800 adicionais por ano, criando uma economia de baixo carbono com alta rentabilidade social.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📅</span>
+                <h2>Plano de Implementação</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Roteiro Estratégico para Transformação</h3>
+
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <h3>Fase Estrutural (1-2 anos)</h3>
+                        <ul>
+                            <li>Criação do Banco da Agricultura Familiar</li>
+                            <li>Implementação da Plataforma Conecta Rural</li>
+                            <li>Ampliação do PAA em 100%</li>
+                            <li>Regularização fundiária de 1 milhão de propriedades</li>
+                            <li>Expansão da ATER para todos os municípios</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <h3>Fase de Desenvolvimento (3-5 anos)</h3>
+                        <ul>
+                            <li>Implantação da Rede de Educação Rural</li>
+                            <li>Estabelecimento do Fundo de Garantia Solidário</li>
+                            <li>Criação de 100 Territórios de Desenvolvimento</li>
+                            <li>Programa de Sucessão Rural Jovem</li>
+                            <li>Expansão da agroecologia para 50% das propriedades</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <h3>Fase de Consolidação (6-10 anos)</h3>
+                        <ul>
+                            <li>Transformação regenerativa de 30% da área</li>
+                            <li>Biocomércio internacional de produtos da sociobiodiversidade</li>
+                            <li>Autonomia energética em 50% das propriedades</li>
+                            <li>Sucessão rural assegurada para 80% das famílias</li>
+                            <li>Modelo brasileiro exportado para outros países</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">4</div>
+                        <h3>Fase Sustentável (10+ anos)</h3>
+                        <ul>
+                            <li>Agricultura familiar como motor do desenvolvimento rural</li>
+                            <li>Segurança alimentar plena e soberania consolidada</li>
+                            <li>Líder global em agricultura regenerativa</li>
+                            <li>Economia de baixo carbono totalmente estabelecida</li>
+                            <li>Qualidade de vida rural superior à urbana</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">Investimentos Necessários e Retornos</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">Investimento Total</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--accent-color);">R$ 150 bilhões</p>
+                        <p>10 anos</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">PIB Agrícola Adicional</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--secondary-color);">R$ 500 bilhões</p>
+                        <p>Por ano (10 anos)</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">Empregos Gerados</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--secondary-color);">5 milhões</p>
+                        <p>Postos diretos e indiretos</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">Carbono Sequestrado</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--secondary-color);">2 bilhões ton</p>
+                        <p>CO2/ano</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>🌾 A agricultura familiar é o futuro do Brasil!</strong></p>
+            <p>Este relatório demonstra que investir na agricultura familiar é investir na soberania alimentar, no desenvolvimento rural sustentável e na economia verde do futuro.</p>
+            <div class="footer-links">
+                <a href="https://www.gov.br/mda/pt-br" target="_blank">Ministério do Desenvolvimento Agrário</a>
+                <a href="https://www.embrapa.br/tema-agricultura-familiar" target="_blank">Embrapa Agricultura Familiar</a>
+                <a href="https://www.fao.org/family-farming/pt/" target="_blank">FAO Agricultura Familiar</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                🤖 Criado com assistência de IA | © 2025 Economia da Agricultura Familiar
+            </p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li>Agricultura familiar brasileira: 3,9 milhões de estabelecimentos produzindo 70% dos alimentos com apenas 23% das terras agrícolas</li>
+                    <li>Concentração em culturas essenciais: mandioca (87%), feijão (70%), leite (58%), hortaliças (60%) da produção nacional</li>
+                    <li>PRONAF como política principal com R$ 89 bilhões disponíveis, mas apenas 30% dos produtores conseguem acesso efetivo ao crédito</li>
+                    <li>Principais desafios: burocracia creditícia, logística precária, baixa educação formal, vulnerabilidade climática, 40% sem regularização fundiária</li>
+                    <li>Crise de sucessão: média de 55 anos e apenas 20% dos filhos pretendem continuar na atividade rural</li>
+                    <li>Oportunidades em mercados crescentes: orgânicos (20% ao ano), circuitos curtos, agroturismo, bioeconomia amazônica (R$ 30 bilhões/ano)</li>
+                    <li>Propostas inovadoras: Banco especializado, plataforma digital Conecta Rural, educação rural, fundo garantia solidário</li>
+                    <li>Investimento proposto de R$ 150 bilhões em 10 anos com retorno estimado de R$ 500 bilhões anuais no PIB agrícola</li>
+                    <li>Plano em 4 fases visando autonomia energética, sucessão assegurada e liderança global em agricultura regenerativa</li>
+                    <li>Potencial de sequestro de 2 bilhões de toneladas de CO2/ano e geração de 5 milhões de empregos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasPercent = text.includes('%');
+                const hasReal = text.includes('R$');
+                const hasMilhoes = text.includes('milhões');
+                const hasBilhoes = text.includes('bilhões');
+
+                // Remove formatação para extrair número
+                let cleanText = text.replace(/[^0-9.-]/g, '');
+                const target = parseFloat(cleanText);
+
+                if (!isNaN(target)) {
+                    const increment = target / 50;
+                    let current = 0;
+
+                    const updateNumber = () => {
+                        current += increment;
+                        if (current < target) {
+                            // Aplica formatação original
+                            let displayNumber = Math.floor(current);
+                            if (hasMilhoes) {
+                                num.innerText = displayNumber + ' milhões';
+                            } else if (hasBilhoes) {
+                                num.innerText = 'R$ ' + displayNumber + ' bilhões';
+                            } else if (hasPercent) {
+                                num.innerText = displayNumber + '%';
+                            } else if (hasReal) {
+                                num.innerText = 'R$ ' + displayNumber + ' bilhões';
+                            } else {
+                                num.innerText = displayNumber + ' milhões';
+                            }
+                            requestAnimationFrame(updateNumber);
+                        } else {
+                            // Mantém formatação original final
+                            num.innerText = text;
+                        }
+                    };
+
+                    updateNumber();
+                }
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
