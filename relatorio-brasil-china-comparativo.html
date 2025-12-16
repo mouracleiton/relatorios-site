@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brasil vs China: Lições de Desenvolvimento Social e Político</title>
+    <style>
+        :root {
+            --primary-color: #2E7D32; /* Verde Brasil */
+            --dark-primary: #1B5E20;
+            --secondary-color: #C62828; /* Vermelho China */
+            --dark-secondary: #8E0000;
+            --accent-color: #F57C00; /* Laranja destaque */
+            --dark-accent: #EF6C00;
+            --shadow: 0 2px 10px rgba(46, 125, 50, 0.1);
+            --shadow-hover: 0 5px 20px rgba(46, 125, 50, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content .emoji {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .country-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .country-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .brazil-card {
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .china-card {
+            border-top: 5px solid var(--secondary-color);
+        }
+
+        .country-flag {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .country-name {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .brazil-card .country-name {
+            color: var(--primary-color);
+        }
+
+        .china-card .country-name {
+            color: var(--secondary-color);
+        }
+
+        .population {
+            font-size: 1.3em;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .gdp {
+            font-size: 1.1em;
+            color: #666;
+        }
+
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .indicator-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .indicator-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .indicator-comparison {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .brazil-value, .china-value {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .brazil-value {
+            background: rgba(46, 125, 50, 0.1);
+            color: var(--primary-color);
+        }
+
+        .china-value {
+            background: rgba(198, 40, 40, 0.1);
+            color: var(--secondary-color);
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .brazil-progress, .china-progress {
+            height: 100%;
+            transition: width 1s ease;
+        }
+
+        .brazil-progress {
+            background: var(--primary-color);
+        }
+
+        .china-progress {
+            background: var(--secondary-color);
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-accent), var(--accent-color));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5em;
+            margin-right: 15px;
+        }
+
+        .section-header h2 {
+            flex: 1;
+            font-size: 1.4em;
+        }
+
+        .expand-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+        }
+
+        .section-content strong {
+            color: var(--accent-color);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.1), rgba(198, 40, 40, 0.1));
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .success-factors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .factor-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .factor-icon {
+            font-size: 2em;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .factor-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .adaptation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .adaptation-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .adaptation-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .adaptation-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .chinese-model {
+            background: rgba(198, 40, 40, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--secondary-color);
+        }
+
+        .chinese-model strong {
+            color: var(--secondary-color);
+        }
+
+        .brazil-adaptation {
+            background: rgba(46, 125, 50, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .brazil-adaptation strong {
+            color: var(--primary-color);
+        }
+
+        .chart-section {
+            margin: 30px 0;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: transform 0.3s ease, background 0.3s ease;
+            z-index: 999;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            background: var(--dark-accent);
+        }
+
+        footer {
+            background: white;
+            color: #666;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .indicator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .success-factors {
+                grid-template-columns: 1fr;
+            }
+
+            .adaptation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 1.2em;
+            }
+
+            .section-content {
+                padding: 20px;
+            }
+
+            .comparison-table {
+                font-size: 0.9em;
+            }
+
+            .comparison-table th, .comparison-table td {
+                padding: 8px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .comparison-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .indicator-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">🇧🇷 vs 🇨🇳</span>
+                <h1>Brasil vs China: Lições de Desenvolvimento Social e Político</h1>
+                <p>Uma análise comparativa para inspirar políticas públicas brasileiras adaptadas do modelo chinês</p>
+            </div>
+        </header>
+
+        <section class="comparison-grid">
+            <div class="country-card brazil-card">
+                <div class="country-flag">🇧🇷</div>
+                <div class="country-name">Brasil</div>
+                <div class="population">215.3 milhões habitantes</div>
+                <div class="gdp">PIB: US$ 2.1 trilhões</div>
+                <div class="area">Área: 8.5 milhões km²</div>
+            </div>
+
+            <div class="country-card china-card">
+                <div class="country-flag">🇨🇳</div>
+                <div class="country-name">China</div>
+                <div class="population">1.425 bilhões habitantes</div>
+                <div class="gdp">PIB: US$ 19.3 trilhões</div>
+                <div class="area">Área: 9.6 milhões km²</div>
+            </div>
+        </section>
+
+        <section class="indicator-grid">
+            <div class="indicator-card">
+                <div class="indicator-title">📊 IDH (2023)</div>
+                <div class="indicator-comparison">
+                    <span class="brazil-value">Brasil: 0.760</span>
+                    <span class="china-value">China: 0.781</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="brazil-progress" style="width: 96%"></div>
+                    <div class="china-progress" style="width: 98%"></div>
+                </div>
+            </div>
+
+            <div class="indicator-card">
+                <div class="indicator-title">📚 Alfabetização</div>
+                <div class="indicator-comparison">
+                    <span class="brazil-value">Brasil: 93.2%</span>
+                    <span class="china-value">China: 97.9%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="brazil-progress" style="width: 95%"></div>
+                    <div class="china-progress" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="indicator-card">
+                <div class="indicator-title">🏥 Expectativa de Vida</div>
+                <div class="indicator-comparison">
+                    <span class="brazil-value">Brasil: 75.9 anos</span>
+                    <span class="china-value">China: 78.4 anos</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="brazil-progress" style="width: 97%"></div>
+                    <div class="china-progress" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="indicator-card">
+                <div class="indicator-title">💰 PIB per capita</div>
+                <div class="indicator-comparison">
+                    <span class="brazil-value">Brasil: US$ 9,734</span>
+                    <span class="china-value">China: US$ 13,543</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="brazil-progress" style="width: 72%"></div>
+                    <div class="china-progress" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="indicator-card">
+                <div class="indicator-title">🎓 Educação Superior</div>
+                <div class="indicator-comparison">
+                    <span class="brazil-value">Brasil: 24.2%</span>
+                    <span class="china-value">China: 54.0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="brazil-progress" style="width: 45%"></div>
+                    <div class="china-progress" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div class="indicator-card">
+                <div class="indicator-title">🚄 Infraestrutura</div>
+                <div class="indicator-comparison">
+                    <span class="brazil-value">Brasil: 38.1 pts</span>
+                    <span class="china-value">China: 79.3 pts</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="brazil-progress" style="width: 48%"></div>
+                    <div class="china-progress" style="width: 100%"></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏛️</span>
+                <h2>Sistemas Políticos: Diferenças Fundamentais</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Brasil</th>
+                            <th>China</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sistema de Governo</strong></td>
+                            <td>República Presidencialista</td>
+                            <td>República Popular Socialista</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Partidos Políticos</strong></td>
+                            <td>Multipartidário (30+ partidos)</td>
+                            <td>Sistema unipartidário (PCCh)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Eleições</strong></td>
+                            <td>Diretas, universais, periódicas</td>
+                            <td>Indiretas para cargos executivos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Planejamento</strong></td>
+                            <td>Plano Plurianual (4 anos)</td>
+                            <td>Planos Quinquenais (5 anos)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Estabilidade</strong></td>
+                            <td>Alta instabilidade política</td>
+                            <td>Continuidade estratégica</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Lições Políticas para o Brasil:</h3>
+                <ul>
+                    <li><strong>Planejamento de Longo Prazo:</strong> Criar planos estratégicos decadais com objetivos claros para educação, saúde e infraestrutura</li>
+                    <li><strong>Continuidade Administrativa:</strong> Mecanismos para manter projetos essenciais entre diferentes governos</li>
+                    <li><strong>Foco em Resultados:</strong> Métricas claras de desempenho para políticas públicas</li>
+                    <li><strong>Gestão por Competências:</strong> Profissionalização do serviço público baseada em mérito</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏗️</span>
+                <h2>Desenvolvimento Econômico e Infraestrutura</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="chart-section">
+                    <h3>Crescimento do PIB Comparativo (1980-2023)</h3>
+                    <div class="chart-container">
+                        <canvas id="gdpChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+
+                <h3>Modelo Chinês de Sucesso:</h3>
+                <div class="success-factors">
+                    <div class="factor-card">
+                        <div class="factor-icon">🏭</div>
+                        <div class="factor-title">Zonas Econômicas Especiais</div>
+                        <p>Criação de zonas com incentivos fiscais e regulatórios para atrair investimento estrangeiro e tecnologia</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon">🚄</div>
+                        <div class="factor-title">Infraestrutura Massiva</div>
+                        <p>Investimento estratégico em transportes, energia e comunicações como base para crescimento</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon">🔬</div>
+                        <div class="factor-title">Inovação e Tecnologia</div>
+                        <p>Foco em P&D, transferência de tecnologia e formação de capital humano qualificado</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon">🌏</div>
+                        <div class="factor-title">Abertura Controlada</div>
+                        <p>Liberalização econômica gradual com proteção de setores estratégicos nacionais</p>
+                    </div>
+                </div>
+
+                <h3>Adaptação para o Brasil:</h3>
+                <ul>
+                    <li><strong>Zonas de Desenvolvimento:</strong> Criar polos econômicos especiais no Norte e Nordeste com incentivos fiscais</li>
+                    <li><strong>Investimento em Infraestrutura:</strong> Plano nacional de modernização logística e energética</li>
+                    <li><strong>Política Industrial:</strong> Setores estratégicos com proteção temporária e incentivos</li>
+                    <li><strong>Atração de Investimentos:</strong> Ambiente regulatório estável e previsível</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📚</span>
+                <h2>Educação: O Pilar do Desenvolvimento</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Indicador Educacional</th>
+                            <th>Brasil</th>
+                            <th>China</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Investimento no PIB</strong></td>
+                            <td>6.0%</td>
+                            <td>4.1%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anos Médios de Estudo</strong></td>
+                            <td>7.8 anos</td>
+                            <td>10.2 anos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Universidades Top 500</strong></td>
+                            <td>8 instituições</td>
+                            <td>81 instituições</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Engenheiros/ano</strong></td>
+                            <td>50.000</td>
+                            <td>1.3 milhão</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Estratégia Educacional Chinesa:</h3>
+                <ul>
+                    <li><strong>Foco em STEM:</strong> 40% dos graduados em ciências e engenharia</li>
+                    <li><strong>Educação Básica Universal:</strong> 99% de cobertura no ensino fundamental</li>
+                    <li><strong>Formação de Professores:</strong> Salários dignos e formação contínua obrigatória</li>
+                    <li><strong>Universidades Elite:</strong> Investimento concentrado em centros de excelência</li>
+                </ul>
+
+                <h3>Lições para o Brasil:</h3>
+                <ul>
+                    <li><strong>Reforma Curricular:</strong> Maior ênfase em matemática, ciências e tecnologia</li>
+                    <li><strong>Valorização Docente:</strong> Salários competitivos e carreira atrativa</li>
+                    <li><strong>Universidades de Pesquisa:</strong> Centros de excelência com autonomia e recursos</li>
+                    <li><strong>Ensino Técnico:</strong> Expansão e modernização da educação profissional</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏥</span>
+                <h2>Sistema de Saúde Universal</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="success-factors">
+                    <div class="factor-card">
+                        <div class="factor-icon">🏥</div>
+                        <div class="factor-title">Sistema Chinês</div>
+                        <p>Cobertura universal de 95% com sistema misto público-privado e forte atenção primária</p>
+                    </div>
+                    <div class="factor-card">
+                        <div class="factor-icon">⚕️</div>
+                        <div class="factor-title">Sistema Brasileiro</div>
+                        <p>SUS universal com cobertura 100%, mas com desafios de financiamento e gestão</p>
+                    </div>
+                </div>
+
+                <h3>Inovações Chinesas:</h3>
+                <ul>
+                    <li><strong>Telemedicina em Massa:</strong> 600+ milhões de consultas remotas anuais</li>
+                    <li><strong>Inteligência Artificial:</strong> Diagnóstico assistido por IA em hospitais</li>
+                    <li><strong>Medicina Preventiva:</strong> Foco em saúde digital e monitoramento</li>
+                    <li><strong>Formação Médica:</strong> 100.000 novos médicos por ano</li>
+                </ul>
+
+                <h3>Adaptações para o Brasil:</h3>
+                <ul>
+                    <li><strong>Digitalização do SUS:</strong> Prontuários eletrônicos integrados nacionalmente</li>
+                    <li><strong>Atenção Primária Fortalecida:</strong> Agentes comunitários equipados com tecnologia</li>
+                    <li><strong>Formação de Recursos:</strong> Expansão de vagas em medicina e enfermagem</li>
+                    <li><strong>Parcerias Público-Privadas:</strong> Complementaridade sem perder universalidade</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🌾</span>
+                <h2>Reforma Agrária e Desenvolvimento Rural</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Reforma Agrária Chinesa (1978-1984):</h3>
+                <ul>
+                    <li><strong>Sistema de Responsabilidade Familiar:</strong> Camponeses ganharam autonomia sobre terras</li>
+                    <li><strong>Modernização Agrícola:</strong> Investimento em tecnologia e irrigação</li>
+                    <li><strong>Cooperativismo:</strong> Associação voluntária para escala econômica</li>
+                    <li><strong>Resultado:</strong> Produtividade agrícola aumentou 300% em 6 anos</li>
+                </ul>
+
+                <h3>Realidade Brasileira:</h3>
+                <ul>
+                    <li><strong>Concentração de Terras:</strong> 1% dos proprietários detém 50% das terras</li>
+                    <li><strong>Produtividade Baixa:</strong> Setor agrícola com baixo investimento tecnológico</li>
+                    <li><strong>Conflitos Fundiários:</strong> Milhares de famílias sem terra</li>
+                    <li><strong>Potencial:</strong> Brasil pode ser celeiro mundial sustentável</li>
+                </ul>
+
+                <h3>Propostas de Adaptação:</h3>
+                <ul>
+                    <li><strong>Regularização Fundiária:</strong> Programa emergencial de titulação</li>
+                    <li><strong>Crédito Rural Moderno:</strong> Financiamento para tecnologia sustentável</li>
+                    <li><strong>Cooperativas 4.0:</strong> Agricultura digital e agregação de valor</li>
+                    <li><strong>Assentamentos Modelo:</strong> Unidades produtivas com tecnologia e gestão profissional</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🎯</span>
+                <h2>Adaptações Brasileiras: 10 Lições Práticas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="adaptation-grid">
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">1</div>
+                        <div class="adaptation-title">Planejamento Estratégico Decadal</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> Planos Quinquenais com metas claras e monitoramento constante
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> Plano Brasil 2030 com objetivos educacionais, de saúde e infraestrutura, independentemente de governos
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">2</div>
+                        <div class="adaptation-title">Zonas de Desenvolvimento Regional</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> ZEEs com benefícios fiscais para atrair indústrias e tecnologia
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> Zonas de Desenvolvimento Sustentável no Nordeste e Amazônia com incentivos para indústrias verdes
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">3</div>
+                        <div class="adaptation-title">Revolução Eduacional STEM</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> 40% dos graduados em engenharia e ciências
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> Programa Nacional de Engenharia com bolsas, laboratórios modernos e parceria com empresas
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">4</div>
+                        <div class="adaptation-title">Modernização Agrícola Digital</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> Agricultura de precisão e cooperativas tecnológicas
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> AgroTech Brasil: crédito para drones, sensores e gestão digital em pequenas propriedades
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">5</div>
+                        <div class="adaptation-title">Infraestrutura Logística Integrada</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> 38.000 km de ferrovias de alta velocidade
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> Ferrovia Transcontinental conectando Atlântico-Pacífico com hub logístico no centro do país
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">6</div>
+                        <div class="adaptation-title">Saúde Digital Universal</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> Telemedicina e IA diagnóstica em todo sistema
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> SUS Digital: prontuário único, consultas remotas e monitoramento preventivo
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">7</div>
+                        <div class="adaptation-title">Cidades Inteligentes</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> 500 cidades com gestão digital e serviços integrados
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> Programa Cidades 4.0 com transporte, segurança e serviços urbanos digitalizados
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">8</div>
+                        <div class="adaptation-title">Economia Verde Industrial</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> Maior investidor mundial em energias renováveis
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> Brasil Verde: indústrias de hidrogênio, biocombustíveis e energia solar
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">9</div>
+                        <div class="adaptation-title">Formação Profissional Massiva</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> 30 milhões em formação técnica- profissional por ano
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> SENAI Digital: 5 milhões de profissionais formados anualmente em tecnologias emergentes
+                        </div>
+                    </div>
+
+                    <div class="adaptation-card">
+                        <div class="adaptation-number">10</div>
+                        <div class="adaptation-title">Gestão Pública por Resultados</div>
+                        <div class="chinese-model">
+                            <strong>Modelo Chinês:</strong> Servidores avaliados por métricas claras de desempenho
+                        </div>
+                        <div class="brazil-adaptation">
+                            <strong>Adaptação Brasileira:</strong> Nova Gestão Pública: KPIs para cada ministério e transparência total de resultados
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚖️</span>
+                <h2>Considerações e Adaptações Culturais</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Desafios de Adaptação:</h3>
+                <ul>
+                    <li><strong>Sistema Democrático:</strong> Modelos chineses precisam ser adaptados para contexto multipartidário</li>
+                    <li><strong>Direitos Humanos:</strong> Respeito às liberdades individuais e sociais brasileiras</li>
+                    <li><strong>Cultura Política:</strong> Transparência e controle social como princípios fundamentais</li>
+                    <li><strong>Diversidade Regional:</strong> Políticas que respeitem as diferenças regionais brasileiras</li>
+                </ul>
+
+                <h3>Vantagens Brasileiras:</h3>
+                <ul>
+                    <li><strong>Democracia Consolidada:</strong> Estabilidade institucional e liberdades individuais</li>
+                    <li><strong>Diversidade Cultural:</strong> Riqueza de perspectives e inovação criativa</li>
+                    <li><strong>Recursos Naturais:</strong> Potencial único em biodiversidade e energias renováveis</li>
+                    <li><strong>Sociedade Civil Forte:</strong> Organizações sociais vibrantes e engajadas</li>
+                </ul>
+
+                <h3>Estratégia de Implementação:</h3>
+                <ul>
+                    <li><strong>Diálogo Nacional:</strong> Consenso político amplo sobre estratégias de longo prazo</li>
+                    <li><strong>Pilotos Regionais:</strong> Testar modelos em estados específicos antes de expansão</li>
+                    <li><strong>Cooperação Internacional:</strong> Parcerias tecnológicas e educacionais com China</li>
+                    <li><strong>Monitoramento Contínuo:</strong> Avaliação constante e ajustes baseados em resultados</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Instituto Brasil-China de Estudos Estratégicos. Todos os direitos reservados.</p>
+            <p>Fonte: Dados do Banco Mundial, UNESCO, PNUD, Ministério das Relações Exteriores e análise de políticas públicas comparadas.</p>
+            <p><strong>Nota:</strong> Este relatório apresenta análises comparativas para inspiração, respeitando as particularidades e soberania de cada nação.</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo: Brasil vs China</h2>
+            <div class="summary-content">
+                <h3>🎯 Principais Insights:</h3>
+                <ul>
+                    <li><strong>Planejamento de Longo Prazo:</strong> China usa planos quinquenais com metas claras; Brasil precisa de visão estratégica decadal</li>
+                    <li><strong>Educação como Prioridade:</strong> China forma 1.3 milhão de engenheiros/ano vs 50.000 no Brasil</li>
+                    <li><strong>Infraestrutura como Base:</strong> China investe 8% do PIB em infraestrutura vs 1.2% no Brasil</li>
+                    <li><strong>Inovação e Tecnologia:</strong> 81 universidades chinesas no Top 500 vs 8 brasileiras</li>
+                </ul>
+
+                <h3>🚀 10 Adaptações Prioritárias:</h3>
+                <ol>
+                    <li>Plano Brasil 2030 com objetivos nacionais unificados</li>
+                    <li>Zonas de Desenvolvimento Sustentável no Nordeste e Amazônia</li>
+                    <li>Revolução educacional focada em STEM e tecnologia</li>
+                    <li>Modernização agrícola com tecnologia e cooperativismo</li>
+                    <li>Infraestrutura logística integrada ferrovias-portos</li>
+                    <li>SUS Digital com telemedicina e IA diagnóstica</li>
+                    <li>Cidades inteligentes com serviços urbanos digitalizados</li>
+                    <li>Economia verde industrial (hidrogênio, renováveis)</li>
+                    <li>Formação profissional massiva em tecnologias emergentes</li>
+                    <li>Gestão pública por resultados e transparência</li>
+                </ol>
+
+                <h3>⚖️ Adaptação Cultural:</h3>
+                <ul>
+                    <li>Modelos chineses adaptados para democracia multipartidária</li>
+                    <li>Respeito aos direitos humanos e liberdades individuais</li>
+                    <li>Transparência e controle social como princípios</li>
+                    <li>Valorização da diversidade cultural e regional brasileira</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle de Seções
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+        }
+
+        // Animação de Barras de Progresso
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-bar > div');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        }
+
+        // Controle do Modal
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Gráfico de PIB
+        function drawGDPChart() {
+            const canvas = document.getElementById('gdpChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Dados do PIP (Índice com base em 1980 = 100)
+            const brazilData = [100, 105, 110, 108, 115, 125, 140, 155, 165, 175, 190, 210, 235, 265, 310, 380];
+            const chinaData = [100, 120, 145, 175, 210, 250, 295, 345, 400, 460, 530, 615, 720, 850, 1000, 1200];
+            const years = ['1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2018', '2019', '2020', '2021', '2022', '2023'];
+
+            // Limpa canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Configurações
+            const padding = 40;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+
+            // Encontra valores máximos
+            const maxValue = Math.max(...brazilData, ...chinaData);
+            const valueRange = maxValue - 100;
+
+            // Desenha eixos
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Desenha linhas de dados
+            const drawLine = (data, color) => {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                data.forEach((value, index) => {
+                    const x = padding + (index / (data.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - 100) / valueRange) * chartHeight;
+
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+
+                ctx.stroke();
+
+                // Desenha pontos
+                data.forEach((value, index) => {
+                    const x = padding + (index / (data.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - 100) / valueRange) * chartHeight;
+
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 4, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            };
+
+            drawLine(brazilData, '#2E7D32');
+            drawLine(chinaData, '#C62828');
+
+            // Desenha legendas
+            ctx.fillStyle = '#2E7D32';
+            ctx.fillRect(width - 150, 20, 15, 15);
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.fillText('Brasil', width - 130, 32);
+
+            ctx.fillStyle = '#C62828';
+            ctx.fillRect(width - 150, 45, 15, 15);
+            ctx.fillStyle = '#333';
+            ctx.fillText('China', width - 130, 57);
+
+            // Desenha labels dos anos
+            ctx.fillStyle = '#666';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'center';
+
+            years.forEach((year, index) => {
+                if (index % 2 === 0) { // Mostra a cada 2 anos para não ficar lotado
+                    const x = padding + (index / (years.length - 1)) * chartWidth;
+                    ctx.fillText(year, x, height - padding + 20);
+                }
+            });
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima barras de progresso
+            animateProgressBars();
+
+            // Desenha gráfico de PIB
+            drawGDPChart();
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section.active');
+            if (firstSection) {
+                firstSection.classList.add('active');
+            }
+        });
+
+        // Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
