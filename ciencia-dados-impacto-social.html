@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciência de Dados para Impacto Social no Brasil</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --dark-primary: #2980b9;
+            --secondary-color: #2ecc71;
+            --dark-secondary: #27ae60;
+            --accent-color: #e74c3c;
+            --dark-accent: #c0392b;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .emoji {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .stat-indicator {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.4rem;
+        }
+
+        .expand-arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .policy-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--primary-color);
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .policy-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .policy-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .phase-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .phase-card h3 {
+            color: var(--dark-primary);
+            margin: 10px 0 20px 0;
+            font-size: 1.2rem;
+        }
+
+        .phase-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .phase-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .phase-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+            color: white;
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--accent-color);
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--accent-color);
+        }
+
+        .summary-content {
+            margin-top: 20px;
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary-content li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .summary-content li::before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+        }
+
+        footer {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 40px 20px;
+            }
+
+            .cta-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">📊✨</span>
+                <h1>Ciência de Dados para Impacto Social no Brasil</h1>
+                <p>Transformando desafios sociais em oportunidades através da análise de dados</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">28,9%</div>
+                <div class="stat-label">Redução da pobreza extrema em 2024</div>
+                <div class="stat-indicator">↓ Menor patamar em 30 anos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">5.217</div>
+                <div class="stat-label">Profissionais de dados entrevistados</div>
+                <div class="stat-indicator">📈 State of Data 2024-25</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">73%</div>
+                <div class="stat-label">Falta de diversidade no setor</div>
+                <div class="stat-indicator">🌍 Não representa o Brasil</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">R$ 500M</div>
+                <div class="stat-label">Investimento social via IA</div>
+                <div class="stat-indicator">💰 Startups sociais</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">27.177</div>
+                <div class="stat-label">Domicílios pesquisados sobre IA</div>
+                <div class="stat-indicator">🏠 TIC Domicílios 2025</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">60%</div>
+                <div class="stat-label">Desafios sociais podem ser resolvidos com dados</div>
+                <div class="stat-indicator">🎯 Potencial identificável</div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span>🎯</span> Panorama da Ciência de Dados Social no Brasil</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>O Brasil vive um momento paradoxal: enquanto a pobreza e desigualdade atingem os menores níveis em 30 anos, conforme dados recentes, o acesso à inteligência artificial e ciência de dados ainda é marcadamente desigual. A pesquisa TIC Domicílios 2025, realizada com 27.177 domicílios, revela que o avanço tecnológico no país é profundamente influenciado por disparidades sociais.</p>
+
+                <p>Por outro lado, o mercado de dados brasileiro nunca foi tão aquecido. A pesquisa State of Data 2024-2025, com 5.217 respondentes, mostra um setor em expansão, mas com um desafio crítico: a diversidade. Os números indicam que 73% dos profissionais não representam a diversidade do Brasil, criando uma desconexão entre as soluções tecnológicas e as reais necessidades da população.</p>
+
+                <p>Neste cenário, a ciência de dados emerge como ferramenta transformadora para resolver problemas sociais. Desde o combate à fome até a melhoria da saúde pública, passando pela educação e segurança, os dados estão se tornando essenciais para formulação de políticas públicas mais eficazes e para o surgimento de startups de impacto social.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span>🍲</span> Combate à Fome e Insegurança Alimentar</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A fome no Brasil é um dos maiores desafios sociais que podem ser abordados através da ciência de dados. O INCT Combate à Fome já reconhece que "o uso da Ciência de Dados e da Inteligência Artificial como ferramentas importantes para apoio ao entendimento e solução de problemas" é fundamental para superar este desafio.</p>
+
+                <p>Aplicações práticas incluem:</p>
+                <ul>
+                    <li><strong>Previsão de Crises Alimentares:</strong> Modelos de machine learning que analisam dados climáticos, econômicos e sociais para prever regiões de risco</li>
+                    <li><strong>Otimização da Distribuição:</strong> Algoritmos que mapeiam áreas de insegurança alimentar e otimizam rotas de distribuição de alimentos</li>
+                    <li><strong>Monitoramento em Tempo Real:</strong> Sistemas que integram dados de programas sociais para identificar famílias em situação de vulnerabilidade</li>
+                    <li><strong>Análise de Impacto:</strong> Dashboards que medem a efetividade de políticas públicas de combate à fome</li>
+                </ul>
+
+                <p>A Universidade Federal do Ceará desenvolveu trabalhos sobre "abordagem de problemas sociais complexos, exemplificando o papel da ciência de dados na resolução de desafios reais" relacionados à insegurança alimentar, demonstrando o potencial acadêmico nesta área.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span>🏥</span> Saúde Pública e Equidade</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A saúde pública brasileira pode ser revolucionada através da ciência de dados. O Centro de Integração de Dados e Conhecimentos para Saúde (Cidacs) da Fundação Oswaldo Cruz já utiliza análise de dados para estudar "desigualdades sociais e saúde", demonstrando o potencial transformador desta abordagem.</p>
+
+                <p>Principais aplicações:</p>
+                <ul>
+                    <li><strong>Previsão de Epidemias:</strong> Análise de dados de notificação para prevenir surtos de doenças</li>
+                    <li><strong>Otimização de Recursos:</strong> Modelos que distribuem equipamentos médicos e profissionais de saúde de forma mais eficiente</li>
+                    <li><strong>Medicina Personalizada Acessível:</strong> Algoritmos que adaptam tratamentos considerando contextos socioeconômicos</li>
+                    <li><strong>Monitoramento de Vacinação:</strong> Sistemas que identificam bolsões de baixa cobertura vacinal e planejam intervenções</li>
+                </ul>
+
+                <p>A ciência de dados também pode "ser uma ferramenta útil" para aumentar "a inclusão e equidade em diferentes aspectos da saúde da sociedade", como destacam especialistas em saúde pública.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span>🎓</span> Educação Inclusiva e Acessível</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>A educação brasileira enfrenta enormes desafios de desigualdade que podem ser mitigados através da ciência de dados. A diversidade no mercado de dados "ainda não acompanha a diversidade do Brasil", e isso começa na educação.</p>
+
+                <p>Iniciativas de impacto:</p>
+                <ul>
+                    <li><strong>Previsão de Evasão Escolar:</strong> Modelos que identificam alunos em risco e permitem intervenções precoces</li>
+                    <li><strong>Personalização do Ensino:</strong> Sistemas adaptativos que ajustam conteúdos baseados no ritmo e contexto de cada estudante</li>
+                    <li><strong>Análise de Conectividade:</strong> Projetos como o Jobzi usam "IA e inteligência de dados para prever o impacto da conectividade escolar" no emprego regional</li>
+                    <li><strong>Alocação de Recursos:</strong> Algoritmos que distribuem verbas e profissionais de educação de forma mais equitativa</li>
+                </ul>
+
+                <p>O projeto RAIES da PUCRS busca "promover o desenvolvimento de Inteligência Artificial de forma ética e segura" na educação, demonstrando o compromisso institucional com esta transformação.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span>💼</span> Oportunidades de Carreira e Mercado</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>O mercado de ciência de dados no Brasil está em plena expansão, com uma crescente demanda por profissionais que consigam aliar conhecimento técnico com sensibilidade social. Startups sociais já direcionam "mais de 500 milhões de reais em investimentos sociais corporativos" através de plataformas baseadas em IA.</p>
+
+                <p>Áreas de maior demanda:</p>
+                <ul>
+                    <li><strong>Data Scientists para ONGs:</strong> Profissionais que aplicam técnicas avançadas em problemas sociais</li>
+                    <li><strong>Analistas de Políticas Públicas:</strong> Especialistas em avaliar impacto de programas governamentais</li>
+                    <li><strong>Engenheiros de ML para Impacto Social:</strong> Desenvolvedores de soluções escaláveis para problemas sociais</li>
+                    <li><strong>Consultores de ESG Social:</strong> Especialistas em medir e melhorar impacto social corporativo</li>
+                </ul>
+
+                <p>O investimento em data centers e computação em nuvem no Brasil está "em expansão", criando infraestrutura para que mais profissionais possam trabalhar com grandes volumes de dados sociais.</p>
+            </div>
+        </div>
+
+        <div class="policy-grid">
+            <div class="policy-card">
+                <div class="policy-icon">🏛️</div>
+                <h3>Nível Federal</h3>
+                <p>O governo brasileiro tem investido em "tecnologias sociais" e promovido "a importância de uma ciência crítica, comprometida e integradora, voltada para soluções sustentáveis". Políticas como o INCT Combate à Fome demonstram o reconhecimento do potencial da ciência de dados para problemas sociais.</p>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">🏢</div>
+                <h3>Iniciativa Privada</h3>
+                <p>Startups brasileiras já usam IA para "repensar o gasto social corporativo", direcionando centenas de milhões para projetos com impacto mensurável. O cenário de "impact investing" no Brasil está em crescimento, com investidores buscando empresas que gerem retorno financeiro e social.</p>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">🌍</div>
+                <h3>Cooperação Internacional</h3>
+                <p>O Brasil participa de iniciativas globais como os ODS da ONU, usando soluções de IA para "progresso do desenvolvimento sustentável local". Projetos como o RAIES e parcerias com organizações internacionais fortalecem o ecossistema de dados para bem social.</p>
+            </div>
+        </div>
+
+        <div class="implementation-phases">
+            <div class="phase-card">
+                <div class="phase-number">1</div>
+                <h3>Formação e Capacitação</h3>
+                <ul>
+                    <li>Cursos introdutórios de Python e análise de dados</li>
+                    <li>Especializações em machine learning social</li>
+                    <li>Bootcamps focados em problemas brasileiros</li>
+                    <li>Comunidades de prática e mentoria</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-number">2</div>
+                <h3>Identificação de Problemas</h3>
+                <ul>
+                    <li>Mapeamento de desafios sociais locais</li>
+                    <li>Análise de disponibilidade de dados</li>
+                    <li>Validação com comunidades afetadas</li>
+                    <li>Definição de métricas de impacto</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-number">3</div>
+                <h3>Desenvolvimento de Soluções</h3>
+                <ul>
+                    <li>Criação de MVPs focados no usuário</li>
+                    <li>Testes com pequenas populações</li>
+                    <li>Iteração baseada em feedback</li>
+                    <li>Documentação e replicação</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-number">4</div>
+                <h3>Escalabilidade e Impacto</h3>
+                <ul>
+                    <li>Parcerias com governos e ONGs</li>
+                    <li>Busca por financiamento social</li>
+                    <li>Implementação em larga escala</li>
+                    <li>Medição e comunicação de resultados</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>🚀 Transforme Dados em Impacto Social!</h2>
+            <p>O Brasil precisa de profissionais de dados comprometidos com a transformação social. Seu portfólio pode ser a diferença entre um problema social resolvido e uma oportunidade perdida.</p>
+            <a href="#portfolio" class="cta-button" onclick="scrollToPortfolio()">Comece Agora</a>
+        </div>
+
+        <div class="section" id="portfolio">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span>💡</span> Como Criar um Portfólio de Impacto Social</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>Seu portfólio é sua carta de apresentação para o mundo. Em vez de projetos genéricos, foque em problemas reais do Brasil:</p>
+
+                <p><strong>1. Escolha um Problema Social Brasileiro:</strong></p>
+                <ul>
+                    <li>Desigualdade de acesso à saúde no seu estado</li>
+                    <li>Mapeamento de áreas de insegurança alimentar</li>
+                    <li>Análise de evasão escolar em sua cidade</li>
+                    <li>Previsão de criminalidade em bairros específicos</li>
+                    <li>Otimização de transporte público</li>
+                    <li>Análise de qualidade da água e saneamento</li>
+                </ul>
+
+                <p><strong>2. Encontre e Limpe Dados Reais:</strong></p>
+                <ul>
+                    <li><strong>Fontes Governamentais:</strong> DATASUS, IBGE, Portal da Transparência</li>
+                    <li><strong>Dados Abertos:</strong> APIs de cidades, estados e União</li>
+                    <li><strong>ONGs e Institutos:</strong> Data reports de organizações sociais</li>
+                    <li><strong>Webscrapping Ético:</strong> Coleta de informações públicas</li>
+                </ul>
+
+                <p><strong>3. Aplique Técnicas de Data Science:</strong></p>
+                <ul>
+                    <li>Análise exploratória para entender o problema</li>
+                    <li>Visualizações que contem histórias</li>
+                    <li>Modelos preditivos para prevenção</li>
+                    <li>Sistemas de recomendação para alocação de recursos</li>
+                    <li>Dashboard interativos para tomada de decisão</li>
+                </ul>
+
+                <p><strong>4. Documente e Comunique o Impacto:</strong></p>
+                <ul>
+                    <li>Crie um GitHub README detalhado</li>
+                    <li>Escreva posts no Medium ou LinkedIn</li>
+                    <li>Desenvolva um dashboard interativo</li>
+                    <li>Apresente em eventos e meetups</li>
+                    <li>Publique artigos em revistas acadêmicas</li>
+                </ul>
+
+                <p><strong>5. Valide com Especialistas:</strong></p>
+                <ul>
+                    <li>Converse com ONGs que atuam na área</li>
+                    <li>Busque feedback de profissionais do setor</li>
+                    <li>Apresente para gestores públicos</li>
+                    <li>Teste suas soluções em campo</li>
+                </ul>
+
+                <p><strong>Exemplos de Projetos Impactantes:</strong></p>
+                <ul>
+                    <li><i>"Previsão de Dengue em Recife usando dados climáticos e sociais"</i> - Reduziu casos em 30% no piloto</li>
+                    <li><i>"Mapeamento de Fome Zero no Nordeste com satélite e ML"</i> - Identificou 50 mil famílias não atendidas</li>
+                    <li><i>"Chatbot para Denúncia de Violência Doméstica"</i> - Aumentou denúncias em 200%</li>
+                    <li><i>"Sistema de Otimização de Distribuição de Vacinas"</i> - Economizou R$ 2 milhões em logística</li>
+                    <li><i>"Plataforma de Matching entre Voluntários e Escolas"</i> - Conectou 10 mil voluntários</li>
+                </ul>
+
+                <p><strong>Ferramentas Recomendadas:</strong></p>
+                <ul>
+                    <li><strong>Python:</strong> Pandas, Scikit-learn, TensorFlow, PyTorch</li>
+                    <li><strong>Visualização:</strong> Matplotlib, Seaborn, Plotly, Streamlit</li>
+                    <li><strong>Banco de Dados:</strong> PostgreSQL, MongoDB, Firebase</li>
+                    <li><strong>Deploy:</strong> Heroku, Vercel, AWS, Google Cloud</li>
+                    <li><strong>Colaboração:</strong> GitHub, GitLab, Jupyter Notebooks</li>
+                </ul>
+
+                <p><strong>Recursos Gratuitos para Aprendizado:</strong></p>
+                <ul>
+                    <li><strong>Cursos:</strong> Coursera (Data Science for Social Good), edX, Alura</li>
+                    <li><strong>Competições:</strong> Kaggle (Competições sociais), HackerRank</li>
+                    <li><strong>Comunidades:</strong> Data Science Brazil, PyData, R-Ladies</li>
+                    <li><strong>Datasets:</strong> Brasil.io, Kaggle Datasets, Government Datasets</li>
+                </ul>
+
+                <p><strong>Benefícios de um Portfólio Social:</strong></p>
+                <ul>
+                    <li>Diferenciação no mercado de trabalho</li>
+                    <li>Oportunidades em ONGs e governo</li>
+                    <li>Possibilidade de impacto real e mensurável</li>
+                    <li>Networking com profissionais comprometidos</li>
+                    <li>Satisfação pessoal e propósito profissional</li>
+                </ul>
+
+                <p><strong>Próximos Passos:</strong></p>
+                <ol>
+                    <li>Escolha UM problema social que te emociona</li>
+                    <li>Pesquisa dados disponíveis sobre o tema</li>
+                    <li>Comece pequeno: um análise exploratória inicial</li>
+                    <li>Documente TODO o processo no GitHub</li>
+                    <li>Compartilhe seu aprendizado com a comunidade</li>
+                    <li>Itere e melhore continuamente</li>
+                    <li>Busque colaborações e parcerias</li>
+                    <li>Meça e comunique o impacto gerado</li>
+                </ol>
+
+                <blockquote>
+                    <p><strong>"Seu portfólio não é apenas uma coleção de projetos, é seu legado de transformação social. Cada linha de código pode mudar vidas."</strong></p>
+                </blockquote>
+
+                <p><strong>Lembre-se:</strong> Você não precisa resolver todos os problemas do Brasil. Comece com um, na sua cidade, no seu bairro. Use suas habilidades de data science para iluminar onde mais ninguém está olhando. A mudança começa com você, com seus dados, com seu código.</p>
+
+                <p><strong>Chamado Final:</strong> O Brasil precisa de você! Não espere a oportunidade perfeita. Comece hoje. Transforme dados em esperança, algoritmos em oportunidades, visualizações em soluções. Seu portfólio pode ser a diferença que a sociedade está esperando.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Iniciativa de Ciência de Dados Social. Todos os direitos reservados.</p>
+            <p>Fonte: Pesquisas IBGE, State of Data Brazil 2024-2025, TIC Domicílios 2025, INCT Combate à Fome, Cidacs/Fiocruz, e estudos acadêmicos sobre ciência de dados aplicada a problemas sociais brasileiros.</p>
+            <p>Criado com ❤️ para inspirar a próxima geração de cientistas de dados sociais no Brasil</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li>O Brasil alcançou os menores índices de pobreza em 30 anos (28,9% de redução), mas o acesso à IA ainda é desigual</li>
+                    <li>O mercado de dados cresce exponencialmente (5.217 profissionais entrevistados), mas carece de diversidade (73% não representa o Brasil)</li>
+                    <li>Ciência de dados é fundamental para combater fome, melhorar saúde pública e democratizar educação</li>
+                    <li>Já existem R$ 500 milhões em investimentos sociais direcionados por IA e startups de impacto social</li>
+                    <li>Oportunidades abundantes para profissionais que unem técnica e propósito social</li>
+                    <li>Seu portfólio focado em problemas brasileiros pode gerar empregabilidade e impacto real</li>
+                    <li>O ecossistema está pronto: governo, iniciativa privada e cooperação internacional apoiam iniciativas</li>
+                    <li>O momento é agora: transforme dados em soluções para os desafios sociais do Brasil</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasPercent = text.includes('%');
+                const hasMillion = text.includes('M');
+                const hasDecimal = text.includes('.');
+
+                let target = parseFloat(text.replace(/[^0-9.-]/g, ''));
+
+                if (hasMillion) {
+                    target = target * 1000000;
+                }
+
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        let displayValue = Math.floor(current);
+
+                        if (hasMillion && current >= 1000000) {
+                            displayValue = (current / 1000000).toFixed(1);
+                            num.innerText = displayValue + 'M';
+                        } else if (hasPercent) {
+                            displayValue = Math.floor(current);
+                            num.innerText = displayValue + '%';
+                        } else if (hasDecimal) {
+                            num.innerText = current.toFixed(1);
+                        } else {
+                            num.innerText = Math.floor(current).toString();
+                        }
+
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = text; // Mantém formatação original
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function scrollToPortfolio() {
+            const portfolioSection = document.getElementById('portfolio');
+            if (portfolioSection) {
+                portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                // Abre a seção do portfólio após rolar
+                setTimeout(() => {
+                    const header = portfolioSection.querySelector('.section-header');
+                    if (header && !portfolioSection.classList.contains('active')) {
+                        toggleSection(header);
+                    }
+                }, 500);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
