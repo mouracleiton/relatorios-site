@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realidade dos Profissionais de Segurança Pública</title>
+    <style>
+        :root {
+            --primary-color: #1e3a8a;
+            --dark-primary: #1e40af;
+            --secondary-color: #3b82f6;
+            --accent-color: #ef4444;
+            --warning-color: #f59e0b;
+            --danger-color: #dc2626;
+            --dark-color: #111827;
+            --light-color: #f3f4f6;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-content p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-card.danger {
+            border-left-color: var(--danger-color);
+        }
+
+        .stat-card.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-card.danger .stat-number {
+            color: var(--danger-color);
+        }
+
+        .stat-card.warning .stat-number {
+            color: var(--warning-color);
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .stat-indicator {
+            font-size: 1.2em;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+        }
+
+        .section-header h2 {
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-header .emoji {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .expand-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .workforce-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .workforce-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .workforce-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .workforce-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .workforce-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .health-card {
+            background: #fef2f2;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--danger-color);
+        }
+
+        .health-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            background: #fee2e2;
+        }
+
+        .health-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .health-card h3 {
+            color: var(--danger-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .policies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .policy-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .policy-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .policy-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .proposals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .proposal-card {
+            background: #f0fdf4;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border-left: 5px solid #22c55e;
+        }
+
+        .proposal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            background: #dcfce7;
+        }
+
+        .proposal-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .proposal-card h3 {
+            color: #15803d;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+            text-align: center;
+        }
+
+        .urgent-box {
+            background: linear-gradient(135deg, var(--danger-color), #b91c1c);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .urgent-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .warning-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #22c55e, #15803d);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .success-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .data-table .danger {
+            background: #fee2e2;
+            color: var(--danger-color);
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .phase-card {
+            background: white;
+            border: 2px solid var(--secondary-color);
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .phase-card h3 {
+            color: var(--primary-color);
+            margin: 10px 0 20px 0;
+            font-size: 1.3em;
+        }
+
+        .phase-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .phase-card li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .phase-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: white;
+            margin-top: 60px;
+            background: var(--dark-color);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background: var(--primary-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            background: var(--dark-primary);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--danger-color);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .modal h2 {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 1.8em;
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-content li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .summary-content li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section.active .section-content {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .workforce-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policies-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .proposals-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .workforce-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .health-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">👮‍♂️</span>
+                <h1>Realidade dos Profissionais de Segurança Pública</h1>
+                <p>Análise abrangente das condições de trabalho, desafios e propostas de valorização dos agentes de segurança no Brasil</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">404.871</div>
+                <div class="stat-label">Policiais Militares ativos no Brasil</div>
+                <div class="stat-indicator">Redução de 6,8% em 10 anos</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-number">151</div>
+                <div class="stat-label">Suicídios de agentes em 2024</div>
+                <div class="stat-indicator">Principal causa de morte</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-number">584.462</div>
+                <div class="stat-label">PMs necessários (efetivo previsto)</div>
+                <div class="stat-indicator">Déficit de 179.591 profissionais</div>
+            </div>
+            <div class="stat-card danger">
+                <div class="stat-number">6.243</div>
+                <div class="stat-label">Mortes por intervenção policial em 2024</div>
+                <div class="stat-indicator">17 pessoas por dia</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-number">30%</div>
+                <div class="stat-label">Aumento de mortes de policiais em 2024</div>
+                <div class="stat-indicator">Crescimento alarmante</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">91%</div>
+                <div class="stat-label">Das tentativas de suicídio na PM</div>
+                <div class="stat-indicator">Polícia Militar concentra casos</div>
+            </div>
+        </section>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">👥</span>
+                <h2>Forças de Segurança Pública no Brasil</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Composição e Distribuição do Efetivo</h3>
+                <p>O Brasil enfrenta um déficit crônico de profissionais de segurança pública. Com uma população de aproximadamente 213 milhões de habitantes, o país necessita de mais 179,5 mil policiais militares apenas para atingir o patamar mínimo recomendado de segurança.</p>
+
+                <div class="workforce-grid">
+                    <div class="workforce-card">
+                        <div class="workforce-icon">🚔</div>
+                        <h3>Polícia Militar</h3>
+                        <p><strong>404.871</strong> profissionais ativos, representando a principal força de segurança ostensiva do país. Os estados registram queda de 6,8% no efetivo nos últimos 10 anos, passando de 434.524 para 404.871 PMs.</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">🕵️‍♂️</div>
+                        <h3>Polícia Civil</h3>
+                        <p><strong>113.899</strong> profissionais, com redução de 2% na última década. Responsáveis pela investigação criminal e atividades de inteligência. A falta de investimentos impacta diretamente a capacidade investigativa.</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">🔬</div>
+                        <h3>Peritos Criminais</h3>
+                        <p>Aproximadamente <strong>20.000</strong> peritos em todo o Brasil, com deficiência crítica em muitos estados. A ausência de profissionalização adequada compromete a qualidade das perícias e consequentemente a justiça.</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">🚒</div>
+                        <h3>Corpo de Bombeiros</h3>
+                        <p><strong>70.000</strong> bombeiros militares atuando no país, responsáveis por proteção contra incêndios, emergências médicas e salvamentos. A maioria dos estados opera com efetivos abaixo do necessário.</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">🔐</div>
+                        <h3>Agentes Penitenciários</h3>
+                        <p><strong>70.000</strong> profissionais responsáveis pela custódia de mais de 900 mil presos. Relação de 1 agente para cada 13 presos, muito acima do recomendado internacionalmente (1:5).</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">🏛️</div>
+                        <h3>Polícia Federal</h3>
+                        <p><strong>15.000</strong> agentes federais atuando em fronteiras, investigações de crimes federais e segurança pública. Sobrecarga crescente devido ao aumento de criminalidade transnacional.</p>
+                    </div>
+                </div>
+
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Instituição</th>
+                            <th>Efetivo Atual</th>
+                            <th>Déficit</th>
+                            <th>Principal Desafio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Polícia Militar</td>
+                            <td>404.871</td>
+                            <td class="danger">179.591</td>
+                            <td>Sobrecarga de plantões</td>
+                        </tr>
+                        <tr>
+                            <td>Polícia Civil</td>
+                            <td>113.899</td>
+                            <td class="danger">50.000</td>
+                            <td>Falta de estrutura investigativa</td>
+                        </tr>
+                        <tr>
+                            <td>Peritos Criminais</td>
+                            <td>20.000</td>
+                            <td class="danger">15.000</td>
+                            <td>Defasagem tecnológica</td>
+                        </tr>
+                        <tr>
+                            <td>Bombeiros Militares</td>
+                            <td>70.000</td>
+                            <td class="danger">30.000</td>
+                            <td>Equipamentos obsoletos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏥</span>
+                <h2>Crise de Saúde Mental</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>O Flagelo do Suicídio e Transtornos Psicológicos</h3>
+                <p>A saúde mental dos profissionais de segurança pública atingiu níveis críticos no Brasil. O suicídio tornou-se a principal causa de morte entre policiais, superando até mesmo as mortes em confrontos armados. A realidade revela uma profunda crise no sistema de proteção e cuidado com esses profissionais.</p>
+
+                <div class="health-grid">
+                    <div class="health-card">
+                        <div class="health-icon">😔</div>
+                        <h3>Suicídio como Principal Causa</h3>
+                        <p><strong>151 mortes em 2024</strong>, representando a maior causa de óbito entre agentes da ativa. A Polícia Militar concentra 91% das tentativas de suicídio, com o Paraná respondendo por 57% dos casos registrados entre 2020-2024.</p>
+                    </div>
+                    <div class="health-card">
+                        <div class="health-icon">📈</div>
+                        <h3>Crescimento de 26,2%</h3>
+                        <p>A taxa de suicídio entre policiais civis e militares cresceu 26,2% em 2023 em comparação com 2022. O aumento evidencia o agravamento da crise e a ineficácia das medidas preventivas atualmente adotadas.</p>
+                    </div>
+                    <div class="health-card">
+                        <div class="health-icon">🧠</div>
+                        <h3>Transtornos Não Diagnosticados</h3>
+                        <p>Estima-se que <strong>60% dos profissionais</strong> apresentam sintomas de TEPT (Transtorno de Estresse Pós-Traumático), depressão e ansiedade, mas menos de 10% recebem tratamento adequado devido ao estigma e falta de acesso.</p>
+                    </div>
+                    <div class="health-card">
+                        <div class="health-icon">💊</div>
+                        <h3>Dependência Química</h3>
+                        <p>Aproximadamente <strong>25% dos policiais</strong> enfrentam problemas com álcool e outras drogas. A pressão constante, horas extras e exposição a situações traumáticas contribuem para o aumento da dependência.</p>
+                    </div>
+                </div>
+
+                <div class="urgent-box">
+                    <h3>🚨 Ponto Crítico: Fatores Contribuintes</h3>
+                    <p>A crise de saúde mental é multifatorial: carga horária excessiva (média de 60 horas semanais), exposição diária a violência e morte, pressão hierárquica, cultura de "resistência" que desestimula a busca por ajuda psicológica, e a completa ausência de programas de prevenção e tratamento adequados.</p>
+                </div>
+
+                <div class="warning-box">
+                    <h3>⚠️ Dados Preocupantes</h3>
+                    <ul style="list-style: none; padding-left: 0; margin-top: 15px;">
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Apenas 15% das instituições possuem programas de saúde mental
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Tempo médio de atendimento psicológico: 18 meses de espera
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> 1.474 tentativas de suicídio registradas entre 2020-2024
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> 73% dos policiais não procuram ajuda por medo de represálias
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🔫</span>
+                <h2>Mortalidade e Violência</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Vitimização e Letalidade no Exercício da Função</h3>
+                <p>Os profissionais de segurança pública enfrentam risco elevado de morte e violência no exercício de suas funções. As estatísticas revelam um cenário alarmante, com aumento significativo da letalidade tanto contra os agentes quanto por parte deles.</p>
+
+                <div class="workforce-grid">
+                    <div class="workforce-card">
+                        <div class="workforce-icon">⚠️</div>
+                        <h3>Mortes de Agentes</h3>
+                        <p>Crescimento de quase <strong>30% em 2024</strong> em relação ao ano anterior. O Rio de Janeiro concentra 52% das mortes de agentes de segurança registradas no Brasil em 2025, evidenciando a crise específica no estado.</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">📍</div>
+                        <h3>Mortes por Intervenção</h3>
+                        <p><strong>6.243 mortes</strong> resultantes de intervenções policiais em 2024, representando aproximadamente 17 pessoas mortas por dia por agentes em serviço e fora dele. A queda de 2,7% em relação a 2023 ainda mantém números elevadíssimos.</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">🏥</div>
+                        <h3>Agentes Feridos</h3>
+                        <p>Estima-se que <strong>mais de 10.000 agentes</strong> sofrem ferimentos graves anualmente. A falta de equipamentos de proteção adequada e o excesso de exposição em áreas de risco contribuem para a alta incidência.</p>
+                    </div>
+                    <div class="workforce-card">
+                        <div class="workforce-icon">💀</div>
+                        <h3>Letalidade Policial</h3>
+                        <p>Nove estados registraram <strong>4.068 mortes</strong> por ação policial em 2024, média de 11 pessoas por dia. Em São Paulo, as mortes de PMs em serviço cresceram 133% entre 2022 e 2024.</p>
+                    </div>
+                </div>
+
+                <div class="urgent-box">
+                    <h3>🚨 Cenário Crítico: Armamento e Proteção</h3>
+                    <p>Apesar do aumento da violência, aproximadamente <strong>40% dos policiais</strong> operam com equipamentos de proteção obsoletos ou inadequados. A falta de investimentos em coletes balísticos modernos, veículos apropriados e tecnologia de comunicação aumenta exponencialmente o risco de mortalidade.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏛️</span>
+                <h2>Políticas Públicas Existentes</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Programas Governamentais de Apoio</h3>
+                <p>As políticas públicas atuais demonstram-se insuficientes para enfrentar a magnitude dos problemas enfrentados pelos profissionais de segurança pública. A maioria das iniciativas carece de recursos adequados, planejamento estratégico e acompanhamento eficaz.</p>
+
+                <div class="policies-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">💊</div>
+                        <h3>Programa de Saúde Mental</h3>
+                        <p>Implementado de forma limitada em poucos estados, oferece atendimento psicológico básico. Carece de estrutura adequada, profissionais especializados e cobertura nacional. A maioria dos programas atende menos de 5% do efetivo.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🛡️</div>
+                        <h3>Seguro de Vida</h3>
+                        <p>Cobertura limitada que varia entre estados. Em muitos casos, os valores pagos são insuficientes para amparar as famílias. A burocracia para recebimento dos benefícios excessivamente demora anos.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🏥</div>
+                        <h3>Aposentadoria Especial</h3>
+                        <p>Tempo reduzido de contribuição (25-30 anos), mas com critérios restritivos. Muitos agentes não conseguem comprovar os requisitos de exposição a risco, sendo negado o benefício.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">📚</div>
+                        <h3>Capacitação Continuada</h3>
+                        <p>Programas de treinamento esporádicos e descontinuados. Falta investimento em formação humanística, inteligência emocional e preparação para lidar com situações de alto estresse.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">💰</div>
+                        <h3>Adicional de Periculosidade</h3>
+                        <p>Adicional de 30% sobre o salário base, considerado insuficiente face aos riscos enfrentados. Não há reajuste proporcional ao aumento da violência e letalidade.</p>
+                    </div>
+                    <div class="policy-card">
+                        <div class="policy-icon">🏠</div>
+                        <h3>Programa de Moradia</h3>
+                        <p>Iniciativas pontuais em poucos municípios. A grande maioria dos agentes não tem acesso a programas habitacionais, sendo obrigados a residir em áreas de alto risco.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h3>⚠️ Deficiências Críticas</h3>
+                    <ul style="list-style: none; padding-left: 0; margin-top: 15px;">
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Falta de dados unificados e estatísticas confiáveis
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Ausência de política nacional integrada de valorização
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Budget insuficiente: menos de 0,5% do PIB nacional
+                        </li>
+                        <li style="padding: 8px 0; padding-left: 25px; position: relative;">
+                            <strong style="color: white;">→</strong> Descontinuidade administrativa entre gestões
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🌟</span>
+                <h2>Propostas Transformadoras</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Estratégias Inovadoras para Valorização e Proteção</h3>
+                <div class="proposals-grid">
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🧠</div>
+                        <h3>Sistema Nacional de Saúde Mental</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Rede especializada com psicólogos em cada unidade</li>
+                            <li style="padding: 5px 0;">✓ Atendimento obrigatório após eventos traumáticos</li>
+                            <li style="padding: 5px 0;">✓ Programa de prevenção ao suicídio com IA preditiva</li>
+                            <li style="padding: 5px 0;">✓ Suporte psicológico anônimo 24/7</li>
+                            <li style="padding: 5px 0;">✓ Reintegração gradual após licença médica</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">📊</div>
+                        <h3>Observatório Nacional da Segurança</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Banco de dados unificado em tempo real</li>
+                            <li style="padding: 5px 0;">✓ Sistema de alerta precoce de suicídio</li>
+                            <li style="padding: 5px 0;">✓ Análise preditiva de riscos operacionais</li>
+                            <li style="padding: 5px 0;">✓ Transparência total de estatísticas</li>
+                            <li style="padding: 5px 0;">✓ Painel público de indicadores</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">💰</div>
+                        <h3>Plano de Carreira e Remuneração</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Salário mínimo profissional de 3 salários mínimos</li>
+                            <li style="padding: 5px 0;">✓ Reajuste anual acima da inflação</li>
+                            <li style="padding: 5px 0;">✓ Bonificação por especialização e dedicação</li>
+                            <li style="padding: 5px 0;">✓ Auxílio moradia em áreas de risco</li>
+                            <li style="padding: 5px 0;">✓ Seguro de vida integral para toda família</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🎓</div>
+                        <h3>Educação Continuada Humanística</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Formação em inteligência emocional</li>
+                            <li style="padding: 5px 0;">✓ Cursos de mediação de conflitos</li>
+                            <li style="padding: 5px 0;">✓ Direitos humanos e uso proporcional da força</li>
+                            <li style="padding: 5px 0;">✓ Gestão de estresse e resiliência</li>
+                            <li style="padding: 5px 0;">✓ Pós-graduação gratuita em segurança pública</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🛡️</div>
+                        <h3>Tecnologia e Equipamentos</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Coletes balísticos com tecnologia de ponta</li>
+                            <li style="padding: 5px 0;">✓ Câmeras corporais com IA de apoio</li>
+                            <li style="padding: 5px 0;">✓ Veículos blindados e segurança passiva</li>
+                            <li style="padding: 5px 0;">✓ Sistemas de comunicação criptografados</li>
+                            <li style="padding: 5px 0;">✓ Drones e robótica em operações de risco</li>
+                        </ul>
+                    </div>
+                    <div class="proposal-card">
+                        <div class="proposal-icon">🏖️</div>
+                        <h3>Qualidade de Vida e Bem-Estar</h3>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li style="padding: 5px 0;">✓ Jornada máxima de 40 horas semanais</li>
+                            <li style="padding: 5px 0;">✓ Descanso semanal garantido de 48 horas</li>
+                            <li style="padding: 5px 0;">✓ Licença premiação de 3 meses a cada 5 anos</li>
+                            <li style="padding: 5px 0;">✓ Centros de convivência e lazer</li>
+                            <li style="padding: 5px 0;">✓ Apoio jurídico gratuito 24 horas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h3>🌟 Proposta Inovadora: Polícia Comunitária Inteligente</h3>
+                    <p>Transformar o modelo de segurança ostensiva para abordagem preventiva e comunitária, utilizando tecnologia e inteligência artificial para reduzir confrontos e aumentar a eficácia. Cada policial seria equipado com assistentes de IA para tomada de decisão, reduzindo o estresse e aumentando a segurança tanto do agente quanto do cidadão.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📅</span>
+                <h2>Plano de Implementação</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Roteiro Estratégico para Transformação</h3>
+
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <h3>Fase Emergencial (6 meses)</h3>
+                        <ul>
+                            <li>Implementação de programa nacional de saúde mental</li>
+                            <li>Criação de Observatório da Segurança Pública</li>
+                            <li>Aumento imediato de 30% nos salários</li>
+                            <li>Distribuição de equipamentos de proteção</li>
+                            <li>Campanha nacional de prevenção ao suicídio</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <h3>Fase Estrutural (1-2 anos)</h3>
+                        <ul>
+                            <li>Plataforma digital integrada de saúde mental</li>
+                            <li>Reestruturação completa de planos de carreira</li>
+                            <li>Tecnologia de ponta para todos os efetivos</li>
+                            <li>Reforma curricular das academias de polícia</li>
+                            <li>Programa de moradia e qualidade de vida</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <h3>Fase Transformadora (3-5 anos)</h3>
+                        <ul>
+                            <li>Implementação da polícia comunitária inteligente</li>
+                            <li>Sistema preditivo de prevenção de crises</li>
+                            <li>Autonomia administrativa e financeira</li>
+                            <li>Redução de 70% nos índices de suicídio</li>
+                            <li>Modelo brasileiro exportado internacionalmente</li>
+                        </ul>
+                    </div>
+                    <div class="phase-card">
+                        <div class="phase-number">4</div>
+                        <h3>Fase Sustentável (5+ anos)</h3>
+                        <ul>
+                            <li>Segurança pública como referência mundial</li>
+                            <li>Taxa de suicídio inferior à população geral</li>
+                            <li>Profissionalização e valorização consolidadas</li>
+                            <li>Relação de confiança com a comunidade</li>
+                            <li>Segurança cidadã plenamente estabelecida</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 40px;">Investimentos e Impactos Esperados</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">Investimento Total</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--primary-color);">R$ 50 bilhões</p>
+                        <p>5 anos</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">Redução de Custos</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--danger-color);">70%</p>
+                        <p>Nos índices de suicídio</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">Eficiência Operacional</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--secondary-color);">+40%</p>
+                        <p>Na resolução de crimes</p>
+                    </div>
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; text-align: center;">
+                        <h4 style="color: var(--primary-color);">Confiança Pública</h4>
+                        <p style="font-size: 1.5em; font-weight: bold; color: var(--secondary-color);">+60%</p>
+                        <p>Na instituição policial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>👮‍♂️ Valorizar é Proteger!</strong></p>
+            <p>A segurança dos profissionais de segurança pública é condição essencial para a segurança de toda a sociedade. Este relatório demonstra a urgência de políticas públicas eficazes e humanizadas.</p>
+            <div class="footer-links">
+                <a href="https://www.gov.br/mj/pt-br" target="_blank">Ministério da Justiça</a>
+                <a href="https://www.forumseguranca.org.br/" target="_blank">Fórum Brasileiro de Segurança Pública</a>
+                <a href="https://www.camara.leg.br/" target="_blank">Câmara dos Deputados</a>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.8;">
+                🤖 Criado com assistência de IA | © 2025 Realidade dos Profissionais de Segurança Pública
+            </p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li>Brasil enfrenta déficit crônico: necessita de 179.591 PMs adicionais, apenas 404.871 atualmente ativos (redução de 6,8% em 10 anos)</li>
+                    <li>Crise de saúde mental: 151 suicídios em 2024, principal causa de morte entre policiais, com crescimento de 26,2% em 2023</li>
+                    <li>Polícia Militar concentra 91% das tentativas de suicídio, Paraná responde por 57% dos casos (2020-2024)</li>
+                    <li>60% dos profissionais apresentam sintomas de TEPT/ansiedade, mas menos de 10% recebem tratamento adequado</li>
+                    <li>Mortalidade aumentou quase 30% em 2024, Rio de Janeiro concentra 52% das mortes de agentes no Brasil</li>
+                    <li>6.243 mortes por intervenção policial em 2024 (17 pessoas por dia), queda de apenas 2,7% em relação a 2023</li>
+                    <li>40% dos policiais operam com equipamentos de proteção obsoletos ou inadequados</li>
+                    <li>Políticas públicas existentes são insuficientes: apenas 15% das instituições possuem programas de saúde mental</li>
+                    <li>Proposta inovadora: Sistema Nacional de Saúde Mental com rede especializada, atendimento obrigatório pós-trauma, IA preditiva</li>
+                    <li>Plano de investimento de R$ 50 bilhões em 5 anos, visando redução de 70% nos índices de suicídio e +40% eficiência operacional</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasPercent = text.includes('%');
+                const hasMilhoes = text.includes('milhões');
+
+                // Remove formatação para extrair número
+                let cleanText = text.replace(/[^0-9.-]/g, '');
+                const target = parseFloat(cleanText);
+
+                if (!isNaN(target)) {
+                    const increment = target / 50;
+                    let current = 0;
+
+                    const updateNumber = () => {
+                        current += increment;
+                        if (current < target) {
+                            // Aplica formatação original
+                            let displayNumber = Math.floor(current);
+                            if (hasMilhoes) {
+                                num.innerText = displayNumber;
+                            } else if (hasPercent) {
+                                num.innerText = displayNumber + '%';
+                            } else {
+                                num.innerText = displayNumber.toLocaleString('pt-BR');
+                            }
+                            requestAnimationFrame(updateNumber);
+                        } else {
+                            // Mantém formatação original final
+                            num.innerText = text;
+                        }
+                    };
+
+                    updateNumber();
+                }
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
