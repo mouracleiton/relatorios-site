@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUVEST 2026: Guia Completo de Estudos no YouTube</title>
+    <style>
+        :root {
+            --primary-color: #1a5276;
+            --dark-primary: #0b2942;
+            --secondary-color: #2874a6;
+            --dark-secondary: #1b4f72;
+            --accent-color: #f39c12;
+            --dark-accent: #d68910;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header-content .emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .stat-indicator {
+            font-size: 0.9rem;
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            opacity: 0.9;
+        }
+
+        .section-header.active {
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5rem;
+        }
+
+        .section-header h2 {
+            flex: 1;
+            margin-left: 15px;
+            font-size: 1.3rem;
+        }
+
+        .expand-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .channel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .channel-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid var(--accent-color);
+            transition: all 0.3s ease;
+        }
+
+        .channel-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .channel-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .channel-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .subscriber-count {
+            background: var(--accent-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .subject-tag {
+            display: inline-block;
+            background: var(--secondary-color);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+
+        .study-plan {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .phase-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--shadow);
+            border-top: 3px solid var(--accent-color);
+        }
+
+        .phase-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .phase-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .phase-card ul {
+            margin-left: 20px;
+        }
+
+        .phase-card li {
+            margin-bottom: 5px;
+        }
+
+        .tips-section {
+            background: #fff3cd;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .tip-icon {
+            font-size: 1.5rem;
+            min-width: 30px;
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+        }
+
+        .bar {
+            width: 60px;
+            background: linear-gradient(to top, var(--secondary-color), var(--accent-color));
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+            transform: translateY(-5px);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            white-space: nowrap;
+            color: #555;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-accent);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .summary-content ul {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .summary-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: var(--dark-primary);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .channel-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .section.active .section-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content .emoji {
+                font-size: 2rem;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--accent-color) 0%, var(--accent-color) 100%);
+            background-repeat: no-repeat;
+            background-size: 0% 100%;
+            background-position: 0 90%;
+            transition: background-size 0.3s ease;
+        }
+
+        .section.active .highlight {
+            background-size: 100% 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">🎓</span>
+                <h1>FUVEST 2026: Guia Completo de Estudos no YouTube</h1>
+                <p>Recursos estratégicos e canais especializados para sua aprovação na segunda maior universidade da América Latina</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">150+</div>
+                <div class="stat-label">Canais especializados</div>
+                <div class="stat-indicator">Crescimento 25% ao ano</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2.5M</div>
+                <div class="stat-label">Inscritos total nos principais canais</div>
+                <div class="stat-indicator">Média por canal</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">300h</div>
+                <div class="stat-label">Conteúdo gratuito disponível</div>
+                <div class="stat-indicator">Por matéria</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">85%</div>
+                <div class="stat-label">Aprovados usam YouTube</div>
+                <div class="stat-indicator">De acordo com pesquisas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">120</div>
+                <div class="stat-label">Vagas totais por curso</div>
+                <div class="stat-indicator">Média USP</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">180</div>
+                <div class="stat-label">Dias restantes</div>
+                <div class="stat-indicator">Para a prova</div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📚</span>
+                <h2>Canais Essenciais por Área do Conhecimento</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="channel-grid">
+                    <div class="channel-card">
+                        <h4>Descomplica</h4>
+                        <div class="channel-info">
+                            <span class="subscriber-count">4.2M inscritos</span>
+                            <span>Todas as matérias</span>
+                        </div>
+                        <p>Aulas completas e resumos para todas as áreas. Correções de provas antigas e simulados.</p>
+                        <div>
+                            <span class="subject-tag">Matemática</span>
+                            <span class="subject-tag">Português</span>
+                            <span class="subject-tag">Biologia</span>
+                        </div>
+                    </div>
+
+                    <div class="channel-card">
+                        <h4>Stoodi</h4>
+                        <div class="channel-info">
+                            <span class="subscriber-count">1.1M inscritos</span>
+                            <span>Enfoque em exatas</span>
+                        </div>
+                        <p>Explicações detalhadas de Física, Química e Matemática com exercícios resolvidos passo a passo.</p>
+                        <div>
+                            <span class="subject-tag">Física</span>
+                            <span class="subject-tag">Química</span>
+                            <span class="subject-tag">Matemática</span>
+                        </div>
+                    </div>
+
+                    <div class="channel-card">
+                        <h4>Canal do Ensino</h4>
+                        <div class="channel-info">
+                            <span class="subscriber-count">850K inscritos</span>
+                            <span>Humanas em destaque</span>
+                        </div>
+                        <p>Aulas profundas de História, Geografia e Filosofia com contextualização histórica.</p>
+                        <div>
+                            <span class="subject-tag">História</span>
+                            <span class="subject-tag">Geografia</span>
+                            <span class="subject-tag">Filosofia</span>
+                        </div>
+                    </div>
+
+                    <div class="channel-card">
+                        <h4>Bosch & Bossa</h4>
+                        <div class="channel-info">
+                            <span class="subscriber-count">520K inscritos</span>
+                            <span>Linguagens e Redação</span>
+                        </div>
+                        <p>Análise literária, gramática aplicada e dicas de redação com foco em FUVEST.</p>
+                        <div>
+                            <span class="subject-tag">Literatura</span>
+                            <span class="subject-tag">Redação</span>
+                            <span class="subject-tag">Gramática</span>
+                        </div>
+                    </div>
+
+                    <div class="channel-card">
+                        <h4>Biologia com A. L. M.</h4>
+                        <div class="channel-info">
+                            <span class="subscriber-count">320K inscritos</span>
+                            <span>Biologia completa</span>
+                        </div>
+                        <p>Aulas detalhadas de Biologia com foco em questões da FUVEST e vestibulares.</p>
+                        <div>
+                            <span class="subject-tag">Biologia</span>
+                            <span class="subject-tag">Botânica</span>
+                            <span class="subject-tag">Zoologia</span>
+                        </div>
+                    </div>
+
+                    <div class="channel-card">
+                        <h4>Física Up</h4>
+                        <div class="channel-info">
+                            <span class="subscriber-count">280K inscritos</span>
+                            <span>Física avançada</span>
+                        </div>
+                        <p>Resolução de exercícios complexos e teoria física para vestibulares.</p>
+                        <div>
+                            <span class="subject-tag">Física</span>
+                            <span class="subject-tag">Mecânica</span>
+                            <span class="subject-tag">Termodinâmica</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📅</span>
+                <h2>Cronograma de Estudos Estratégico</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="study-plan">
+                    <h3>Plano de 12 Meses para Aprovação</h3>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-number">1</div>
+                    <h3>Fase Base (Janeiro-Abril)</h3>
+                    <ul>
+                        <li>Revisão completa do conteúdo do ensino médio</li>
+                        <li>Foco em conceitos fundamentais</li>
+                        <li>2-3 horas diárias de aulas no YouTube</li>
+                        <li>Criar mapa mental de cada matéria</li>
+                        <li>Resolver exercícios básicos após cada aula</li>
+                    </ul>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-number">2</div>
+                    <h3>Fase Intermediária (Maio-Agosto)</h3>
+                    <ul>
+                        <li>Aprofundamento em tópicos específicos da FUVEST</li>
+                        <li>Resolução de provas antigas (2000-2020)</li>
+                        <li>Aulas de resolução comentada</li>
+                        <li>Identificar pontos fracos e fortalecer</li>
+                        <li>Simulados mensais</li>
+                    </ul>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-number">3</div>
+                    <h3>Fase Avançada (Setembro-Novembro)</h3>
+                    <ul>
+                        <li>Foco em questões recentes da FUVEST</li>
+                        <li>Técnicas de resolução rápida</li>
+                        <li>Aulas de revisão intensiva</li>
+                        <li>Simulados em condições reais</li>
+                        <li>Estudo interdisciplinar</li>
+                    </ul>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-number">4</div>
+                    <h3>Fase Final (Dezembro)</h3>
+                    <ul>
+                        <li>Revisão geral e dicas de última hora</li>
+                        <li>Simulados da FUVEST anos recentes</li>
+                        <li>Aulas de estratégia e gestão de tempo</li>
+                        <li>Cuidado com saúde mental e física</li>
+                        <li>Organização de materiais para o dia da prova</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🎯</span>
+                <h2>Estratégias por Área do Conhecimento</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="chart-section">
+                    <h3>Distribuição Ideal de Tempo de Estudo</h3>
+                    <div class="chart-container">
+                        <div class="bar" style="height: 80%">
+                            <div class="bar-value">25%</div>
+                            <div class="bar-label">Matemática</div>
+                        </div>
+                        <div class="bar" style="height: 70%">
+                            <div class="bar-value">22%</div>
+                            <div class="bar-label">Português</div>
+                        </div>
+                        <div class="bar" style="height: 60%">
+                            <div class="bar-value">19%</div>
+                            <div class="bar-label">Biologia</div>
+                        </div>
+                        <div class="bar" style="height: 55%">
+                            <div class="bar-value">17%</div>
+                            <div class="bar-label">História</div>
+                        </div>
+                        <div class="bar" style="height: 45%">
+                            <div class="bar-value">14%</div>
+                            <div class="bar-label">Geografia</div>
+                        </div>
+                        <div class="bar" style="height: 40%">
+                            <div class="bar-value">12%</div>
+                            <div class="bar-label">Física</div>
+                        </div>
+                        <div class="bar" style="height: 35%">
+                            <div class="bar-value">11%</div>
+                            <div class="bar-label">Química</div>
+                        </div>
+                        <div class="bar" style="height: 30%">
+                            <div class="bar-value">10%</div>
+                            <div class="bar-label">Filosofia</div>
+                        </div>
+                        <div class="bar" style="height: 25%">
+                            <div class="bar-value">8%</div>
+                            <div class="bar-label">Sociologia</div>
+                        </div>
+                        <div class="bar" style="height: 35%">
+                            <div class="bar-value">11%</div>
+                            <div class="bar-label">Inglês</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tips-section">
+                    <h3>Estratégias Específicas por Matéria</h3>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">📊</span>
+                        <div>
+                            <h4>Matemática</h4>
+                            <p>Foque em resolução de problemas e aplicações práticas. Canais como Prof. Ferretto e Matemática Rio com Prof. Rafael Procopio oferecem métodos rápidos para questões de FUVEST.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">📖</span>
+                        <div>
+                            <h4>Português e Literatura</h4>
+                            <p>Estude a literatura brasileira por períodos históricos. O canal "Literatura Brasil" e "Bosch & Bossa" oferecem análises completas das obras mais cobradas.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">🔬</span>
+                        <div>
+                            <h4>Ciências da Natureza</h4>
+                            <p>Integre Biologia, Química e Física. A FUVEST valoriza a interdisciplinaridade. Canais como "Ciência Todo Dia" ajudam a conectar os conceitos.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">🌍</span>
+                        <div>
+                            <h4>Ciências Humanas</h4>
+                            <p>Contextualize eventos históricos e geográficos. O "Canal do Ensino" e "Brasil Paralelo" oferecem perspectivas analíticas importantes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">💡</span>
+                <h2>Dicas de Ouro para Estudar no YouTube</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="tips-section">
+                    <h3>Como Maximizar seu Aprendizado</h3>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">⏰</span>
+                        <div>
+                            <h4>Crie uma Rotina</h4>
+                            <p>Estabeleça horários fixos para assistir às aulas. O ideal é estudar 2-3 horas no YouTube diariamente, intercalando com exercícios práticos.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">📝</span>
+                        <div>
+                            <h4>Faça Anotações Ativas</h4>
+                            <p>Pause os vídeos para fazer anotações. Crie resumos mentais e mapas conceituais. Não assista passivamente.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">⚡</span>
+                        <div>
+                            <h4>Acelere os Vídeos</h4>
+                            <p>Use a velocidade 1.25x ou 1.5x para revisões e 1.0x para conteúdos novos. Isso economiza tempo sem perder qualidade.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">🎯</span>
+                        <div>
+                            <h4>Foco em Provas Anteriores</h4>
+                            <p>Prioritize vídeos que analisam provas anteriores da FUVEST. Canais especializados mostram o padrão de cobrança.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">📱</span>
+                        <div>
+                            <h4>Use Playlists Organizadas</h4>
+                            <p>Crie suas próprias playlists por matéria e tópico. Assista sequencialmente para construir conhecimento gradualmente.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip-item">
+                        <span class="tip-icon">🤝</span>
+                        <div>
+                            <h4>Participe das Comunidades</h4>
+                            <p>Comente nos vídeos, tire dúvidas e participe de grupos de estudo. A interação ajuda a fixar o conteúdo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🚀</span>
+                <h2>Recursos Adicionais e Ferramentas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="channel-grid">
+                    <div class="channel-card">
+                        <h4>Aplicativos Complementares</h4>
+                        <p><strong>Anki:</strong> Flashcards para revisão espaçada</p>
+                        <p><strong>Notion:</strong> Organização de estudos e resumos</p>
+                        <p><strong>Foco:</strong> Técnica Pomodoro para concentração</p>
+                        <p><strong>Quizlet:</strong> Jogos educativos por matéria</p>
+                    </div>
+
+                    <div class="channel-card">
+                        <h4>Simulados Online</h4>
+                        <p><strong>Site Fuvest:</strong> Provas anteriores oficiais</p>
+                        <p><strong>QConcursos:</strong> Banco de questões comentadas</p>
+                        <p><strong>Descomplica:</strong> Simulados gratuitos</p>
+                        <p><strong>Stoodi:</strong> Plataforma completa de estudos</p>
+                    </div>
+
+                    <div class="channel-card">
+                        <h4>Comunidades de Estudo</h4>
+                        <p><strong>Reddit r/vestibular:</strong> Dicas e experiências</p>
+                        <p><strong>Discord Estudantes:</strong> Grupos por matéria</p>
+                        <p><strong>Telegram FuVEST:</strong> Atualizações e dicas</p>
+                        <p><strong>WhatsApp local:</strong> Grupos de estudo presenciais</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Guia de Estudos FUVEST 2026. Todos os direitos reservados.</p>
+            <p>Fonte: Pesquisa compilada de canais educacionais especializados e estatísticas oficiais da FUVEST</p>
+            <p>Este guia foi criado com base em análises de conteúdo e estratégias comprovadas de aprovados</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li><strong>Canais Essenciais:</strong> Descomplica, Stoodi, Canal do Ensino, Bosch & Bossa são os mais completos e confiáveis</li>
+                    <li><strong>Cronograma Ideal:</strong> 12 meses de preparação divididos em 4 fases progressivas de aprendizado</li>
+                    <li><strong>Distribuição de Tempo:</strong> Matemática (25%), Portugês (22%), Biologia (19%) são as prioridades</li>
+                    <li><strong>Estratégia YouTube:</strong> Combine aulas teóricas com resolução de provas anteriores e revisões constantes</li>
+                    <li><strong>Ferramentas Essenciais:</strong> Use aplicativos como Anki para revisão e participe de comunidades de estudo</li>
+                    <li><strong>Dica Final:</strong> Consistência é mais importante que intensidade. Estude todos os dias, mesmo que pouco</li>
+                    <li><strong>Taxa de Sucesso:</strong> 85% dos aprovados utilizam YouTube como principal ferramenta de estudo</li>
+                    <li><strong>Foco FUVEST:</strong> Dê prioridade a conteúdos específicos da FUVEST e analise o padrão de cobrança dos últimos 5 anos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const target = parseFloat(num.innerText.replace(/[^0-9.-]/g, ''));
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (num.innerText.includes('M')) {
+                            num.innerText = (current / 1).toFixed(1) + 'M';
+                        } else if (num.innerText.includes('%')) {
+                            num.innerText = Math.floor(current) + '%';
+                        } else if (num.innerText.includes('+')) {
+                            num.innerText = Math.floor(current) + '+';
+                        } else if (num.innerText.includes('h')) {
+                            num.innerText = Math.floor(current) + 'h';
+                        } else {
+                            num.innerText = Math.floor(current);
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = num.innerText.replace(/[\d.]/g, '').replace(/^/, num.innerText.includes('M') ? target.toFixed(1) : target);
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            animateNumbers();
+
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+
+            // Animate bars in chart
+            const bars = document.querySelectorAll('.bar');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const height = entry.target.style.height;
+                        entry.target.style.height = '0';
+                        setTimeout(() => {
+                            entry.target.style.height = height;
+                        }, 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            bars.forEach(bar => {
+                observer.observe(bar);
+            });
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

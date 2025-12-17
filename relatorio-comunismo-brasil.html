@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Século Vermelho: A Trajetória do Comunismo no Brasil (1922-2024)</title>
+    <style>
+        :root {
+            --primary-color: #e74c3c;
+            --dark-primary: #c0392b;
+            --secondary-color: #2c3e50;
+            --dark-secondary: #1a252f;
+            --accent-color: #f39c12;
+            --dark-accent: #d68910;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            border-radius: 15px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="50%" font-size="100" fill="rgba(255,255,255,0.05)">⚒</text></svg>');
+            background-size: 100px 100px;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .stat-indicator {
+            font-size: 1.5rem;
+        }
+
+        .section {
+            background: white;
+            margin-bottom: 25px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .section.active {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .section-header h2 {
+            flex: 1;
+            margin: 0 20px;
+            font-size: 1.5rem;
+        }
+
+        .expand-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active .section-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .policy-card {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateX(5px);
+        }
+
+        .policy-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .phase-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 30px;
+            border-radius: 15px;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .phase-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .phase-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .phase-card li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .phase-card li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-accent);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-content li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .summary-content li::before {
+            content: '★';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 15px;
+            margin-top: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .timeline-container {
+            margin: 40px 0;
+        }
+
+        .timeline-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .timeline-filters button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: #e0e0e0;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .timeline-filters button.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .timeline-filters button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--primary-color);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-date {
+            flex: 0 0 150px;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            text-align: right;
+            padding-right: 20px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-date {
+            text-align: left;
+            padding-left: 20px;
+            padding-right: 0;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin: 0 30px;
+            position: relative;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 3px solid white;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -38px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -38px;
+        }
+
+        .timeline-content h4 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .timeline-content p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .timeline-impact {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .chart-section {
+            margin: 40px 0;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .chart-container canvas {
+            max-width: 100%;
+            height: auto !important;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .chart-description {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            margin-top: 20px;
+        }
+
+        .map-section {
+            margin: 40px 0;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .map-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .map-container svg {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+
+        .state {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .state:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        .map-legend {
+            margin-top: 30px;
+        }
+
+        .map-legend h4 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--secondary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+            border: 3px solid var(--accent-color);
+        }
+
+        .profile-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .profile-card .years {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                padding: 15px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 1.2rem;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                flex-direction: row !important;
+                margin-left: 50px;
+            }
+
+            .timeline-date {
+                flex: 0 0 120px;
+                text-align: left !important;
+                padding-left: 0 !important;
+                padding-right: 10px !important;
+            }
+
+            .timeline-content::before {
+                left: -38px !important;
+                right: auto !important;
+            }
+
+            .timeline-content {
+                margin-left: 10px;
+                margin-right: 0;
+            }
+
+            .chart-container {
+                height: 300px;
+            }
+
+            .floating-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 40px 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .policy-grid,
+            .implementation-phases,
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .timeline-filters button {
+                width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">⚒️</span>
+                <h1>Século Vermelho: A Trajetória do Comunismo no Brasil</h1>
+                <p>Uma análise abrangente da luta comunista brasileira de 1922 a 2024, explorando suas origens, períodos de repressão, momentos de resistência e seu legado na política contemporânea</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">1922</div>
+                <div class="stat-label">Ano de fundação do PCB</div>
+                <div class="stat-indicator">📅</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1935</div>
+                <div class="stat-label">Intentona Comunista</div>
+                <div class="stat-indicator">⚔️</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1964-1985</div>
+                <div class="stat-label">Anos de maior repressão</div>
+                <div class="stat-indicator">⚖️</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">~400.000</div>
+                <div class="stat-label">Militantes no auge</div>
+                <div class="stat-indicator">👥</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2.300</div>
+                <div class="stat-label">Mortos e desaparecidos</div>
+                <div class="stat-indicator">🕯️</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">8+</div>
+                <div class="stat-label">Partidos atuais herdeiros</div>
+                <div class="stat-indicator">🏛️</div>
+            </div>
+        </section>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📖</span>
+                <h2>Contexto Histórico</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>O Partido Comunista Brasileiro (PCB) foi fundado em 25 de março de 1922, na cidade de Niterói, Rio de Janeiro, inspirado pela Revolução Russa de 1917 e pelo movimento operário internacional. A fundação ocorreu em um contexto de agitação social no Brasil, marcado pelas greves gerais de 1917 e 1919 em São Paulo e Rio de Janeiro.</p>
+
+                <p>Os primeiros anos foram marcados pela organização sindical e pela tentativa de estabelecer bases operárias nos centros urbanos. O partido enfrentou imediatamente a repressão do Estado, sendo colocado na ilegalidade já em 1924, durante o governo de Artur Bernardes.</p>
+
+                <p>A trajetória do comunismo no Brasil é marcada por ciclos de legalidade e clandestinidade, períodos de forte repressão estatal e momentos de atuação institucional, sempre mantendo sua influência na política brasileira e nos movimentos sociais.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>Evolução da Militância</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="chart-section">
+                    <h3>Evolução da Militância Comunista (1922-2024)</h3>
+                    <div class="chart-container">
+                        <canvas id="militancyChart" width="800" height="400"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <span class="legend-item"><span class="legend-color" style="background: #e74c3c"></span>Militantes Ativos</span>
+                        <span class="legend-item"><span class="legend-color" style="background: #3498db"></span>Membros do Comitê Central</span>
+                        <span class="legend-item"><span class="legend-color" style="background: #2ecc71"></span>Sindicatos Influenciados</span>
+                    </div>
+                    <p class="chart-description">
+                        O gráfico mostra a evolução da militância comunista ao longo do tempo. Note-se os picos durante os períodos de legalidade (1945-1947 e 1985-1992)
+                        e os declínios acentuados durante os momentos de maior repressão (1935-1945 e 1964-1979).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⏳</span>
+                <h2>Linha do Tempo Histórica</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">1922</div>
+                            <div class="timeline-content">
+                                <h4>Fundação do PCB</h4>
+                                <p>O Partido Comunista Brasileiro é fundado em Niterói, RJ, por um grupo de nove trabalhadores e intelectuais, incluindo Astrojildo Pereira, Abílio de Nequete e Cristiano Cordeiro.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">1924</div>
+                            <div class="timeline-content">
+                                <h4>Primeira Ilegalidade</h4>
+                                <p>O governo Artur Bernardes coloca o PCB na ilegalidade. O partido passa a operar na clandestinidade, using outras organizações como fachada.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="social">
+                            <div class="timeline-date">1930</div>
+                            <div class="timeline-content">
+                                <h4>Aliança Nacional Libertadora</h4>
+                                <p>O PCB cria a ANL como frente ampla anti-imperialista e antifascista, liderada por Luís Carlos Prestes, que se fil oficializa ao partido neste ano.</p>
+                                <span class="timeline-impact">Social</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="militar">
+                            <div class="timeline-date">1935</div>
+                            <div class="timeline-content">
+                                <h4>Intentona Comunista</h4>
+                                <p>Fracassada tentativa de golpe militar liderada pelo PCB. A rebelião em Natal, Recife e Rio de Janeiro é brutalmente reprimida, resultando em milhares de prisões.</p>
+                                <span class="timeline-impact">Militar</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">1945</div>
+                            <div class="timeline-content">
+                                <h4>Legalidade e Sucesso Eleitoral</h4>
+                                <p>Com o fim do Estado Novo, o PCB é legalizado. Nas eleições, elege 14 deputados federais e o senador Luís Carlos Prestes se torna o homem mais votado do Brasil.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">1947</div>
+                            <div class="timeline-content">
+                                <h4>Novo Banimento</h4>
+                                <p>O governo Dutra cassa o registro do PCB. O partido retorna à clandestinidade, onde permanecerá por 38 anos consecutivos.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="militar">
+                            <div class="timeline-date">1964</div>
+                            <div class="timeline-content">
+                                <h4>Golpe Militar</h4>
+                                <p>O golpe militar instaura uma ditadura que durará 21 anos. O PCB sofre intensa repressão, com prisões, torturas e exílios de seus militantes.</p>
+                                <span class="timeline-impact">Militar</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="social">
+                            <div class="timeline-date">1968-1974</div>
+                            <div class="timeline-content">
+                                <h4>Resistência Armada</h4>
+                                <p>Surge dissidência armada com focos guerrilheiros. A Guerrilha do Araguaia (1968-1974) representou a maior resistência armada ao regime militar.</p>
+                                <span class="timeline-impact">Social</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">1979</div>
+                            <div class="timeline-content">
+                                <h4>Anistia e Reorganização</h4>
+                                <p>A Lei da Anistia permite o retorno de exilados. O PCB inicia sua reestruturação legal, mesmo ainda na clandestinidade formal.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">1985</div>
+                            <div class="timeline-content">
+                                <h4>Redemocratização</h4>
+                                <p>Com o fim da ditadura, o PCB é finalmente legalizado. Participa ativamente da Assembleia Nacional Constituinte e do processo de redemocratização.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">1992</div>
+                            <div class="timeline-content">
+                                <h4>Cisão do PPS</h4>
+                                <p>Após o colapso da URSS, o PCB sofre nova cisão. Um grupo forma o Partido Popular Socialista (PPS), que mais tarde se tornaria Cidadania.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="social">
+                            <div class="timeline-date">2000</div>
+                            <div class="timeline-content">
+                                <h4>Movimentos Sociais</h4>
+                                <p>O PCB influencia fortemente movimentos como o MST, CUT e organizações estudantis, mantendo sua base militante despite de pequeno porte eleitoral.</p>
+                                <span class="timeline-impact">Social</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-category="political">
+                            <div class="timeline-date">2024</div>
+                            <div class="timeline-content">
+                                <h4>Herança Política</h4>
+                                <p>Atualmente, o legado comunista vive em diversos partidos (PCdoB, PCO, UP) e influencia a esquerda brasileira, especialmente nos movimentos sociais e acadêmicos.</p>
+                                <span class="timeline-impact">Político</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🗺️</span>
+                <h2>Focos de Resistência</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="map-section">
+                    <h3>Principais Focos da Atividade Comunista no Brasil</h3>
+                    <div class="map-container">
+                        <svg id="mapSvg" viewBox="0 0 800 600">
+                            <!-- Mapa simplificado do Brasil -->
+                            <!-- Nordeste -->
+                            <g class="state" onclick="showStateInfo('PE')" data-state="PE">
+                                <path d="M 400 250 Q 420 240 440 250 L 450 280 Q 430 290 410 280 Z"
+                                      fill="#e74c3c" stroke="#333" stroke-width="1"/>
+                                <text x="425" y="268" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">PE</text>
+                            </g>
+
+                            <g class="state" onclick="showStateInfo('CE')" data-state="CE">
+                                <path d="M 380 220 Q 400 210 420 220 L 430 240 Q 410 250 390 240 Z"
+                                      fill="#e74c3c" stroke="#333" stroke-width="1"/>
+                                <text x="405" y="233" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">CE</text>
+                            </g>
+
+                            <g class="state" onclick="showStateInfo('PB')" data-state="PB">
+                                <path d="M 440 250 Q 460 240 480 250 L 490 270 Q 470 280 450 270 Z"
+                                      fill="#e74c3c" stroke="#333" stroke-width="1"/>
+                                <text x="465" y="263" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">PB</text>
+                            </g>
+
+                            <!-- Sudeste -->
+                            <g class="state" onclick="showStateInfo('SP')" data-state="SP">
+                                <path d="M 380 380 Q 420 370 460 380 L 470 420 Q 430 430 390 420 Z"
+                                      fill="#e74c3c" stroke="#333" stroke-width="2"/>
+                                <text x="425" y="403" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">SP</text>
+                            </g>
+
+                            <g class="state" onclick="showStateInfo('RJ')" data-state="RJ">
+                                <path d="M 460 370 Q 480 360 500 370 L 510 390 Q 490 400 470 390 Z"
+                                      fill="#e74c3c" stroke="#333" stroke-width="2"/>
+                                <text x="485" y="383" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">RJ</text>
+                            </g>
+
+                            <g class="state" onclick="showStateInfo('MG')" data-state="MG">
+                                <path d="M 360 350 Q 380 340 400 350 L 410 380 Q 390 390 370 380 Z"
+                                      fill="#e74c3c" stroke="#333" stroke-width="1"/>
+                                <text x="385" y="368" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">MG</text>
+                            </g>
+
+                            <!-- Norte -->
+                            <g class="state" onclick="showStateInfo('PA')" data-state="PA">
+                                <path d="M 320 180 Q 350 170 380 180 L 390 210 Q 360 220 330 210 Z"
+                                      fill="#f39c12" stroke="#333" stroke-width="1"/>
+                                <text x="355" y="198" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">PA</text>
+                            </g>
+
+                            <g class="state" onclick="showStateInfo('AM')" data-state="AM">
+                                <path d="M 280 150 Q 310 140 340 150 L 350 170 Q 320 180 290 170 Z"
+                                      fill="#f39c12" stroke="#333" stroke-width="1"/>
+                                <text x="315" y="163" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">AM</text>
+                            </g>
+
+                            <!-- Centro-Oeste -->
+                            <g class="state" onclick="showStateInfo('GO')" data-state="GO">
+                                <path d="M 340 320 Q 360 310 380 320 L 390 340 Q 370 350 350 340 Z"
+                                      fill="#f39c12" stroke="#333" stroke-width="1"/>
+                                <text x="365" y="333" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">GO</text>
+                            </g>
+
+                            <!-- Sul -->
+                            <g class="state" onclick="showStateInfo('RS')" data-state="RS">
+                                <path d="M 360 450 Q 380 440 400 450 L 410 480 Q 390 490 370 480 Z"
+                                      fill="#2ecc71" stroke="#333" stroke-width="1"/>
+                                <text x="385" y="468" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">RS</text>
+                            </g>
+
+                            <g class="state" onclick="showStateInfo('SC')" data-state="SC">
+                                <path d="M 400 440 Q 420 430 440 440 L 450 460 Q 430 470 410 460 Z"
+                                      fill="#2ecc71" stroke="#333" stroke-width="1"/>
+                                <text x="425" y="453" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">SC</text>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="map-legend">
+                        <h4>Intensidade da Atividade Comunista por Região</h4>
+                        <div class="legend-items">
+                            <span class="legend-item"><span class="legend-color" style="background: #e74c3c"></span>Focos Principais (Sudeste/Nordeste)</span>
+                            <span class="legend-item"><span class="legend-color" style="background: #f39c12"></span>Áreas de Guerrilha (Norte/Centro-Oeste)</span>
+                            <span class="legend-item"><span class="legend-color" style="background: #2ecc71"></span>Influência Anarquista (Sul)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">👤</span>
+                <h2>Líderes e Personalidades</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="profile-grid">
+                    <div class="profile-card">
+                        <div class="profile-photo">⭐</div>
+                        <h3>Luís Carlos Prestes</h3>
+                        <div class="years">1903-1990</div>
+                        <p>"Cavaleiro da Esperança", líder por mais de 60 anos. Organizador da Intentona de 35, senador mais votado em 1945 e símbolo máximo do comunismo brasileiro.</p>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-photo">✊</div>
+                        <h3>Olga Benário</h3>
+                        <div class="years">1908-1942</div>
+                        <p>Militante comunista alemã, companheira de Prestes. Capturada e deportada para a Alemanha nazista, morreu em campo de concentração.</p>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-photo">📚</div>
+                        <h3>Astrojildo Pereira</h3>
+                        <div class="years">1890-1965</div>
+                        <p>Fundador do PCB em 1922. Intelectual e operário, primeiro secretário-geral do partido e responsável por sua organização inicial.</p>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-photo">🌱</div>
+                        <h3>Maria Rita Drumond</h3>
+                        <div class="years">1898-1961</div>
+                        <p>Líder feminina do PCB, participou da organização da Intentona. Representa a importante participação das mulheres no movimento.</p>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-photo">⚔️</div>
+                        <h3>Carlos Marighella</h3>
+                        <div class="years">1911-1969</div>
+                        <p>Militante do PCB, rompeu com o partido em 1968. Fundou a ALN e escreveu o "Mini-manual do Guerrilheiro Urbano". Morto em emboscada.</p>
+                    </div>
+
+                    <div class="profile-card">
+                        <div class="profile-photo">🎓</div>
+                        <h3>Giocondo Dias</h3>
+                        <div class="years">1915-1993</div>
+                        <p>Importante líder do PCB pós-64. Secretário-geral durante a resistência à ditadura, negociador da anistia e reorganização partidária.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🛡️</span>
+                <h2>Políticas de Repressão</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">⚖️</div>
+                        <h3>Lei de Segurança Nacional (1935-1945)</h3>
+                        <p>Implementada por Getúlio Vargas após a Intentona. Criou o Tribunal de Segurança Nacional, criminalizou a difusão de ideias comunistas e autorizou prisões preventivas. Milhares de presos políticos e exílios.</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">🚫</div>
+                        <h3>Decreto-lei 3.180 (1941)</h3>
+                        <p>Considerou crime qualquer difusão de ideias consideradas "subversivas". Autorizou a punição com até 10 anos de prisão para militantes comunistas e anarquistas.</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">🏛️</div>
+                        <h3>Lei de Imprensa (1967)</h3>
+                        <p>Controle editorial sobre jornais, revistas e rádio. Censura prévia a qualquer conteúdo considerado contrário à "segurança nacional". Fechamento de órgãos de imprensa alternativa.</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">⚔️</div>
+                        <h3>Atos Institucionais (1964-1978)</h3>
+                        <p>AI-5 (1968): Cassação de mandatos, suspensão de direitos políticos e intervenção em sindicatos. Criou bases legais para tortura sistemática e desaparecimentos forçados.</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">🔍</div>
+                        <h3>DOI-CODI (1970-1990)</h3>
+                        <p>Destacamento de Operações de Informação - Centro de Operações de Defesa Interna. Principal órgão de repressão política. Estimativas de 20-30 mil torturados.</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">📋</div>
+                        <h3>Lei da Anistia (1979)</h3>
+                        <p>Política de redenção, não vingança. Anistia aos crimes políticos cometidos entre 1961-1979. Controversa por também anistiar torturadores e agentes da repressão.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🔄</span>
+                <h2>Transformações Ideológicas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <h3>Comunismo Ortodoxo (1922-1935)</h3>
+                        <ul>
+                            <li>Alinhamento estrito com Moscou</li>
+                            <li>Foco em revolução proletária urbana</li>
+                            <li>Oposição frontal ao Estado burguês</li>
+                            <li>Organização baseada em células clandestinas</li>
+                            <li>Influência da III Internacional</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <h3>Frentes Populares (1935-1947)</h3>
+                        <ul>
+                            <li>Alianças táticas com setores democráticos</li>
+                            <li>Participação eleitoral legal</li>
+                            <li>Combate ao fascismo e ao nazi-fascismo</li>
+                            <li>Apoio à política de frentes da Kominform</li>
+                            <li>Sucesso eleitoral em 1945-1947</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <h3>Luta Armada (1964-1979)</h3>
+                        <ul>
+                            <li>Divisão entre reforma e revolução</li>
+                            <li>Surto de organizações guerrilheiras</li>
+                            <li>Influência da Revolução Cubana</li>
+                            <li>Foco em "guerra popular prolongada"</li>
+                            <li>Criação de focos rurais e urbanos</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">4</div>
+                        <h3>Eurocomunismo (1979-1992)</h3>
+                        <ul>
+                            <li>Crítica ao modelo soviético</li>
+                            <li>Defesa da democracia liberal</li>
+                            <li>Rejeição da ditadura do proletariado</li>
+                            <li>Enfoque em transformações pacíficas</li>
+                            <li>Alinhamento com partidos comunistas europeus</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">5</div>
+                        <h3>Pós-Guerra Fria (1992-2024)</h3>
+                        <ul>
+                            <li>Identidade socialista não-leninista</li>
+                            <li>Foco em movimentos sociais e ONGs</li>
+                            <li>Crítica ao neoliberalismo global</li>
+                            <li>Ecologismo e feminismo como eixos</li>
+                            <li>Revalorização de Marx gramsciano</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">6</div>
+                        <h3>Atualidade</h3>
+                        <ul>
+                            <li>Anticapitalismo sistêmico</li>
+                            <li>Interculturalismo e interseccionalidade</li>
+                            <li>Tecnologia e novas formas de organização</li>
+                            <li>Globalização e solidariedade internacional</li>
+                            <li>Sustentabilidade e ecossocialismo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏛️</span>
+                <h2>Herança Política Atual</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <p>O legado do comunismo no Brasil se manifesta atualmente através de diversos partidos e movimentos que reivindicam ou são influenciados pela tradição marxista:</p>
+
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">🌟</div>
+                        <h3>Partidos Herdeiros Diretos</h3>
+                        <p><strong>PCdoB</strong> (Partido Comunista do Brasil): Fundado em 1962 por dissidentes do PCB. Maior partido comunista atualmente, com representação no Congresso.</p>
+                        <p><strong>PCB</strong>: Continuação histórica do partido original, embora com pequena expressão eleitoral.</p>
+                        <p><strong>PCO</strong> (Partido da Causa Operária): Grupo maoista dissidente do PCdoB em 1995.</p>
+                        <p><strong>UP</strong> (Unidade Popular): Fundado em 2016 por Leonel Brizola e dissidentes do PDT.</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">✊</div>
+                        <h3>Influência em Outros Partidos</h3>
+                        <p><strong>PT</strong>: Muitos fundadores e líderes têm formação marxista. Mantêm diálogo crítico com a tradição comunista.</p>
+                        <p><strong>PSOL</strong>: Reúne diversas correntes socialistas e marxistas. Forte presença de ex-militantes de partidos comunistas.</p>
+                        <p><strong>Cidadania (antigo PPS)</strong>: Originário de cisão do PCB em 1992, hoje centro-esquerda.</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">🌱</div>
+                        <h3>Movimentos Sociais</h3>
+                        <p><strong>MST</strong>: Movimento dos Trabalhadores Rurais Sem Terra. Forte influência da teologia da libertação e marxismo.</p>
+                        <p><strong>CUT</strong>: Central Única dos Trabalhadores. Criada com influência de militantes comunistas.</p>
+                        <p><strong>UBES</strong> e <strong>UNE</strong>: Movimentos estudantis com tradicional presença comunista.</p>
+                        <p><strong>MTST</strong>: Movimento dos Trabalhadores Sem Teto. Atuação urbana inspirada no MST.</p>
+                    </div>
+                </div>
+
+                <p>Apesar da pequena expressão eleitoral dos partidos comunistas propriamente ditos, suas ideias continuam influenciando fortemente o debate público, especialmente através de intelectuais, sindicatos e movimentos sociais.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Arquivo Histórico Brasileiro. Todos os direitos reservados.</p>
+            <p>Fontes: Arquivo Nacional, Fundação Getúlio Vargas, Centro de Pesquisa e Documentação de História Contemporânea do Brasil (CPDOC), Memorial da Resistência de São Paulo, Comissão Nacional da Verdade.</p>
+            <p>Última atualização: dezembro de 2024</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li>O PCB foi fundado em 1922, inspirado pela Revolução Russa e pelo movimento operário brasileiro</li>
+                    <li>A trajetória comunista no Brasil é marcada por ciclos de legalidade e clandestinidade ao longo de 100 anos</li>
+                    <li>A Intentona de 1935 e a resistência à ditadura militar foram períodos cruciais de confronto com o Estado</li>
+                    <li>O movimento comunista influenciou profundamente sindicatos, movimentos sociais e a cultura política brasileira</li>
+                    <li>A despeito da pequena expressão eleitoral atual, seu legado permanece vivo em partidos e movimentos contemporâneos</li>
+                    <li>A luta comunista contribuiu para a redemocratização do país e a ampliação dos direitos sociais</li>
+                    <li>Os 2.300 mortos e desaparecidos políticos representam o alto preço pago pela resistência à ditadura</li>
+                    <li>A trajetória comunista reflete as transformações ideológicas globais do marxismo no século XX e XXI</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Toggle de Seções (Accordion)
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        // 2. Animação de Números
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const target = parseFloat(text.replace(/[^0-9.-]/g, ''));
+
+                // Pular animação para anos e números simples
+                if (text.includes('~') || text.includes('+')) {
+                    return;
+                }
+
+                if (isNaN(target)) return;
+
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (text.includes('.')) {
+                            num.innerText = formatNumber(current) + 'M';
+                        } else {
+                            num.innerText = formatNumber(current);
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = text; // Mantém formatação original
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(0) + 'K';
+            } else if (num % 1 !== 0) {
+                return num.toFixed(1);
+            }
+            return Math.floor(num).toString();
+        }
+
+        // 3. Controle do Modal
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 4. Animação de Timeline
+        function animateTimeline() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(20px)';
+                item.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                observer.observe(item);
+            });
+        }
+
+        // 5. Informações do Mapa
+        function showStateInfo(state) {
+            const info = {
+                'SP': 'São Paulo: Principal centro industrial e operário do Brasil. Berço de importantes greves e organizações comunistas. Local do Congresoo de fundação da ANL em 1935.',
+                'RJ': 'Rio de Janeiro: Capital federal até 1960. Berço do movimento comunista brasileiro. Palco da Intentona de 1935 e centro político do PCB por décadas.',
+                'MG': 'Minas Gerais: Importante centro mineiro com forte organização operária. Participou ativamente na Intentona e na resistência à ditadura militar.',
+                'PE': 'Pernambuco: Destaque nas Ligas Camponesas sob liderança de Francisco Julião. Movimento comunista rural importante antes do golpe de 1964.',
+                'CE': 'Ceará: Forte presença comunista no movimento camponês e urbano. Importante na organização de sindicatos rurais e urbanos.',
+                'PB': 'Paraíba: Participação significativa no movimento comunista nordestino, especialmente no movimento camponês das décadas de 1950-60.',
+                'PA': 'Pará: Local da Guerrilha do Araguaia (1968-1974). Maior foco de resistência armada contra a ditadura militar na região amazônica.',
+                'AM': 'Amazonas: Cenário de atividade comunista durante a ditadura. Importante na organização de trabalhadores rurais e indígenas.',
+                'GO': 'Goiás: Estado abrangido pela área da Guerrilha do Araguaia. Palco de enfrentamentos entre guerrilheiros e forças militares.',
+                'RS': 'Rio Grande do Sul: Forte influência anarquista e comunista nas áreas rurais e urbanas. Importante no movimento operário gaúcho.',
+                'SC': 'Santa Catarina: Presença comunista ligada à imigração europeia. Atuação em movimentos operários e sindicais.'
+            };
+
+            const message = info[state] || `${state}: Importante participação no movimento comunista brasileiro`;
+
+            // Remove tooltip existente
+            const existingTooltip = document.querySelector('.map-tooltip');
+            if (existingTooltip) {
+                existingTooltip.remove();
+            }
+
+            // Cria tooltip
+            const tooltip = document.createElement('div');
+            tooltip.className = 'map-tooltip';
+            tooltip.innerHTML = `<strong>${state}</strong><br>${message}`;
+            tooltip.style.cssText = `
+                position: fixed;
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+                z-index: 1000;
+                max-width: 300px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 2px solid var(--primary-color);
+                font-size: 14px;
+                line-height: 1.6;
+            `;
+
+            document.body.appendChild(tooltip);
+
+            // Auto-remove após 5 segundos
+            setTimeout(() => {
+                if (tooltip.parentNode) {
+                    tooltip.remove();
+                }
+            }, 5000);
+        }
+
+        // 6. Renderização de Gráficos
+        function drawLineChart(canvasId, data, labels) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Limpa canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Configurações
+            const padding = 60;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+
+            // Encontra valores máximos e mínimos
+            const maxValue = Math.max(...data.flat());
+            const minValue = 0;
+
+            // Desenha grade
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+
+            // Linhas horizontais da grade
+            for (let i = 0; i <= 5; i++) {
+                const y = padding + (i * chartHeight / 5);
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+
+                // Labels do eixo Y
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                const value = Math.round(maxValue - (i * maxValue / 5));
+                ctx.fillText(value.toLocaleString('pt-BR'), padding - 10, y + 4);
+            }
+
+            // Desenha eixos principais
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Desenha linhas de dados
+            const colors = ['#e74c3c', '#3498db', '#2ecc71'];
+
+            data.forEach((dataset, datasetIndex) => {
+                ctx.strokeStyle = colors[datasetIndex % colors.length];
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                dataset.forEach((value, index) => {
+                    const x = padding + (index / (dataset.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - minValue) / maxValue) * chartHeight;
+
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+
+                ctx.stroke();
+
+                // Desenha pontos
+                dataset.forEach((value, index) => {
+                    const x = padding + (index / (dataset.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - minValue) / maxValue) * chartHeight;
+
+                    ctx.fillStyle = colors[datasetIndex % colors.length];
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    // Borda branca nos pontos
+                    ctx.strokeStyle = 'white';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                });
+            });
+
+            // Desenha labels X
+            ctx.fillStyle = '#333';
+            ctx.font = '11px Arial';
+            ctx.textAlign = 'center';
+
+            if (labels) {
+                labels.forEach((label, index) => {
+                    const x = padding + (index / (labels.length - 1)) * chartWidth;
+                    ctx.fillText(label, x, height - padding + 25);
+                });
+            }
+
+            // Título dos eixos
+            ctx.save();
+            ctx.translate(20, height / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillStyle = '#666';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Número de Militantes', 0, 0);
+            ctx.restore();
+
+            ctx.fillStyle = '#666';
+            ctx.font = '14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Anos', width / 2, height - 15);
+        }
+
+        // 7. Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Anima timeline
+            animateTimeline();
+
+            // Desenha gráfico de militância
+            setTimeout(() => {
+                const militancyData = [
+                    [5000, 30000, 180000, 8000, 180000, 10000, 8000, 200000, 150000, 50000, 30000, 20000, 15000], // Militantes Ativos
+                    [9, 25, 80, 30, 75, 35, 15, 60, 40, 25, 20, 15, 12], // Comitê Central
+                    [5, 12, 45, 20, 50, 18, 8, 35, 30, 15, 12, 10, 8]  // Sindicatos
+                ];
+
+                const labels = ['1922', '1930', '1935', '1940', '1945', '1950', '1964', '1970', '1979', '1985', '1992', '2000', '2024'];
+
+                drawLineChart('militancyChart', militancyData, labels);
+            }, 500);
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // 8. Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // 9. Remove tooltips ao clicar fora
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.state') && !event.target.closest('.map-tooltip')) {
+                const tooltips = document.querySelectorAll('.map-tooltip');
+                tooltips.forEach(tooltip => tooltip.remove());
+            }
+        });
+
+        // 10. Smooth scroll para âncoras (se houver)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
