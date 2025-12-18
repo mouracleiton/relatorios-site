@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCBR nas Eleições de 2026 - Relatório Visual</title>
+    <style>
+        :root {
+            --primary-color: #c1272d;
+            --dark-primary: #8b0000;
+            --secondary-color: #2c3e50;
+            --dark-secondary: #1a252f;
+            --accent-color: #f1c40f;
+            --dark-accent: #d4ac0d;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header-content .emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .data-source {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            font-style: italic;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .stat-indicator {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            flex: 1;
+        }
+
+        .expand-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active .section-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-date {
+            flex: 0 0 150px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px;
+            background: rgba(193, 39, 45, 0.1);
+            border-radius: 8px;
+            margin: 0 20px;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            position: relative;
+            border: 2px solid var(--primary-color);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 3px solid white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -40px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -40px;
+        }
+
+        .timeline-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .timeline-impact {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--accent-color);
+            color: var(--dark-secondary);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .chart-section {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .policy-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .policy-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .policy-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .policy-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .policy-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .policy-card li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary-content li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.05rem;
+        }
+
+        .summary-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            border-radius: 12px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .timeline-date {
+                margin: 10px 0;
+                align-self: flex-start;
+            }
+
+            .timeline-content::before {
+                left: -40px !important;
+            }
+
+            .timeline-content {
+                margin-left: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">⚡</span>
+                <h1>PCBR nas Eleições de 2026</h1>
+                <p>Análise estratégica e posicionamento político do Partido Comunista Brasileiro Revolucionário</p>
+                <p class="data-source">Fonte: Nota política oficial do PCBR - Outubro 2025</p>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">22/10/2025</div>
+                <div class="stat-label">Data do Pleno Extraordinário do Comitê Central</div>
+                <div class="stat-indicator">📅 Decisão estratégica</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1</div>
+                <div class="stat-label">Candidatura majoritária revolucionária proposta</div>
+                <div class="stat-indicator">🎯 Unificação necessária</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Jones Manoel</div>
+                <div class="stat-label">Candidato a deputado federal por Pernambuco</div>
+                <div class="stat-indicator">🗣️ Tribuno do povo</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">PSOL</div>
+                <div class="stat-label">Partido em negociação para legenda</div>
+                <div class="stat-indicator">🤝 Filiação democrática</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2022</div>
+                <div class="stat-label">Ano do "erro histórico" - 3 candidaturas divididas</div>
+                <div class="stat-indicator">📚 Lição aprendida</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">AGORA</div>
+                <div class="stat-label">Momento de iniciar debate programático</div>
+                <div class="stat-indicator">⚡ Urgência tática</div>
+            </div>
+        </div>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🌍</span>
+                <h2>Contexto Político Nacional</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Cenário de Contradições</h3>
+                <p><strong>Avanços imperialistas:</strong> Nova ofensiva dos EUA contra Brasil e Venezuela sem alternativa revolucionária global.</p>
+
+                <h3>Governo Lula-Alckmin</h3>
+                <ul>
+                    <li><strong>Caráter burguês e social-liberal inegável</strong></li>
+                    <li><strong>Contrarreformas mantidas:</strong> Previdência, Trabalhista, Novo Ensino Médio</li>
+                    <li><strong>Novos ataques:</strong> Novo Arcabouço Fiscal, ajuste do IRPF</li>
+                    <li><strong>Ataque a serviços:</strong> BPC do INSS, pisos da saúde e educação</li>
+                    <li><strong>Posição conciliatória:</strong> Com Trump e imperialismo</li>
+                </ul>
+
+                <h3>Oposição Burguesa</h3>
+                <ul>
+                    <li><strong>Concordância programática</strong> com o governo</li>
+                    <li><strong>Privatizações aceleradas</strong> com BNDES</li>
+                    <li><strong>Apoio à PEC da Blindagem</strong> (recuaram só por pressão popular)</li>
+                    <li><strong>Reforma Administrativa:</strong> Terceirização e fim da estabilidade</li>
+                </ul>
+
+                <h3>Cenário das Massas</h3>
+                <p><strong>Baixa na luta de classes</strong> mas com movimentações importantes:</p>
+                <ul>
+                    <li>Lutas por transporte público estatal e gratuito</li>
+                    <li>Greves operárias e de servidores</li>
+                    <li>Falta de unificação com posição independente</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📋</span>
+                <h2>Posição para Eleições Majoritárias</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Necessidade de Alternativa Revolucionária</h3>
+                <blockquote>
+                    <p><strong>"A posição do PCBR frente aos governos burgueses de conciliação de classes é uma oposição por princípio político estratégico."</strong></p>
+                    <p>- XVII Congresso (Extraordinário) do PCB-RR, 2024</p>
+                </blockquote>
+
+                <h3>Erros Passados e Lições</h3>
+                <div style="background: #ffe6e6; padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color); margin: 20px 0;">
+                    <p><strong>Erro de 2022:</strong> Três candidaturas divididas (PCB, UP e PSTU) prejudicaram a visão do proletariado sobre a necessidade de uma Frente Anticapitalista.</p>
+                </div>
+
+                <h3>Apelo à Unificação</h3>
+                <p><strong>Organizações identificadas:</strong> Diversos partidos e organizações revolucionários, legalizados ou não, que:</p>
+                <ul>
+                    <li>Não compõem o governo burguês</li>
+                    <li>São completamente independentes da burguesia</li>
+                    <li>Lutam pelo socialismo</li>
+                    <li>Podem construir acordos programáticos avançados</li>
+                </ul>
+
+                <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; border-left: 4px solid #2ecc71; margin: 20px 0;">
+                    <h4>📢 Chamado do PCBR:</h4>
+                    <p><strong>"Comecemos agora um debate programático para construir essa alternativa! Sabemos que há diferenças entre nós, mas entendemos ser possível um programa bastante avançado para uma candidatura unificada!"</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🗳️</span>
+                <h2>Estratégia para Eleições Proporcionais</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Candidatura Jones Manoel</h3>
+                <div style="background: linear-gradient(135deg, var(--primary-color), var(--dark-primary)); color: white; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                    <h4>🎯 Candidato: Jones Manoel</h4>
+                    <p><strong>Cargo:</strong> Deputado Federal por Pernambuco</p>
+                    <p><strong>Perfil:</strong> Membro do Comitê Central do PCBR</p>
+                    <p><strong>Objetivo:</strong> "Tribuno do povo" no Parlamento burguês</p>
+                </div>
+
+                <h3>Oportunidade Histórica</h3>
+                <ul>
+                    <li><strong>Proeminência do camarada:</strong> Maior alcance para o Programa do PCBR</li>
+                    <li><strong>Agitação revolucionária:</strong> De dentro do Congresso Nacional</li>
+                    <li><strong>Alternativa comunista:</strong> Contraposta à gestão do capitalismo</li>
+                    <li><strong>Janela histórica:</strong> Possibilidade real de eleger um deputado comunista</li>
+                </ul>
+
+                <h3>Desafio da Legenda</h3>
+                <p><strong>Problema:</strong> PCBR não possui legenda eleitoral própria</p>
+                <p><strong>Solução:</strong> Negociação com PSOL para "filição democrática"</p>
+
+                <div style="background: #fff3cd; padding: 20px; border-radius: 8px; border-left: 4px solid var(--accent-color); margin: 20px 0;">
+                    <h4>⚠️ Condições Imprescindíveis:</h4>
+                    <ul>
+                        <li>Preservar autonomia e independência política do PCBR</li>
+                        <li>Manter diferenças programáticas com PSOL</li>
+                        <li>Protocolo de respeito mútuo democrático</li>
+                    </ul>
+                </div>
+
+                <h3>Estratégia Partidária</h3>
+                <p><strong>Esforço concentrado:</strong> Todas as energias na candidatura de Jones Manoel</p>
+                <p><strong>Apoios seletivos:</strong> Apenas candidatos completamente independentes da burguesia e que defendam alternativa socialista</p>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <h3>Timeline: Processo Decisório do PCBR</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">22/10/2025</div>
+                    <div class="timeline-content">
+                        <h4>Pleno Extraordinário</h4>
+                        <p>Reunião do Comitê Central para debater posição eleitoral</p>
+                        <span class="timeline-impact">Decisão estratégica</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Novembro 2025</div>
+                    <div class="timeline-content">
+                        <h4>Início das Negociações</h4>
+                        <p>Contatos avançados com PSOL para filiação democrática</p>
+                        <span class="timeline-impact">Alinhamento tático</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2025-2026</div>
+                    <div class="timeline-content">
+                        <h4>Debate Programático</h4>
+                        <p>Chamado a partidos revolucionários para unificação</p>
+                        <span class="timeline-impact">Construção de frente</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2026</div>
+                    <div class="timeline-content">
+                        <h4>Campanha Eleitoral</h4>
+                        <p>Jones Manoel como candidato e frente majoritária unificada</p>
+                        <span class="timeline-impact">Ofensiva unida</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h3>Análise Comparativa: Cenário Eleitoral</h3>
+            <div class="chart-container">
+                <canvas id="electionChart" width="800" height="400"></canvas>
+            </div>
+            <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color" style="background: #c1272d"></span>Governo Lula-Alckmin</span>
+                <span class="legend-item"><span class="legend-color" style="background: #1a252f"></span>Oposição Burguesa</span>
+                <span class="legend-item"><span class="legend-color" style="background: #f1c40f"></span>Alternativa Revolucionária</span>
+            </div>
+            <p style="text-align: center; margin-top: 20px; color: #666;">
+                <strong>Análise:</strong> A alternativa revolucionária busca romper com a falsa polarização e apresentar um projeto socialista independente
+            </p>
+        </div>
+
+        <div class="policy-grid">
+            <div class="policy-card">
+                <div class="policy-icon">🎯</div>
+                <h3>Objetivos Estratégicos</h3>
+                <ul>
+                    <li>Apresentar alternativa socialista</li>
+                    <li>Denunciar falsas saídas burguesas</li>
+                    <li>Agitar por ditadura do proletariado</li>
+                    <li>Construir unidade revolucionária</li>
+                    <li>Preparar lutas pós-eleições</li>
+                </ul>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">⚡</div>
+                <h3>Táticas Imediatas</h3>
+                <ul>
+                    <li>Debate programático urgente</li>
+                    <li>Candidatura unificada majoritária</li>
+                    <li>Eleger Jones Manoel deputado</li>
+                    <li>Utilizar Parlamento como tribuna</li>
+                    <li>Manter independência política</li>
+                </ul>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">🚫</div>
+                <h3>Posições Críticas</h3>
+                <ul>
+                    <li>Nenhum apoio a gestões capitalistas</li>
+                    <li>Rejeição a "mal menor"</li>
+                    <li>Combate à conciliação de classes</li>
+                    <li>Crítica às ilusões democráticas</li>
+                    <li>Oposição a frentes populares</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">💡</span>
+                <h2>Princípios Programáticos</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Fundamentos da Posição PCBR</h3>
+                <div style="background: var(--secondary-color); color: white; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                    <h4>🏛️ Concepção de Estado</h4>
+                    <p>"Nossa tarefa é a organização da classe trabalhadora para a derrubada da burguesia e do seu Estado e a instauração da ditadura do proletariado."</p>
+                </div>
+
+                <h3>Crítica à Gestão Capitalista</h3>
+                <ul>
+                    <li><strong>Impossibilidade:</strong> Não há gestão "progressista" do capitalismo</li>
+                    <li><strong>Falsa polarização:</strong> Frações burguesas com programas similares</li>
+                    <li><strong>Ilusão democrática:</strong> Democracia burguesa como ferramenta de dominação</li>
+                    <li><strong>Conciliação:</strong> Governos que fomentam ilusões na classe trabalhadora</li>
+                </ul>
+
+                <h3>Tarefa Histórica</h3>
+                <div style="background: linear-gradient(135deg, #27ae60, #2ecc71); color: white; padding: 25px; border-radius: 12px; margin: 20px 0;">
+                    <h4>🚀 Construção Socialista</h4>
+                    <p>Apresentar projeto de país que represente interesses da classe trabalhadora em oposição ao grande capital brasileiro e internacional.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Relatório Visual PCBR. Análise baseada em nota política oficial.</p>
+            <p>Fonte: Em Defesa do Comunismo - Nota Política sobre Eleições 2026</p>
+            <p>Elaborado com base em documento do Comitê Central do PCBR - Outubro 2025</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li><strong>Contexto:</strong> Cenário de defensiva trabalhadora e contradições interimperialistas</li>
+                    <li><strong>Governo:</strong> Caráter burguês-social-liberal de Lula-Alckmin mantém contrarreformas</li>
+                    <li><strong>Oposição:</strong> Frações burguesas com programa basicamente igual ao governo</li>
+                    <li><strong>Posição estratégica:</strong> Oposição por princípio a toda gestão do capitalismo</li>
+                    <li><strong>Tática majoritária:</strong> Chamado à unificação das esquerdas revolucionárias</li>
+                    <li><strong>Candidatura principal:</strong> Jones Manoel para deputado federal por Pernambuco</li>
+                    <li><strong>Desafio legal:</strong> Negociação com PSOL para acesso à legenda eleitoral</li>
+                    <li><strong>Urgência:</strong> Debate programático deve começar imediatamente</li>
+                    <li><strong>Objetivo:</strong> Romper falsa polarização e apresentar alternativa socialista</li>
+                    <li><strong>Preparação:</strong> Utilizar eleições como plataforma para agitação e organização</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                if (!isNaN(num.innerText)) {
+                    const target = parseFloat(num.innerText);
+                    const increment = target / 50;
+                    let current = 0;
+
+                    const updateNumber = () => {
+                        current += increment;
+                        if (current < target) {
+                            num.innerText = Math.floor(current);
+                            requestAnimationFrame(updateNumber);
+                        } else {
+                            num.innerText = target;
+                        }
+                    };
+
+                    updateNumber();
+                }
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            animateNumbers();
+
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+
+            drawElectionChart();
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        function drawElectionChart() {
+            const canvas = document.getElementById('electionChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = 120;
+
+            const data = [
+                { label: 'Governo Lula-Alckmin', value: 35, color: '#c1272d' },
+                { label: 'Oposição Burguesa', value: 35, color: '#1a252f' },
+                { label: 'Alternativa Revolucionária', value: 30, color: '#f1c40f' }
+            ];
+
+            let currentAngle = -Math.PI / 2;
+
+            data.forEach((segment, index) => {
+                const sliceAngle = (segment.value / 100) * 2 * Math.PI;
+
+                // Draw segment
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, currentAngle, currentAngle + sliceAngle);
+                ctx.lineTo(centerX, centerY);
+                ctx.fillStyle = segment.color;
+                ctx.fill();
+
+                // Draw label
+                const labelAngle = currentAngle + sliceAngle / 2;
+                const labelX = centerX + Math.cos(labelAngle) * (radius * 0.7);
+                const labelY = centerY + Math.sin(labelAngle) * (radius * 0.7);
+
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 16px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(segment.value + '%', labelX, labelY);
+
+                currentAngle += sliceAngle;
+            });
+
+            // Draw labels outside
+            currentAngle = -Math.PI / 2;
+            data.forEach((segment) => {
+                const sliceAngle = (segment.value / 100) * 2 * Math.PI;
+                const labelAngle = currentAngle + sliceAngle / 2;
+                const labelX = centerX + Math.cos(labelAngle) * (radius + 30);
+                const labelY = centerY + Math.sin(labelAngle) * (radius + 30);
+
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.textAlign = labelAngle > Math.PI / 2 && labelAngle < 3 * Math.PI / 2 ? 'right' : 'left';
+                ctx.fillText(segment.label, labelX, labelY);
+
+                currentAngle += sliceAngle;
+            });
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
