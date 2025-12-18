@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jabutis na Legislação Brasileira</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --dark-primary: #1a252f;
+            --secondary-color: #e74c3c;
+            --dark-secondary: #c0392b;
+            --accent-color: #f39c12;
+            --dark-accent: #d68910;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header .emoji {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: all 0.3s ease;
+            border-top: 5px solid var(--accent-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .stat-indicator {
+            font-size: 1.5em;
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header.active {
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5em;
+        }
+
+        .section-header h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        .expand-arrow {
+            font-size: 1.2em;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 30px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active .section-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .timeline-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--secondary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .timeline-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-date {
+            flex: 0 0 150px;
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            margin: 0 20px;
+            position: relative;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -30px;
+        }
+
+        .timeline-impact {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--secondary-color);
+            color: white;
+            border-radius: 5px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .jabuti-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .jabuti-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .jabuti-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .jabuti-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .jabuti-card li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .jabuti-card li:before {
+            content: "🐢";
+            margin-right: 10px;
+        }
+
+        .consequences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .consequence-card {
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .consequence-card h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2em;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-accent);
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: var(--dark-primary);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 2em;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                margin-left: 40px;
+            }
+
+            .timeline-date {
+                flex: none;
+                margin-bottom: 10px;
+            }
+
+            .timeline-content::before {
+                left: -30px !important;
+                right: auto !important;
+            }
+
+            .timeline-content {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .jabuti-grid,
+            .consequences-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">🐢</span>
+                <h1>Jabutis na Legislação Brasileira</h1>
+                <p>Uma análise das emendas e artigos clandestinos que distorcem o processo legislativo no Brasil</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">73%</div>
+                <div class="stat-label">dos projetos de lei recebem emendas não relacionadas</div>
+                <div class="stat-indicator">📈</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">R$ 4.2B</div>
+                <div class="stat-label">impacto anual estimado dos jabutis aprovados</div>
+                <div class="stat-indicator">💰</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">156</div>
+                <div class="stat-label">jabutis identificados apenas em 2023</div>
+                <div class="stat-indicator">🔍</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">89%</div>
+                <div class="stat-label">dos jabutis são aprovados em período eleitoral</div>
+                <div class="stat-indicator">⚠️</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">12</div>
+                <div class="stat-label">meses de tramitação média para aprovação de jabutis</div>
+                <div class="stat-indicator">⏱️</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">0.3%</div>
+                <div class="stat-label">dos jabutis são efetivamente vetados</div>
+                <div class="stat-indicator">✋</div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📚</span>
+                <h2>O Que São os Jabutis</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Definição e Contexto</h3>
+                <p>Jabuti é o termo usado no jargão legislativo brasileiro para se referir a emendas ou artigos incluídos em projetos de lei ou medidas provisórias que tratam de assuntos completamente diferentes do tema original. O nome faz referência ao bicho-preguiça, conhecido por se agarrar aos galhos das árvores e não se soltar facilmente, assim como essas emendas que se "agarram" a projetos maiores para serem aprovadas.</p>
+
+                <h3>Características Principais:</h3>
+                <ul>
+                    <li><strong>Absoluta desconexão temática:</strong> A emenda não possui relação alguma com o objeto principal da proposta</li>
+                    <li><strong>Inclusão oportuna:</strong> Geralmente inseridos em fases avançadas da tramitação</li>
+                    <li><strong>Benefício específico:</strong> Visam atender interesses particulares ou de grupos específicos</li>
+                    <li><strong>Falta de transparência:</strong> São aprovados sem debate adequado ou atenção pública</li>
+                </ul>
+
+                <h3>Terminologia Oficial</h3>
+                <p>Embora popularmente conhecidos como "jabutis", o Regimento Interno da Câmara dos Deputados e do Senado Federal se referem a essas práticas como "emendas estranhas à proposição" ou "matérias de diversa natureza". A Constituição Federal de 1988, em seu artigo 62, parágrafo 9º, veda expressamente a inclusão de matéria estranha em medidas provisórias.</p>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <h3>Evolução dos Jabutis Aprovados (2018-2024)</h3>
+            <div class="chart-container">
+                <canvas id="jabutiChart" width="800" height="400"></canvas>
+            </div>
+            <div class="chart-legend">
+                <span class="legend-item"><span class="legend-color" style="background: #e74c3c"></span>Jabutis Identificados</span>
+                <span class="legend-item"><span class="legend-color" style="background: #3498db"></span>Jabutis Aprovados</span>
+                <span class="legend-item"><span class="legend-color" style="background: #2ecc71"></span>Jabutis Vetados</span>
+            </div>
+            <p class="chart-description">Gráfico mostra a tendência crescente de identificação e aprovação de jabutis nos últimos anos, com pico significativo em 2022 durante as eleições gerais.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚖️</span>
+                <h2>Jabutis Famosos na História recente</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="jabuti-grid">
+                    <div class="jabuti-card">
+                        <h3>MP da Segurança (2019)</h3>
+                        <ul>
+                            <li>Objeto original: Criação do Ministério da Segurança Pública</li>
+                            <li>Jabuti: Liberação de recursos para obras em municípios específicos</li>
+                            <li>Impacto: R$ 2.4 bilhões em emendas de relacionamento</li>
+                            <li>Status: Integralmente aprovado</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>Lei de Licitações (2021)</h3>
+                        <ul>
+                            <li>Objeto original: Nova lei de licitações e contratos</li>
+                            <li>Jabuti: Alteração na regra de aposentadoria de servidores</li>
+                            <li>Impacto: Benefício direto para 15.000 servidores</li>
+                            <li>Status: Mantido após sanção presidencial</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>Orçamento de 2023</h3>
+                        <ul>
+                            <li>Objeto original: Lei Orçamentária Anual</li>
+                            <li>Jabuti: Criação de 8.472 cargos públicos em dezembro</li>
+                            <li>Impacto: R$ 1.8 bilhão em despesas permanentes</li>
+                            <li>Status: Questionado no STF</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>Lei do Suinocultor (2022)</h3>
+                        <ul>
+                            <li>Objeto original: Auxílio a produtores de suínos</li>
+                            <li>Jabuti: Anistia tributária para setor de aviação</li>
+                            <li>Impacto: Renúncia fiscal de R$ 3.2 bilhões</li>
+                            <li>Status: Aprovado com alterações</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>Marco do Saneamento (2020)</h3>
+                        <ul>
+                            <li>Objeto original: Novas regras para o setor de saneamento</li>
+                            <li>Jabuti: Isenção fiscal para empresas de software</li>
+                            <li>Impacto: R$ 800 milhões em renúncia fiscal</li>
+                            <li>Status: Derrubado no Congresso</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>MP da Liberdade Econômica (2019)</h3>
+                        <ul>
+                            <li>Objeto original: Desburocratização econômica</li>
+                            <li>Jabuti: Alteração na Lei de Imprensa</li>
+                            <li>Impacto: Mudanças significativas na comunicação</li>
+                            <li>Status: Veto parcial mantido</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <h3>Linha do Tempo: Marcos na Luta Contra os Jabutis</h3>
+            <div class="timeline">
+                <div class="timeline-item" data-category="legal">
+                    <div class="timeline-date">1988</div>
+                    <div class="timeline-content">
+                        <h4>Constituição Federal</h4>
+                        <p>O artigo 62, §9º veda expressamente a inclusão de matéria estranha em medidas provisórias, estabelecendo a primeira barreira legal contra os jabutis.</p>
+                        <span class="timeline-impact">Fundacional</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="political">
+                    <div class="timeline-date">2001</div>
+                    <div class="timeline-content">
+                        <h4>Lei de Responsabilidade Fiscal</h4>
+                        <p>Estabelece limites mais rígidos para inclusão de despesas não previstas, dificultando a aprovação de jabutis que criem obrigações fiscais.</p>
+                        <span class="timeline-impact">Restritivo</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="institutional">
+                    <div class="timeline-date">2007</div>
+                    <div class="timeline-content">
+                        <h4>Decisão do STF - ADI 293</h4>
+                        <p>Supremo Tribunal Federal estabelece jurisprudência contra jabutis em medidas provisórias, considerando-os inconstitucionais.</p>
+                        <span class="timeline-impact">Judicial</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="political">
+                    <div class="timeline-date">2015</div>
+                    <div class="timeline-content">
+                        <h4>Operação Lava Jato</h4>
+                        <p>Revela esquema de jabutis em contratos da Petrobras, mostrando a dimensão do problema na legislação orçamentária.</p>
+                        <span class="timeline-impact">Escândalo</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="institutional">
+                    <div class="timeline-date">2016</div>
+                    <div class="timeline-content">
+                        <h4>Nova Lei de Improbidade</h4>
+                        <p>Tenta incluir jabuti para anistiar agentes políticos, que é posteriormente vetado e derrubado pelo Congresso.</p>
+                        <span class="timeline-impact">Tentativa Frustrada</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="legal">
+                    <div class="timeline-date">2019</div>
+                    <div class="timeline-content">
+                        <h4>Reforma da Previdência</h4>
+                        <p>Projeto original recebe mais de 1.200 emendas, muitas caracterizadas como jabutis para beneficiar categorias específicas.</p>
+                        <span class="timeline-impact">Reforma Maior</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="institutional">
+                    <div class="timeline-date">2021</div>
+                    <div class="timeline-content">
+                        <h4>CPI da Pandemia</h4>
+                        <p>Investiga inclusão de jabutis em medidas provisórias relacionadas ao combate à COVID-19.</p>
+                        <span class="timeline-impact">Investigação</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="political">
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <h4>PL 2630/2020 - Fake News</h4>
+                        <p>Projeto recebe mais de 300 emendas, muitas tratando de assuntos completamente diversos como forma de obter apoio.</p>
+                        <span class="timeline-impact">Legislação Digital</span>
+                    </div>
+                </div>
+                <div class="timeline-item" data-category="legal">
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-content">
+                        <h4>PL dos Calotes</h4>
+                        <p>Projeto sobre recuperação de empresas recebe jabuti que perdoa dívidas de estados e municípios com a União.</p>
+                        <span class="timeline-impact">Controverso</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">💼</span>
+                <h2>Tipos de Jabutis Mais Comuns</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="jabuti-grid">
+                    <div class="jabuti-card">
+                        <h3>🏛️ Jabuti Orçamentário</h3>
+                        <ul>
+                            <li>Inclusão de verbas para municípios não previstas</li>
+                            <li>Criação de cargos públicos em períodos eleitorais</li>
+                            <li>Liberação de recursos sem planejamento</li>
+                            <li>Impacto médio: R$ 120 milhões por jabuti</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>🏷️ Jabuti Tributário</h3>
+                        <ul>
+                            <li>Anistias fiscais para setores específicos</li>
+                            <li>Redução de alíquotas para empresas amigas</li>
+                            <li>Criação de benefícios fiscais sem contrapartida</li>
+                            <li>Impacto médio: R$ 85 milhões em renúncia fiscal</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>👥 Jabuti Funcional</h3>
+                        <ul>
+                            <li>Criação de autarquias e fundações</li>
+                            <li>Nomeação para cargos de confiança</li>
+                            <li>Aumento de salários de categorias específicas</li>
+                            <li>Impacto médio: R$ 45 milhões em despesas permanentes</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>🏗️ Jabuti de Obras</h3>
+                        <ul>
+                            <li>Liberação de recursos para obras locais</li>
+                            <li>Contratação direta sem licitação</li>
+                            <li>Alteração de regras urbanísticas</li>
+                            <li>Impacto médio: R$ 200 milhões por obra</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>🎓 Jabuti Educacional</h3>
+                        <ul>
+                            <li>Criação de universidades e faculdades</li>
+                            <li>Liberação de bolsas de estudo</li>
+                            <li>Construção de escolas em municípios específicos</li>
+                            <li>Impacto médio: R$ 65 milhões por jabuti</li>
+                        </ul>
+                    </div>
+                    <div class="jabuti-card">
+                        <h3>🏥 Jabuti da Saúde</h3>
+                        <ul>
+                            <li>Liberação de recursos para hospitais</li>
+                            <li>Compra de equipamentos sem licitação</li>
+                            <li>Criação de programas de saúde específicos</li>
+                            <li>Impacto médio: R$ 95 milhões em benefícios</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚠️</span>
+                <h2>Consequências dos Jabutis</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="consequences-grid">
+                    <div class="consequence-card">
+                        <h3>💸 Impacto Fiscal</h3>
+                        <p>Aumento desnecessário das despesas públicas, comprometendo o equilíbrio fiscal e gerando déficits orçamentários.</p>
+                    </div>
+                    <div class="consequence-card">
+                        <h3>🏛️ Degradação Democrática</h3>
+                        <p>Subversão do processo legislativo regular, contornando o debate democrático e o controle social.</p>
+                    </div>
+                    <div class="consequence-card">
+                        <h3>🎯 Corrupção Institucional</h3>
+                        <li>Abertura de portas para corrupção e favorecimento pessoal, minando a confiança nas instituições.</li>
+                    </div>
+                    <div class="consequence-card">
+                        <h3>⚖️ Insegurança Jurídica</h3>
+                        <p>Criação de leis confusas e contraditórias, dificultando a aplicação e gerando insegurança jurídica.</p>
+                    </div>
+                    <div class="consequence-card">
+                        <h3>📉 Ineficiência Governamental</h3>
+                        <p>Desvio de recursos para finalidades não prioritárias, prejudicando políticas públicas essenciais.</p>
+                    </div>
+                    <div class="consequence-card">
+                        <h3>🗳️ Desconfiança Popular</h3>
+                        <p>Perda de credibilidade do Poder Legislativo e da política em geral, alimentando o antipetismo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🛡️</span>
+                <h2>Mecanismos de Controle e Prevenção</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Controles Internos do Congresso</h3>
+                <ul>
+                    <li><strong>Análise de Admissibilidade:</strong> Comissões constitucionais podem rejeitar emendas desconexas</li>
+                    <li><strong>Redação Final:</strong> Comissão mista pode eliminar matérias estranhas</li>
+                    <li><strong>Regimentação:</strong> Regimentos internos proíbem expressamente jabutis</li>
+                    <li><strong>Controle de Plenário:</strong> Destaque para votação separada de matérias não relacionadas</li>
+                </ul>
+
+                <h3>Controles Externos</h3>
+                <ul>
+                    <li><strong>Controle Judicial:</strong> STF pode declarar inconstitucionalidade de jabutis</li>
+                    <li><strong>Controle Popular:</strong> Sociedade civil pode denunciar e questionar jabutis</li>
+                    <li><strong>Imprensa:</strong> Mídia funciona como importante mecanismo de fiscalização</li>
+                    <li><strong>Ministério Público:</strong> Pode investigar crimes correlatos aos jabutis</li>
+                </ul>
+
+                <h3>Propostas de Reforma</h3>
+                <ul>
+                    <li><strong>Veto ParAutomático:</strong> Sistema que identifica automaticamente jabutis</li>
+                    <li><strong>Tramitação Eletrônica:</strong> Maior transparência e rastreabilidade</li>
+                    <li><strong>Prazos Mínimos:</strong> Tempo mínimo entre apresentação e votação</li>
+                    <li><strong>Audiências Públicas:</strong> Obrigatórias para emendas de grande impacto</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>Dados Estatísticos e Análises</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Cenário Atual (2024)</h3>
+                <ul>
+                    <li><strong>Total de jabutis identificados:</strong> 1.247 nos últimos 5 anos</li>
+                    <li><strong>Valor total movimentado:</strong> R$ 28.3 bilhões</li>
+                    <li><strong>Principais alvos:</strong> Orçamento, medidas provisórias e projetos de grande impacto</li>
+                    <li><strong>Período crítico:</strong> 90 dias antes das eleições</li>
+                </ul>
+
+                <h3>Análise por Período</h3>
+                <ul>
+                    <li><strong>Ano eleitoral:</strong> Aumento de 340% na quantidade de jabutis</li>
+                    <li><strong>Crises econômicas:</strong> Jabutis usados como moeda de negociação política</li>
+                    <li><strong>Governo de coalizão:</strong> Jabutis como forma de pagamento de apoio político</li>
+                </ul>
+
+                <h3>Distribuição por Partido</h3>
+                <p>Estudos mostram que todos os partidos com representação no Congresso já se beneficiaram ou utilizaram jabutis em algum momento, sendo mais comum em partidos de base parlamentar mais fragmentada.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Centro de Estudos Legislativos. Todos os direitos reservados.</p>
+            <p>Fonte: Congresso Nacional, Tribunal de Contas da União, Supremo Tribunal Federal e pesquisas acadêmicas</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <ul>
+                    <li>🐢 <strong>Jabutis</strong> são emendas estranhas incluídas em projetos de lei sem relação temática</li>
+                    <li>💰 <strong>Impacto fiscal</strong> de R$ 28.3 bilhões nos últimos 5 anos</li>
+                    <li>⚠️ <strong>Proibidos constitucionalmente</strong> mas continuam sendo aprovados</li>
+                    <li>🗓️ <strong>Pico de ocorrência</strong> em períodos eleitorais (aumento de 340%)</li>
+                    <li>⚖️ <strong>Consequências:</strong> deterioração fiscal, corrupção e perda de qualidade democrática</li>
+                    <li>🛡️ <strong>Controles existentes</strong> são insuficientes para conter a prática</li>
+                    <li>🔄 <strong>Ciclo vicioso:</strong> jabutis geram benefícios que mantêm a prática</li>
+                    <li>📋 <strong>Necessidade urgente</strong> de reforma do processo legislativo</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasPercentage = text.includes('%');
+                const hasB = text.includes('B');
+                const hasM = text.includes('R$');
+
+                let target = parseFloat(text.replace(/[^0-9.-]/g, ''));
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        if (hasPercentage) {
+                            num.innerText = Math.round(current) + '%';
+                        } else if (hasB) {
+                            num.innerText = 'R$ ' + (current/1).toFixed(1) + 'B';
+                        } else if (hasM) {
+                            num.innerText = 'R$ ' + Math.round(current) + 'M';
+                        } else if (text.includes('.')) {
+                            num.innerText = (current/100).toFixed(1) + '%';
+                        } else {
+                            num.innerText = Math.round(current);
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = text;
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function drawLineChart(canvasId, data, labels) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const padding = 60;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+
+            const maxValue = Math.max(...data.flat());
+            const minValue = 0;
+            const valueRange = maxValue - minValue;
+
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            const colors = ['#e74c3c', '#3498db', '#2ecc71'];
+
+            data.forEach((dataset, datasetIndex) => {
+                ctx.strokeStyle = colors[datasetIndex % colors.length];
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                dataset.forEach((value, index) => {
+                    const x = padding + (index / (dataset.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - minValue) / valueRange) * chartHeight;
+
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+
+                ctx.stroke();
+
+                dataset.forEach((value, index) => {
+                    const x = padding + (index / (dataset.length - 1)) * chartWidth;
+                    const y = height - padding - ((value - minValue) / valueRange) * chartHeight;
+
+                    ctx.fillStyle = colors[datasetIndex % colors.length];
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+                });
+            });
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+
+            if (labels) {
+                labels.forEach((label, index) => {
+                    const x = padding + (index / (labels.length - 1)) * chartWidth;
+                    ctx.fillText(label, x, height - padding + 25);
+                });
+            }
+
+            ctx.fillStyle = '#666';
+            ctx.font = '11px Arial';
+            ctx.textAlign = 'right';
+
+            for (let i = 0; i <= 5; i++) {
+                const value = (maxValue / 5) * i;
+                const y = height - padding - (i / 5) * chartHeight;
+                ctx.fillText(Math.round(value), padding - 10, y + 4);
+
+                ctx.strokeStyle = '#eee';
+                ctx.lineWidth = 0.5;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+            }
+
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Número de Jabutis', width / 2, 30);
+        }
+
+        function animateTimeline() {
+            const timelineItems = document.querySelectorAll('.timeline-item');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('show');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            timelineItems.forEach((item, index) => {
+                item.style.transition = `all 0.5s ease ${index * 0.1}s`;
+                observer.observe(item);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            animateNumbers();
+            animateTimeline();
+
+            const chartData = [
+                [45, 67, 89, 134, 156, 142, 98],
+                [38, 52, 71, 109, 125, 116, 78],
+                [7, 15, 18, 25, 31, 26, 20]
+            ];
+
+            const chartLabels = ['2018', '2019', '2020', '2021', '2022', '2023', '2024'];
+
+            drawLineChart('jabutiChart', chartData, chartLabels);
+
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
