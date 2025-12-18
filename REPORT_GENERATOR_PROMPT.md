@@ -11,6 +11,8 @@ Este é um prompt mestre para criar relatórios interativos e responsivos em HTM
 - **Interatividade**: Seções expansíveis, modal, animações
 - **Visual moderno**: Gradientes, sombras, transições suaves
 - **Acessibilidade**: HTML5 semântico, contraste adequado
+- **📊 Visualização de dados históricos**: Gráficos interativos, timelines, mapas históricos
+- **📈 Análise temporal**: Evolução de eventos e tendências históricas
 
 ## 🚀 Como Usar
 
@@ -103,6 +105,61 @@ Defina uma paleta de cores coerente com o tema:
 </div>
 ```
 
+### 3.1. SEÇÃO COM GRÁFICO (NOVO)
+```html
+<div class="chart-section">
+    <h3>[TÍTULO DO GRÁFICO]</h3>
+    <div class="chart-container">
+        <canvas id="[ID_GRAFICO]" width="400" height="200"></canvas>
+    </div>
+    <div class="chart-legend">
+        <span class="legend-item"><span class="legend-color" style="background: [COR]"></span>[LEGENDA 1]</span>
+        <span class="legend-item"><span class="legend-color" style="background: [COR]"></span>[LEGENDA 2]</span>
+    </div>
+    <p class="chart-description">[ANÁLISE DO GRÁFICO]</p>
+</div>
+```
+
+### 3.2. TIMELINE HISTÓRICO (NOVO)
+```html
+<div class="timeline-container">
+    <h3>[TÍTULO DA TIMELINE]</h3>
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-date">[ANO/PERÍODO]</div>
+            <div class="timeline-content">
+                <h4>[EVENTO]</h4>
+                <p>[DESCRIÇÃO DETALHADA]</p>
+                <span class="timeline-impact">[IMPACTO]</span>
+            </div>
+        </div>
+        <!-- Repetir para cada evento -->
+    </div>
+</div>
+```
+
+### 3.3. MAPA HISTÓRICO INTERATIVO (NOVO)
+```html
+<div class="map-section">
+    <h3>[TÍTULO DO MAPA]</h3>
+    <div class="map-container">
+        <svg id="mapSvg" viewBox="0 0 800 600">
+            <!-- Elementos do mapa -->
+            <g class="state" onclick="showStateInfo('[ESTADO]')" data-state="[ESTADO]">
+                <path d="[PATH_SVG]" fill="[COR]" stroke="#333" stroke-width="1"/>
+                <text x="[X]" y="[Y]" text-anchor="middle" fill="#fff">[SIGLA]</text>
+            </g>
+        </svg>
+    </div>
+    <div class="map-legend">
+        <h4>Legenda:</h4>
+        <div class="legend-items">
+            <span class="legend-item"><span class="legend-color" style="background: [COR]"></span>[DESCRIÇÃO]</span>
+        </div>
+    </div>
+</div>
+```
+
 ### 4. GRID DE POLÍTICAS/DESAFIOS/OPORTUNIDADES
 ```html
 <div class="policy-grid">
@@ -188,6 +245,136 @@ header {
 - `.section-content` - Conteúdo animado com fadeIn
 - `.modal` - Modal overlay
 - `.floating-button` - Botão circular fixo
+- `.chart-section` - Container para gráficos
+- `.timeline-container` - Container para timeline histórica
+- `.timeline-item` - Item individual da timeline
+- `.map-section` - Container para mapas interativos
+- `.chart-container` - Canvas do gráfico com responsividade
+- `.legend-item` - Item da legenda do gráfico
+- `.timeline-impact` - Badge de impacto do evento
+
+### Classes para Análise Histórica (NOVO)
+```css
+.chart-container {
+    position: relative;
+    height: 300px;
+    margin: 20px 0;
+}
+
+.timeline {
+    position: relative;
+    padding: 20px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-color);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.timeline-item:nth-child(odd) {
+    flex-direction: row;
+}
+
+.timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.timeline-date {
+    flex: 0 0 120px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.timeline-content {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    margin: 0 20px;
+    position: relative;
+}
+
+.timeline-content::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.timeline-item:nth-child(odd) .timeline-content::before {
+    left: -30px;
+}
+
+.timeline-item:nth-child(even) .timeline-content::before {
+    right: -30px;
+}
+
+.timeline-impact {
+    display: inline-block;
+    padding: 4px 8px;
+    background: var(--accent-color);
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.map-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.map-container svg {
+    max-width: 100%;
+    height: auto;
+}
+
+.state {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.state:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+}
+```
 
 ## ⚡ FUNCIONALIDADES JAVASCRIPT OBRIGATÓRIAS
 
@@ -279,6 +466,199 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// 7. Renderização de Gráficos (NOVO)
+function drawLineChart(canvasId, data, labels) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width;
+    const height = canvas.height;
+
+    // Limpa canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Configurações
+    const padding = 40;
+    const chartWidth = width - 2 * padding;
+    const chartHeight = height - 2 * padding;
+
+    // Encontra valores máximos e mínimos
+    const maxValue = Math.max(...data.flat());
+    const minValue = Math.min(...data.flat());
+    const valueRange = maxValue - minValue;
+
+    // Desenha eixos
+    ctx.strokeStyle = '#ccc';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, height - padding);
+    ctx.lineTo(width - padding, height - padding);
+    ctx.stroke();
+
+    // Desenha linhas de dados
+    const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f39c12'];
+
+    data.forEach((dataset, datasetIndex) => {
+        ctx.strokeStyle = colors[datasetIndex % colors.length];
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+
+        dataset.forEach((value, index) => {
+            const x = padding + (index / (dataset.length - 1)) * chartWidth;
+            const y = height - padding - ((value - minValue) / valueRange) * chartHeight;
+
+            if (index === 0) {
+                ctx.moveTo(x, y);
+            } else {
+                ctx.lineTo(x, y);
+            }
+        });
+
+        ctx.stroke();
+
+        // Desenha pontos
+        dataset.forEach((value, index) => {
+            const x = padding + (index / (dataset.length - 1)) * chartWidth;
+            const y = height - padding - ((value - minValue) / valueRange) * chartHeight;
+
+            ctx.fillStyle = colors[datasetIndex % colors.length];
+            ctx.beginPath();
+            ctx.arc(x, y, 4, 0, 2 * Math.PI);
+            ctx.fill();
+        });
+    });
+
+    // Desenha labels
+    ctx.fillStyle = '#333';
+    ctx.font = '12px Arial';
+    ctx.textAlign = 'center';
+
+    if (labels) {
+        labels.forEach((label, index) => {
+            const x = padding + (index / (labels.length - 1)) * chartWidth;
+            ctx.fillText(label, x, height - padding + 20);
+        });
+    }
+}
+
+// 8. Animação de Timeline (NOVO)
+function animateTimeline() {
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, { threshold: 0.1 });
+
+    timelineItems.forEach((item, index) => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = `all 0.5s ease ${index * 0.1}s`;
+        observer.observe(item);
+    });
+}
+
+// 9. Informações do Mapa (NOVO)
+function showStateInfo(state) {
+    const info = {
+        'SP': 'São Paulo: Centro industrial e operário, importante na formação do PCB',
+        'RJ': 'Rio de Janeiro: Berço do movimento comunista brasileiro, sede da Revolução de 1935',
+        'RS': 'Rio Grande do Sul: Forte influência anarquista e comunista nas áreas rurais',
+        'PE': 'Pernambuco: Destaque nas Ligas Camponesas e movimento comunista rural',
+        'PA': 'Pará: Importante na Guerrilha do Araguaia',
+        'GO': 'Goiás: Palco da Guerrilha do Araguaia'
+    };
+
+    const message = info[state] || `${state}: Participação ativa no movimento comunista brasileiro`;
+
+    // Cria tooltip ou modal
+    const tooltip = document.createElement('div');
+    tooltip.className = 'map-tooltip';
+    tooltip.innerHTML = `<strong>${state}</strong><br>${message}`;
+    tooltip.style.cssText = `
+        position: fixed;
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 1000;
+        max-width: 250px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    `;
+
+    document.body.appendChild(tooltip);
+
+    setTimeout(() => {
+        tooltip.remove();
+    }, 3000);
+}
+
+// 10. Inicialização Extendida (ATUALIZADO)
+document.addEventListener('DOMContentLoaded', function() {
+    // Anima números ao carregar
+    animateNumbers();
+
+    // Anima timeline
+    animateTimeline();
+
+    // Desenha gráficos
+    if (typeof chartData !== 'undefined') {
+        chartData.forEach(chart => {
+            drawLineChart(chart.id, chart.data, chart.labels);
+        });
+    }
+
+    // Abre primeira seção automaticamente
+    const firstSection = document.querySelector('.section-header');
+    if (firstSection) {
+        toggleSection(firstSection);
+    }
+
+    // Adiciona filtros para timeline
+    addTimelineFilters();
+});
+
+// 11. Filtros de Timeline (NOVO)
+function addTimelineFilters() {
+    const filterContainer = document.createElement('div');
+    filterContainer.className = 'timeline-filters';
+    filterContainer.innerHTML = `
+        <button onclick="filterTimeline('all')">Todos</button>
+        <button onclick="filterTimeline('political')">Político</button>
+        <button onclick="filterTimeline('social')">Social</button>
+        <button onclick="filterTimeline('militar')">Militar</button>
+    `;
+
+    const timeline = document.querySelector('.timeline-container');
+    if (timeline) {
+        timeline.insertBefore(filterContainer, timeline.firstChild);
+    }
+}
+
+function filterTimeline(type) {
+    const items = document.querySelectorAll('.timeline-item');
+    items.forEach(item => {
+        if (type === 'all' || item.dataset.category === type) {
+            item.style.display = 'flex';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+
+    // Atualiza botões
+    document.querySelectorAll('.timeline-filters button').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+}
 ```
 
 ## 📝 CONTEÚDO ESPECÍFICO [Personalizar aqui]
@@ -361,6 +741,26 @@ Paleta de Cores:
 - Cor de Destaque: Amarelo #f39c12 (tecnologia)
 ```
 
+### Exemplo 3: Comunismo no Brasil (NOVO)
+```
+Tema: Contexto Histórico do Comunismo no Brasil (1922-2024)
+Público: Estudantes de história, pesquisadores e interessados em política
+Tipo: Histórico/Acadêmico
+
+Paleta de Cores:
+- Cor Primária: Vermelho #e74c3c (simbolismo comunista)
+- Cor Secundária: Azul escuro #2c3e50 (seriedade histórica)
+- Cor de Destaque: Dourado #f39c12 (resistência e esperança)
+
+Elementos Específicos:
+- Timeline de eventos políticos (1922-2024)
+- Gráfico de evolução da militância comunista
+- Mapa do Brasil com focos de resistência
+- Perfil biográfico de líderes comunistas
+- Análise de políticas de repressão
+- Comparação entre diferentes períodos históricos
+```
+
 ## 🎨 Paletas de Cores Sugeridas
 
 ### Empresarial
@@ -379,6 +779,18 @@ Paleta de Cores:
 - Azul conhecimento + verde crescimento + laranja criatividade
 - Vermelho paixão + azul lógico + amarelo iluminação
 
+### Histórico/Político (NOVO)
+- **Comunismo/Socialismo**: Vermelho #e74c3c + Azul escuro #2c3e50 + Dourado #f39c12
+- **Democracia**: Verde #27ae60 + Azul #3498db + Branco #ecf0f1
+- **Ditadura/Militar**: Cinza escuro #34495e + Vermelho escuro #c0392b + Preto #2c3e50
+- **Resistência**: Laranja #e67e22 + Amarelo #f1c40f + Verde #2ecc71
+
+### Cores Históricas Brasileiras (NOVO)
+- **Período Imperial**: Verde #009739 + Amarelo #fedd00 + Azul #012169
+- **Era Vargas**: Vermelho #c1272d + Preto #000000 + Branco #ffffff
+- **Ditadura Militar**: Verde oliva #556b2f + Marrom #8b4513 + Cinza #708090
+- **Redemocratização**: Azul #4169e1 + Verde #228b22 + Amarelo #ffd700
+
 ## 📋 Checklist de Validação
 
 Antes de finalizar seu relatório, verifique:
@@ -392,6 +804,9 @@ Antes de finalizar seu relatório, verifique:
 - [ ] Cross-browser compatível
 - [ ] Conteúdo coeso e bem estruturado
 - [ ] Coerência visual mantida
+- [ ] Gráficos e visualizações funcionando corretamente
+- [ ] Timeline animada e responsiva
+- [ ] Mapa interativo com informações corretas
 
 ## 🚀 Próximos Passos
 
@@ -401,6 +816,8 @@ Antes de finalizar seu relatório, verifique:
 4. **Verifique acessibilidade**: WAVE ou Lighthouse
 5. **Otimize**: Comprima imagens, minifique se necessário
 6. **Deploy**: Hospede em servidor web estático
+7. **Teste visualizações**: Verifique gráficos, timelines e mapas
+8. **Valide dados**: Confira precisão histórica e estatística
 
 ## 📚 Recursos Adicionais
 
@@ -408,7 +825,48 @@ Antes de finalizar seu relatório, verifique:
 - [CSS Custom Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties)
 - [Web Accessibility Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [Responsive Design Patterns](https://web.dev/responsive-web-design-basics/)
+- [Canvas API for Charts](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
+- [SVG for Interactive Maps](https://developer.mozilla.org/en-US/docs/Web/SVG)
+- [Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)
+
+## 📖 Conteúdo Específico: Comunismo no Brasil (Exemplo Completo)
+
+### Título: "Século Vermelho: A Trajetória do Comunismo no Brasil (1922-2024)"
+
+#### Contexto Histórico:
+- Fundação do Partido Comunista Brasileiro (PCB) em 1922
+- Influência da Revolução Russa e do movimento operário
+- Períodos de legalidade e clandestinidade
+- Relação com outros movimentos sociais e políticos
+
+#### Estatísticas Essenciais:
+1. **1922** - Ano de fundação do PCB
+2. **1935** - Ano da Intentona Comunista
+3. **1964-1985** - Período de maior repressão (Ditadura Militar)
+4. **~400.000** - Estimativa de militantes em momentos de pico
+5. **2.300** - Número aproximado de mortos e desaparecidos políticos
+6. **8** - Número de partidos com origem comunista/ socialista hoje
+
+#### Timeline Principal:
+1. **1922-1935**: Formação e primeiros anos do PCB
+2. **1935-1945**: Repressão varguista e participação na resistência
+3. **1945-1964**: Breve legalidade e atuação institucional
+4. **1964-1979**: Clandestinidade e resistência armada
+5. **1979-1985**: Anistia e redemocratização
+6. **1985-2024**: Transição para partidos legais e atuação democrática
+
+#### Focos de Resistência (Mapa):
+- **Sudeste**: SP, RJ, MG - Centros industriais e operários
+- **Nordeste**: PE, PB, CE - Ligas Camponesas e movimento rural
+- **Norte**: PA, AM, GO - Guerrilha do Araguaia
+- **Sul**: RS, SC - Influência anarquista e imigrante
+
+#### Gráficos Sugeridos:
+- Evolução da militância (1922-2024)
+- Comparativo: Repressão vs. Organização
+- Distribuição geográfica por décadas
+- Relação com outros movimentos sociais
 
 ---
 
-**Nota**: Este prompt foi criado baseado na análise dos relatórios existentes do sistema, garantindo consistência e qualidade em todas as gerações futuras.
+**Nota**: Este prompt foi criado baseado na análise dos relatórios existentes do sistema, garantindo consistência e qualidade em todas as gerações futuras. A versão adaptada inclui recursos específicos para análise histórica e visualização de dados temporais.

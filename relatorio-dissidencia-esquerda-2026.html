@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dissidência da Esquerda: Plano Estratégico 2026</title>
+    <style>
+        :root {
+            --primary-color: #d32f2f;
+            --dark-primary: #b71c1c;
+            --secondary-color: #455a64;
+            --dark-secondary: #263238;
+            --accent-color: #ffc107;
+            --dark-accent: #f57c00;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content .emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .stat-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--accent-color);
+            color: var(--dark-primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header .emoji {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .section-header h2 {
+            flex: 1;
+            font-size: 1.3rem;
+        }
+
+        .expand-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 30px;
+            max-height: 2000px;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .policy-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow);
+        }
+
+        .policy-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .phase-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .phase-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--accent-color);
+            color: var(--dark-primary);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .phase-card h3 {
+            color: var(--secondary-color);
+            margin: 10px 0 15px 0;
+        }
+
+        .chart-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+
+        .timeline-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .timeline-date {
+            flex: 0 0 120px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin: 0 20px;
+            position: relative;
+            border: 1px solid #e9ecef;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -30px;
+        }
+
+        .timeline-impact {
+            display: inline-block;
+            padding: 4px 8px;
+            background: var(--accent-color);
+            color: var(--dark-primary);
+            border-radius: 4px;
+            font-size: 12px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-color);
+            color: var(--dark-primary);
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            transform: scale(1.1);
+            background: var(--dark-accent);
+            color: white;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--secondary-color);
+        }
+
+        .close:hover {
+            color: var(--primary-color);
+        }
+
+        .summary-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary-content li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .summary-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        footer {
+            background: var(--dark-secondary);
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 40px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+            }
+
+            .timeline-date {
+                margin-bottom: 10px;
+            }
+
+            .timeline-content {
+                margin: 0 0 0 50px;
+            }
+
+            .timeline-content::before {
+                left: -30px !important;
+            }
+
+            .floating-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            header p {
+                font-size: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <span class="emoji">🔄</span>
+            <h1>Dissidência da Esquerda: Plano Estratégico 2026</h1>
+            <p>Análise Estrutural e Cenários para a Reconstrução Progressista</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">+15%</div>
+                <div class="stat-label">Crescimento potencial da esquerda unificada</div>
+                <div class="stat-indicator">Projeção 2026</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">6</div>
+                <div class="stat-label">Principais partidos progressistas em dissidência</div>
+                <div class="stat-indicator">PT, PSB, PSOL, PDT, Cidadania, Rede</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">R$ 2,3B</div>
+                <div class="stat-label">Recurso estimado para campanha unificada</div>
+                <div class="stat-indicator">Fundo Eleitoral + Fundo Partidário</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">30M</div>
+                <div class="stat-label">Eleitores progressistas potenciais</div>
+                <div class="stat-indicator">Base identificada</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">18</div>
+                <div class="stat-label">Meses até o pleito presidencial</div>
+                <div class="stat-indicator">Contagem regressiva</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Cenários estratégicos principais</div>
+                <div class="stat-indicator">Otimista, Realista, Pessimista</div>
+            </div>
+        </section>
+
+        <div class="section active">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>Análise do Cenário Atual da Esquerda</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Diagnóstico Estratégico</h3>
+                <p>A esquerda brasileira enfrenta um momento crítico de fragmentação, com múltiplos projetos políticos disputando espaço e influência. A polarização política e a ascensão de novas lideranças criaram um cenário complexo que exige reorganização estratégica para as eleições de 2026.</p>
+
+                <h3>Principais Fatores de Fragmentação:</h3>
+                <ul>
+                    <li><strong>Disputas ideológicas:</strong> Diferenças estratégicas entre reforma ou revolução</li>
+                    <li><strong>Disputas de poder:</strong> Ambições pessoais e disputas por espaço institucional</li>
+                    <li><strong>Falta de liderança unificadora:</strong> Ausência de consenso sobre candidato/a presidenciável</li>
+                    <li><strong>Diferenças programáticas:</strong> Visões distintas sobre prioridades governamentais</li>
+                    <li><strong>Questões de funding:</strong> Disputa por recursos eleitorais e financeiros</li>
+                </ul>
+
+                <h3>Oportunidades Estratégicas:</h3>
+                <ul>
+                    <li><strong>Desgaste do governo atual:</strong> Insatisfação com políticas econômicas</li>
+                    <li><strong>Demanda por alternativas:</strong> Busca por opções progressistas viáveis</li>
+                    <li><strong>Nova geração de ativistas:</strong> Juventude engajada em causas ambientais e sociais</li>
+                    <li><strong>Crise econômica global:</strong> Abertura para discursos de transformação</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🏛️</span>
+                <h2>Principais Atores e Grupos de Dissidência</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Partido dos Trabalhadores (PT)</h3>
+                <p><strong>Segmento majoritário:</strong> Base histórica ligada a Lula e ao sindicalismo</p>
+                <p><strong>Segmento dissidente:</strong> Setores críticos das alianças com centro-direita</p>
+                <p><strong>Líderes relevantes:</strong> Gleisi Hoffmann, Jacques Wagner, Paulo Pimenta</p>
+
+                <h3>Partido Socialismo e Liberdade (PSOL)</h3>
+                <p><strong>Perfil:</strong> Esquerda radical, anticapitalista</p>
+                <p><strong>Tensões internas:</strong> Disputa entre setor mais institucional e movimento social</p>
+                <p><strong>Líderes relevantes:</strong> Guilherme Boulos, Juliana Cardoso, Luciana Genro</p>
+
+                <h3>Partido Socialista Brasileiro (PSB)</h3>
+                <p><strong>Posicionamento:</strong> Centro-esquerda com fortes bases regionais</p>
+                <p><strong>Setores dissidentes:</strong> Críticos das alianças com PT</p>
+                <p><strong>Líderes relevantes:</strong> Carlos Lupi, Ana Cláudia, Geraldo Alckmin (ala mais centrista)</p>
+
+                <h3>Partido Democrático Trabalhista (PDT)</h3>
+                <p><strong>Herança:</strong> Trabalhismo getulista, social-democracia</p>
+                <p><strong>Tensões atuais:</strong> Disputa entre setores mais à esquerda e centro</p>
+                <p><strong>Líderes relevantes:</strong> Carlos Roberto Siqueira, Roberto Campos, Ciro Gomes (aposentado)</p>
+
+                <h3>Novos Movimentos</h3>
+                <ul>
+                    <li><strong>Coletivos Juvenis:</strong> Movimento antifascista e feminista</li>
+                    <li><strong>Ativismo Ambiental:</strong> Ecologistas radicais e movimento climático</li>
+                    <li><strong>Setores LGBTI+:</strong> Movimento identitário e direitos humanos</li>
+                    <li><strong>Movimentos Periféricos:</strong> Hip hop, cultura das ruas e periferias</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚖️</span>
+                <h2>Análise de Conflitos e Alianças Possíveis</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Matriz de Conflitos Principais:</h3>
+
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">🔥</div>
+                        <h3>Alianças com Centro</h3>
+                        <p><strong>Posição favorável:</strong> PT majoritário, PSB centrista</p>
+                        <p><strong>Posição contrária:</strong> PSOL, PDT à esquerda</p>
+                        <p><strong>Impasse:</strong> Legitimidade vs. Pragmatismo</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">💰</div>
+                        <h3>Política Econômica</h3>
+                        <p><strong>Setor moderado:</strong> Reforma gradual, diálogo com mercado</p>
+                        <p><strong>Setor radical:</strong> Ruptura, estatizações, auditoria da dívida</p>
+                        <p><strong>Conflito:</strong> Credibilidade vs. Transformação</p>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">🌍</div>
+                        <h3>Meio Ambiente</h3>
+                        <p><strong>Consenso geral:</strong> Need de transição ecológica</p>
+                        <p><strong>Divisão:</strong> Ritmo e profundidade das mudanças</p>
+                        <p><strong>Tensão:</strong> Desenvolvimento vs. Sustentabilidade</p>
+                    </div>
+                </div>
+
+                <h3>Pontes para Unificação:</h3>
+                <ul>
+                    <li><strong>Programa mínimo comum:</strong> Democracia, direitos humanos, soberania</li>
+                    <li><strong>Novo arquivo constitucional:</strong> Propostas de reformas estruturais</li>
+                    <li><strong>Reforma política:</strong> Democratização do sistema partidário</li>
+                    <li><strong>Combate à desigualdade:</strong> Políticas de redistribuição</li>
+                    <li><strong>Defesa da democracia:</strong> Frente antifascista ampla</li>
+                </ul>
+
+                <h3>Alianças Estratégicas Viáveis:</h3>
+                <ul>
+                    <li><strong>Frente Progressista Ampliada:</strong> PT + PSB + Cidadania + PDT</li>
+                    <li><strong>Frente de Esquerda:</strong> PSOL + setores PT + movimentos sociais</li>
+                    <li><strong>Frente Antifascista:</strong> Todos contra extrema-direita</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📈</span>
+                <h2>Evolução Histórico-Política da Esquerda</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="chart-container">
+                    <canvas id="leftWingEvolutionChart" width="400" height="200"></canvas>
+                </div>
+                <div class="chart-legend">
+                    <span class="legend-item"><span class="legend-color" style="background: #d32f2f"></span>PT</span>
+                    <span class="legend-item"><span class="legend-color" style="background: #455a64"></span>PSOL</span>
+                    <span class="legend-item"><span class="legend-color" style="background: #ffc107"></span>PSB</span>
+                    <span class="legend-item"><span class="legend-color" style="background: #4caf50"></span>PDT</span>
+                </div>
+                <p class="chart-description"><strong>Análise:</strong> Evolução do apoio eleitoral dos principais partidos de esquerda de 2002 a 2024, mostrando impacto de dissidências e reorganizações partidárias. Nota-se a fragmentação crescente após 2016.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🗺️</span>
+                <h2>Mapa Estratégico: Forças por Região</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="timeline-container">
+                    <h3>Distribuição Regional da Esquerda Brasileira</h3>
+                    <div class="policy-grid">
+                        <div class="policy-card">
+                            <div class="policy-icon">🌆</div>
+                            <h3>Sudeste</h3>
+                            <p><strong>PT:</strong> São Paulo industrial, Rio de Janeiro periferias</p>
+                            <p><strong>PSOL:</strong> Capital paulistana, centros universitários</p>
+                            <p><strong>PSB:</strong> Minas Gerais interior, traditional bases</p>
+                            <p><strong>Desafio:</strong> Unificar forças urbanas fragmentadas</p>
+                        </div>
+
+                        <div class="policy-card">
+                            <div class="policy-icon">☀️</div>
+                            <h3>Nordeste</h3>
+                            <p><strong>PT:</strong> Fortaleza, Recife, Salvador, bases sindicais</p>
+                            <p><strong>PSB:</strong> Paraíba, Pernambuco, Alagoas, governadores</p>
+                            <p><strong>Alianças:</strong> Força tradicional da esquerda unificada</p>
+                            <p><strong>Oportunidade:</strong> Mantém liderança regional consolidada</p>
+                        </div>
+
+                        <div class="policy-card">
+                            <div class="policy-icon">🌲</div>
+                            <h3>Norte</h3>
+                            <p><strong>PT:</strong> Belém, Manaus, áreas rurais</p>
+                            <p><strong>PSOL:</strong> Movimentos indígenas, ambientalistas</p>
+                            <p><strong>PSB:</strong> Pará, Amapá, política de desenvolvimento</p>
+                            <p><strong>Foco:</strong> Questões ambientais e extrativismo</p>
+                        </div>
+
+                        <div class="policy-card">
+                            <div class="policy-icon">🌾</div>
+                            <h3>Centro-Oeste</h3>
+                            <p><strong>PT:</strong> Brasília, Goiânia, sem-terra</p>
+                            <p><strong>PSOL:</strong> Movimentos estudantis universitários</p>
+                            <p><strong>Desafio:</strong> Agronegócio, conservadorismo forte</p>
+                            <p><strong>Estratégia:</strong> Direitos humanos e reforma agrária</p>
+                        </div>
+
+                        <div class="policy-card">
+                            <div class="policy-icon">🌊</div>
+                            <h3>Sul</h3>
+                            <p><strong>PT:</strong> Porto Alegre, movimentos urbanos</p>
+                        <p><strong>PSOL:</strong> Cidades universitárias, novos partidos</p>
+                            <p><strong>PSB:</strong> Presença limitada, Santa Catarina</p>
+                            <p><strong>Complexidade:</strong> Histórico conservador, nova diversidade</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⏰</span>
+                <h2>Timeline da Dissidência (2022-2026)</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="timeline-container">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Out/2022</div>
+                            <div class="timeline-content">
+                                <h4>Vitória de Lula e Início das Tensões</h4>
+                                <p>Eleição de Lula reúne ampla frente, mas surgem primeiras divergências sobre composição ministerial e direção do governo</p>
+                                <span class="timeline-impact">Alta</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Jan/2023</div>
+                            <div class="timeline-content">
+                                <h4>Crise do 8 de Janeiro</h4>
+                                <p>Ataques fascistas unificam frente antifascista, mas intensificam debates sobre estratégia de repressão</p>
+                                <span class="timeline-impact">Média</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Mar/2023</div>
+                            <div class="timeline-content">
+                                <h4>Primeiras Críticas Internas</h4>
+                                <p>PSOL e movimentos sociais começam a criticar políticas econômicas e alianças com centro-direita</p>
+                                <span class="timeline-impact">Média</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Jun/2023</div>
+                            <div class="timeline-content">
+                                <h4>Municipais 2024: Divisão de Candidaturas</h4>
+                                <p>Partidos da esquerda começam a se dividir nas eleições municipais, fortalecendo dissidências</p>
+                                <span class="timeline-impact">Alta</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Set/2023</div>
+                            <div class="timeline-content">
+                                <h4>Novo Arquivo Constitucional</h4>
+                                <p>Proposta de reforma constitucional cria novas linhas de divisão entre moderados e radicais</p>
+                                <span class="timeline-impact">Baixa</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Fev/2024</div>
+                            <div class="timeline-content">
+                                <h4>Crise de Liderança no PSOL</h4>
+                                <p>Disputa interna sobre estratégia eleitoral fortalece setor mais institucional</p>
+                                <span class="timeline-impact">Média</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Mai/2024</div>
+                            <div class="timeline-content">
+                                <h4>Greves e Protestos</h4>
+                                <p>Movimentos sociais organizam greves e protestos, testando capacidade de mobilização</p>
+                                <span class="timeline-impact">Alta</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Out/2024</div>
+                            <div class="timeline-content">
+                                <h4>Início das Discussões Presidenciais</h4>
+                                <p>Debates sobre candidatura única ou múltiplas candidaturas se intensificam</p>
+                                <span class="timeline-impact">Altíssima</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">2025</div>
+                            <div class="timeline-content">
+                                <h4>Ano Decisivo de Organização</h4>
+                                <p>Definição de estratégias, pré-candidaturas e acordos eleitorais</p>
+                                <span class="timeline-impact">Altíssima</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">2026</div>
+                            <div class="timeline-content">
+                                <h4>Pleito Presidencial</h4>
+                                <p>Resultado definirá futuro da esquerda brasileira por próxima década</p>
+                                <span class="timeline-impact">Crítica</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">🎯</span>
+                <h2>Plano Estratégico: Três Cenários</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <div class="implementation-phases">
+                    <div class="phase-card">
+                        <div class="phase-number">1</div>
+                        <h3>Cenário Otimista</h3>
+                        <p><strong>Descrição:</strong> Unificação da esquerda com candidatura única e apoio consolidado</p>
+                        <p><strong>Condições:</strong></p>
+                        <ul>
+                            <li>Acordo entre PT, PSB, PSOL e PDT</li>
+                            <li>Candidato/a com amplo apelo popular</li>
+                            <li>Programa mínimo comum consensual</li>
+                            <li>Financiamento unificado</li>
+                            <li>Base militante mobilizada</li>
+                        </ul>
+                        <p><strong>Probabilidade:</strong> 30%</p>
+                        <p><strong>Potencial de vitória:</strong> 45%</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">2</div>
+                        <h3>Cenário Realista</h3>
+                        <p><strong>Descrição:</strong> Frente ampla com múltiplos candidatos e 2º turno decisivo</p>
+                        <p><strong>Condições:</strong></p>
+                        <ul>
+                            <li>PT candidato principal com apoio parcial</li>
+                            <li>PSOL/PSB candidatos próprios</li>
+                            <li>Apóio recíproco no 2º turno</li>
+                            <li>Programa com pontos convergentes</li>
+                            <li>Competição benigna</li>
+                        </ul>
+                        <p><strong>Probabilidade:</strong> 50%</p>
+                        <p><strong>Potencial de vitória:</strong> 40%</p>
+                    </div>
+
+                    <div class="phase-card">
+                        <div class="phase-number">3</div>
+                        <h3>Cenário Pessimista</h3>
+                        <p><strong>Descrição:</strong> Fragmentação total com múltiplos candidatos e competição acirrada</p>
+                        <p><strong>Condições:</strong></p>
+                        <ul>
+                            <li>Candidatura própria para cada partido</li>
+                            <li>Acusações mútuas durante campanha</li>
+                            <li>Programas conflitantes</li>
+                            <li>Disputa por recursos eleitorais</li>
+                            <li>Desmobilização da base</li>
+                        </ul>
+                        <p><strong>Probabilidade:</strong> 20%</p>
+                        <p><strong>Potencial de vitória:</strong> 15%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📋</span>
+                <h2>Roteiro Estratégico Detalhado</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Fase 1: Diagnóstico e Organização (Jan-Abr/2025)</h3>
+                <ul>
+                    <li><strong>Mapeamento de forças:</strong> Levantamento detalhado de militantes, simpatizantes e estruturas</li>
+                    <li><strong>Grupos de trabalho:</strong> Criação de GTs temáticos (economia, direitos humanos, meio ambiente)</li>
+                    <li><strong>Encontros regionais:</strong> Diálogos entre bases locais dos diferentes partidos</li>
+                    <li><strong>Plataforma digital:</strong> Ferramenta unificada de comunicação e mobilização</li>
+                    <li><strong>Financiamento:</strong> Estabelecimento de fundos compartilhados para atividades pré-eleitorais</li>
+                </ul>
+
+                <h3>Fase 2: Construção Programática (Mai-Ago/2025)</h3>
+                <ul>
+                    <li><strong>Conferências temáticas:</strong> Debates abertos com especialistas e sociedade civil</li>
+                    <li><strong>Documento-base:</strong> Elaboração de programa mínimo com pontos de consenso</li>
+                    <li><strong>Consultas populares:</strong> Plebiscitos sobre propostas estratégicas</li>
+                    <li><strong>Seminários técnicos:</strong> Detalhamento de políticas públicas específicas</li>
+                    <li><strong>Revisão crítica:</strong> Análise de programas anteriores e aprendizados</li>
+                </ul>
+
+                <h3>Fase 3: Negociação de Alianças (Set-Out/2025)</h3>
+                <ul>
+                    <li><strong>Mesa de negociação:</strong> Encontros formais entre lideranças partidárias</li>
+                    <li><strong>Definição de candidaturas:</strong> Critérios objetivos para escolha de candidatos</li>
+                    <li><strong>Acordo eleitoral:</strong> Divisão de cargos e recursos financeiros</li>
+                    <li><strong>Comunicação unificada:</strong> Estratégia conjunta de comunicação</li>
+                    <li><strong>Protocolos éticos:</strong> Regras para competição entre aliados</li>
+                </ul>
+
+                <h3>Fase 4: Lançamento e Campanha (Nov/2025-Out/2026)</h3>
+                <ul>
+                    <li><strong>Evento nacional:</strong> Ato público de lançamento da aliança/força progressista</li>
+                    <li><strong>Comitê unificado:</strong> Estrutura organizacional integrada</li>
+                    <li><strong>Campanha em rede:</strong> Articulação entre coordenações estaduais e municipais</li>
+                    <li><strong>Mobilização social:</strong> Ativação de movimentos sociais e sindicatos</li>
+                    <li><strong>Debates públicos:</strong> Participação massiva em todos os níveis</li>
+                </ul>
+
+                <h3>Fase 5: Eleição e Pós-Eleição (Out/2026 em diante)</h3>
+                <ul>
+                    <li><strong>Gestão da vitória:</strong> Plano de transição governamental</li>
+                    <li><strong>Oposição organizada:</strong> Estrutura para atuação parlamentar e social</li>
+                    <li><strong> Avaliação crítica:</strong> Balanço do processo eleitoral</li>
+                    <li><strong>Planejamento estratégico:</strong> Projeções para 2028-2030</li>
+                    <li><strong>Manutenção da articulação:</strong> Preservação da aliança para médio prazo</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">💡</span>
+                <h2>Inovações e Estratégias Disruptivas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Inovações Políticas</h3>
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">🤖</div>
+                        <h3>IA e Política Digital</h3>
+                        <ul>
+                            <li>Chatbot de política pública</li>
+                            <li>Simulações de resultados eleitorais</li>
+                            <li>Análise preditiva de comportamento eleitoral</li>
+                            <li>Plataforma de deliberação digital</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">📱</div>
+                        <h3>Comunicação 4.0</h3>
+                        <ul>
+                            <li>App oficial da campanha</li>
+                            <li>Redes sociais descentralizadas</li>
+                            <li>Realidade aumentada em manifestações</li>
+                            <li>Podcast e streaming programáticos</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">🏘️</div>
+                        <h3>Organização Comunitária</h3>
+                        <ul>
+                            <li>Bairros políticos digitais</li>
+                            <li>Conselhos populares virtuais</li>
+                            <li>Bancos de tempo solidários</li>
+                            <li>Moedas sociais locais</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Estratégias Inovadoras de Mobilização</h3>
+                <ul>
+                    <li><strong>Campanha antecipada:</strong> Início em 2025 com 1 milhão de conversas significativas</li>
+                    <li><strong>Marketing de experiência:</strong> Eventos imersivos sobre políticas públicas</li>
+                    <li><strong>Gamificação política:</strong> Aplicativo com missões e conquistas cívicas</li>
+                    <li><strong>Co-criação de políticas:</strong> Editonas de políticas públicas abertas</li>
+                    <li><strong>Colaboração transnacional:</strong> Intercâmbio com esquerdas internacionais</li>
+                </ul>
+
+                <h3>Propostas Programáticas Inovadoras</h3>
+                <ul>
+                    <li><strong>Renda Universal Cidadã:</strong> Implementação gradual por faixas de renda</li>
+                    <li><strong>Nova Lei de Partidos:</strong> Redução de partidos, financiamento misto, democracia interna</li>
+                    <li><strong>Economia Verde:</strong> Transição para modelo produtivo sustentável</li>
+                    <li><strong>Reforma Universitária:</strong> Gratuidade, pesquisa aplicada, internacionalização</li>
+                    <li><strong>Justiça Restaurativa:</strong> Transformação do sistema prisional e policial</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">⚠️</span>
+                <h2>Riscos e Planos de Mitigação</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Riscos Políticos</h3>
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">🔥</div>
+                        <h3>Fragmentação Irreversível</h3>
+                        <p><strong>Risco:</strong> Ruptura definitiva entre partidos da esquerda</p>
+                        <p><strong>Mitigação:</strong></p>
+                        <ul>
+                            <li>Mediação profissional externa</li>
+                            <li>Comitê de crise bipartidário</li>
+                            <li>Foco em interesses sobre divergências</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">💰</div>
+                        <h3>Crise Financeira</h3>
+                        <p><strong>Risco:</strong> Falta de recursos para campanha competitiva</p>
+                        <p><strong>Mitigação:</strong></p>
+                        <ul>
+                            <li>Financiamento coletivo massivo</li>
+                            <li>Parcerias com setor produtivo progressista</li>
+                            <li>Campanha low-cost com alto impacto</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">📉</div>
+                        <h3>Desmobilização da Base</h3>
+                        <p><strong>Risco:</strong> Fadiga política e desinteresse eleitoral</p>
+                        <p><strong>Mitigação:</strong></p>
+                        <ul>
+                            <li>Reforma política como pauta unificadora</li>
+                            <li>Visibilidade de resultados governamentais</li>
+                            <li>Participação direta em decisões</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Riscos Externos</h3>
+                <ul>
+                    <li><strong>Crise econômica global:</strong> Desvalorização, recessão, desemprego</li>
+                    <li><strong>Ascensão autoritária:</strong> Avanço da extrema-direita regional e global</li>
+                    <li><strong>Desinformação:</strong> Fake news, manipulação algorítmica, guerra híbrida</li>
+                    <li><strong>Intervenção judicial:</strong> Processos seletivos contra lideranças progressistas</li>
+                    <li><strong>Cenário internacional:</strong> Guerras, crises diplomáticas, isolamento</li>
+                </ul>
+
+                <h3>Plano de Contingência</h3>
+                <ul>
+                    <li><strong>Força-tarefa de crise:</strong> Equipe permanente para gestão emergencial</li>
+                    <li><strong>Comunicação de crise:</strong> Protocolos rápidos e unified messaging</li>
+                    <li><strong>Reserva estratégica:</strong> Fundo financeiro para situações emergenciais</li>
+                    <li><strong>Alianças de emergência:</strong> Acordos pré-negociados com outros setores</li>
+                    <li><strong>Plano B operacional:</strong> Estratégias alternativas para cenários adversos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <span class="emoji">📊</span>
+                <h2>Métricas de Sucesso e KPIs</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>KPIs Quantitativos</h3>
+                <div class="policy-grid">
+                    <div class="policy-card">
+                        <div class="policy-icon">👥</div>
+                        <h3>Base Militante</h3>
+                        <ul>
+                            <li>Meta: +1 milhão de ativistas engajados</li>
+                            <li>Monitoramento: Plataforma digital</li>
+                            <li> Frequência: Mensal</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">💵</div>
+                        <h3>Financiamento</h3>
+                        <ul>
+                            <li>Meta: R$ 500 milhões em doações</li>
+                            <li>Monitoramento: Transparência pública</li>
+                            <li> Frequência: Semanal</li>
+                        </ul>
+                    </div>
+
+                    <div class="policy-card">
+                        <div class="policy-icon">📺</div>
+                        <h3>Cobertura Midiática</h3>
+                        <ul>
+                            <li>Meta: +40% share de voice positivo</li>
+                            <li>Monitoramento: Media clipping</li>
+                            <li> Frequência: Diária</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>KPIs Qualitativos</h3>
+                <ul>
+                    <li><strong>Satisfação militante:</strong> Pesquisa trimestral sobre percepção da direção</li>
+                    <li><strong>Coerência programática:</strong> Avaliação de alinhamento com plataforma</li>
+                    <li><strong>Reputação pública:</strong> Índice de aprovação social</li>
+                    <li><strong>Capacidade de diálogo:</strong> Avaliação de abertura a críticas internas</li>
+                    <li><strong>Inovação estratégica:</strong> Adoção de novas tecnologias e métodos</li>
+                </ul>
+
+                <h3>Métricas de Eleitorais</h3>
+                <ul>
+                    <li><strong>Intenção de voto:</strong> Acompanhamento diário (primeiro turno)</li>
+                    <li><strong>Transferência de votos:</strong> Potencial de migração entre 1º e 2º turnos</li>
+                    <li><strong>Geolocalização:</strong> Fortalezas e vulnerabilidades regionais</li>
+                    <li><strong>Perfil demográfico:</strong> Composição por idade, gênero, classe</li>
+                    <li><strong>Engajamento digital:</strong> Interações, alcance, viralização</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo: Plano Estratégico 2026</h2>
+            <div class="summary-content">
+                <ul>
+                    <li><strong>Análise de Cenário:</strong> A esquerda brasileira enfrenta fragmentação histórica com oportunidades estratégicas para reconstrução em 2026</li>
+                    <li><strong>Principais Desafios:</strong> Unificação programática, definição de liderança, gestão de divergências ideológicas</li>
+                    <li><strong>Cenários Prováveis:</strong> Frente ampla com múltiplos candidatos (50%), unificação completa (30%), fragmentação total (20%)</li>
+                    <li><strong>Estratégia Recomendada:</strong> Construção gradual de alianças com programa mínimo comum e coordenação eleitoral</li>
+                    <li><strong>Inovações Necessárias:</strong> Uso intensivo de tecnologia digital, comunicação 4.0, organização em rede</li>
+                    <li><strong>Potencial de Vitória:</strong> 40-45% com estratégia unificada e candidatos adequados</li>
+                    <li><strong>Riscos Críticos:</strong> Fragmentação irreversível, crise financeira, desmobilização da base</li>
+                    <li><strong>Plano de Ação:</strong> 5 fases estratégicas de organização, programação, negociação, campanha e pós-eleição</li>
+                    <li><strong>Investimento Necessário:</strong> R$ 2,3 bilhões em recursos financeiros e mobilização humana</li>
+                    <li><strong>Métricas de Sucesso:</strong> Engajamento de 1 milhão de ativistas, aprovação social de +40%, unificação estratégica</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Centro de Estudos Estratégicos Progressistas. Todos os direitos reservados.</p>
+        <p>Fonte: Análise política baseada em dados públicos, pesquisas eleitorais e cenários prospectivos</p>
+        <p>Relatório elaborado com fins acadêmicos e estratégicos para debate público</p>
+    </footer>
+
+    <script>
+        // Toggle de Seções
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        // Animação de Números
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const text = num.innerText;
+                const hasPercent = text.includes('%');
+                const hasPlus = text.includes('+');
+                const hasB = text.includes('B');
+                const hasM = text.includes('M');
+
+                let target = parseFloat(text.replace(/[^0-9.-]/g, ''));
+                const increment = target / 50;
+                let current = 0;
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        let displayNum = current;
+                        if (hasM) displayNum = displayNum / 1000000;
+                        if (hasB) displayNum = displayNum / 1000000000;
+
+                        if (hasM) {
+                            num.innerText = (hasPlus ? '+' : '') + displayNum.toFixed(0) + 'M';
+                        } else if (hasB) {
+                            num.innerText = (hasPlus ? '+' : '') + displayNum.toFixed(1) + 'B';
+                        } else if (hasPercent) {
+                            num.innerText = (hasPlus ? '+' : '') + displayNum.toFixed(0) + '%';
+                        } else {
+                            num.innerText = num.innerText;
+                        }
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = text; // Mantém formatação original
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        // Controle do Modal
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Gráfico de Evolução
+        function drawEvolutionChart() {
+            const canvas = document.getElementById('leftWingEvolutionChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Dados simulados para o gráfico
+            const years = ['2002', '2006', '2010', '2014', '2018', '2022', '2024'];
+            const data = {
+                'PT': [46.4, 48.6, 46.9, 41.7, 29.3, 48.4, 45.0],
+                'PSOL': [1.2, 6.8, 6.9, 6.8, 0.6, 7.9, 8.5],
+                'PSB': [5.0, 11.2, 9.1, 8.0, 5.2, 7.1, 6.8],
+                'PDT': [4.5, 5.1, 3.9, 3.1, 1.3, 2.8, 3.2]
+            };
+
+            // Configurações do gráfico
+            const padding = 50;
+            const chartWidth = width - 2 * padding;
+            const chartHeight = height - 2 * padding;
+
+            // Limpa canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Fundo
+            ctx.fillStyle = '#f8f9fa';
+            ctx.fillRect(padding, padding, chartWidth, chartHeight);
+
+            // Desenha eixos
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(padding, height - padding);
+            ctx.lineTo(width - padding, height - padding);
+            ctx.stroke();
+
+            // Configurações de cores
+            const colors = {
+                'PT': '#d32f2f',
+                'PSOL': '#455a64',
+                'PSB': '#ffc107',
+                'PDT': '#4caf50'
+            };
+
+            // Encontra valor máximo
+            const maxValue = 60; // Percentual máximo para escala
+
+            // Desenha linhas de grade horizontais
+            ctx.strokeStyle = '#eee';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= 6; i++) {
+                const y = padding + (i / 6) * chartHeight;
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
+
+                // Labels de porcentagem
+                ctx.fillStyle = '#666';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText((60 - i * 10) + '%', padding - 10, y + 4);
+            }
+
+            // Desenha linhas de dados
+            Object.entries(data).forEach(([party, values]) => {
+                ctx.strokeStyle = colors[party];
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+
+                values.forEach((value, index) => {
+                    const x = padding + (index / (values.length - 1)) * chartWidth;
+                    const y = height - padding - (value / maxValue) * chartHeight;
+
+                    if (index === 0) {
+                        ctx.moveTo(x, y);
+                    } else {
+                        ctx.lineTo(x, y);
+                    }
+                });
+
+                ctx.stroke();
+
+                // Desenha pontos
+                values.forEach((value, index) => {
+                    const x = padding + (index / (values.length - 1)) * chartWidth;
+                    const y = height - padding - (value / maxValue) * chartHeight;
+
+                    ctx.fillStyle = colors[party];
+                    ctx.beginPath();
+                    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+                    ctx.fill();
+
+                    // Labels de valores nos pontos
+                    ctx.fillStyle = '#333';
+                    ctx.font = '10px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(value.toFixed(1) + '%', x, y - 10);
+                });
+            });
+
+            // Desenha labels dos anos
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+
+            years.forEach((year, index) => {
+                const x = padding + (index / (years.length - 1)) * chartWidth;
+                ctx.fillText(year, x, height - padding + 20);
+            });
+
+            // Título
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 14px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Evolução do Apoio Eleitoral da Esquerda (%)', width / 2, 20);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Desenha gráfico
+            setTimeout(() => {
+                drawEvolutionChart();
+            }, 100);
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                // Já está aberta pela classe 'active' no HTML
+            }
+        });
+
+        // Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // Redimensiona gráfico quando a janela muda
+        window.addEventListener('resize', function() {
+            drawEvolutionChart();
+        });
+
+        // Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
