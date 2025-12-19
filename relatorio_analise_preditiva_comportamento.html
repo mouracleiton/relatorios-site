@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise Preditiva de Comportamento Humano através da Interação Humano-Computador</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --dark-primary: #1a252f;
+            --secondary-color: #3498db;
+            --dark-secondary: #2980b9;
+            --accent-color: #e74c3c;
+            --dark-accent: #c0392b;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-hover: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-primary));
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header-content .emoji {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .stat-indicator {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+        }
+
+        .section {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-color), var(--dark-secondary));
+            color: white;
+            padding: 20px 25px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--dark-secondary), var(--secondary-color));
+        }
+
+        .section-header.active {
+            background: linear-gradient(135deg, var(--accent-color), var(--dark-accent));
+        }
+
+        .section-header h2 {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.4rem;
+        }
+
+        .section-header .emoji {
+            font-size: 1.8rem;
+        }
+
+        .expand-arrow {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active .expand-arrow {
+            transform: rotate(180deg);
+        }
+
+        .section-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .section.active .section-content {
+            padding: 25px;
+            max-height: 2000px;
+        }
+
+        .section-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .section-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .policy-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .policy-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .policy-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .implementation-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .phase-card {
+            background: white;
+            border: 2px solid var(--secondary-color);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .phase-card:hover {
+            background: var(--secondary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .phase-number {
+            background: var(--accent-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .phase-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .phase-card:hover h3 {
+            color: white;
+        }
+
+        .floating-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-button:hover {
+            background: var(--dark-accent);
+            transform: scale(1.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover {
+            color: var(--accent-color);
+        }
+
+        .summary-content h3 {
+            color: var(--primary-color);
+            margin: 25px 0 15px 0;
+            font-size: 1.3rem;
+        }
+
+        .summary-content ul {
+            margin-left: 20px;
+        }
+
+        .summary-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        footer {
+            background: var(--dark-primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 15px;
+            margin-top: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .header-content .emoji {
+                font-size: 3rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .policy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .implementation-phases {
+                grid-template-columns: 1fr;
+            }
+
+            .floating-button {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            header h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section.active .section-content {
+            animation: fadeIn 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <span class="emoji">🔮</span>
+                <h1>Análise Preditiva de Comportamento Humano através da Interação Humano-Computador</h1>
+                <p>Como os padrões de interação digital revelam insights sobre o comportamento futuro e transformam a experiência do usuário</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">87%</div>
+                <div class="stat-label">Precisão na previsão de intenções do usuário</div>
+                <div class="stat-indicator">📈</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2.3x</div>
+                <div class="stat-label">Aumento na conversão com personalização preditiva</div>
+                <div class="stat-indicator">🎯</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">150ms</div>
+                <div class="stat-label">Tempo médio para antecipação de ação</div>
+                <div class="stat-indicator">⚡</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">92%</div>
+                <div class="stat-label">Satisfação do usuário com experiências preditivas</div>
+                <div class="stat-indicator">😊</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">64%</div>
+                <div class="stat-label">Redução no tempo de conclusão de tarefas</div>
+                <div class="stat-indicator">⏰</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">78%</div>
+                <div class="stat-label">Das empresas já utilizam análise preditiva</div>
+                <div class="stat-indicator">🏢</div>
+            </div>
+        </section>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="emoji">🧠</span> Fundamentos da Análise Preditiva</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>O que é Análise Preditiva de Comportamento?</h3>
+                <p>A análise preditiva de comportamento humano através da interação humano-computador é um campo multidisciplinar que utiliza dados de interação digital para antecipar ações, preferências e necessidades futuras dos usuários. Esta abordagem combina aprendizado de máquina, psicologia computacional e análise de padrões para criar sistemas inteligentes que se adaptam proativamente às expectativas humanas.</p>
+
+                <h3>Princípios Fundamentais</h3>
+                <ul>
+                    <li><strong>Padrões Comportamentais:</strong> Identificação de sequências recorrentes nas interações do usuário</li>
+                    <li><strong>Contexto Temporal:</strong> Análise do timing e frequência das ações</li>
+                    <li><strong>Correlação de Dados:</strong> Conexão entre diferentes tipos de interação</li>
+                    <li><strong>Aprendizado Contínuo:</strong> Adaptação e refinamento constante dos modelos preditivos</li>
+                </ul>
+
+                <h3>Base Científica</h3>
+                <p>A análise preditiva fundamenta-se em princípios da psicologia cognitiva, comportamental e da ciência de dados. Estudos mostram que o comportamento humano, emboracomplexo, segue padrões detectáveis quando analisado em escala suficiente. A tecnologia moderna permite capturar e processar esses padrões em tempo real, possibilitando previsões com alto grau de acurácia.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="emoji">📊</span> Tecnologias e Métodos</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Técnicas de Machine Learning</h3>
+                <ul>
+                    <li><strong>Redes Neurais Recorrentes (RNN):</strong> Modelagem de sequências temporais de interação</li>
+                    <li><strong>Processamento de Linguagem Natural:</strong> Análise de textos e comandos por voz</li>
+                    <li><strong>Visão Computacional:</strong> Interpretação de expressões faciais e gestuais</li>
+                    <li><strong>Clustering Não-Supervisionado:</strong> Identificação de segmentos de usuários similares</li>
+                    <li><strong>Random Forest e Gradient Boosting:</strong> Previsão de comportamentos discretos</li>
+                </ul>
+
+                <h3>Fontes de Dados de Interação</h3>
+                <ul>
+                    <li><strong>Mouse Tracking:</strong> Movimentos, cliques e padrões de navegação</li>
+                    <li><strong>Teclado Dinâmico:</strong> Ritmo de digitação e padrões de correção</li>
+                    <li><strong>Toque e Gestos:</strong> Interações em dispositivos móveis</li>
+                    <li><strong>Comandos por Voz:</strong> Análise semântica e entonação</li>
+                    <li><strong>Biometria Comportamental:</strong> Padrões únicos de interação individual</li>
+                </ul>
+
+                <h3>Arquitetura de Sistemas Preditivos</h3>
+                <p>Os sistemas modernos de análise preditiva geralmente seguem uma arquitetura em camadas: coleta de dados em tempo real, processamento streaming, motor analítico, e camada de predição. Essa estrutura permite latência mínima entre a captura do comportamento e a previsão da intenção, essencial para aplicações interativas.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="emoji">🎯</span> Aplicações Práticas</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>E-commerce e Marketing Digital</h3>
+                <ul>
+                    <li><strong>Previsão de Compra:</strong> Identificação de intenções de compra baseadas no comportamento de navegação</li>
+                    <li><strong>Recomendação Personalizada:</strong> Sugestões proativas baseadas em padrões de浏览</li>
+                    <li><strong>Otimização de Conversão:</strong> Adaptação dinâmica da interface para maximizar conversões</li>
+                    <li><strong>Prevenção de Abandono:</strong> Detecção precoce de sinais de frustração ou desinteresse</li>
+                </ul>
+
+                <h3>Interfaces Conversacionais</h3>
+                <ul>
+                    <li><strong>Chatbots Inteligentes:</strong> Antecipação de perguntas e necessidades do usuário</li>
+                    <li><strong>Assistentes Virtuais:</strong> Sugestões proativas baseadas em contexto e histórico</li>
+                    <li><strong>Suporte ao Cliente:</strong> Detecção automática de problemas e resolução preditiva</li>
+                </ul>
+
+                <h3>Educação e Treinamento</h3>
+                <ul>
+                    <li><strong>Sistemas Adaptativos:</strong> Ajuste automático da dificuldade baseado no desempenho</li>
+                    <li><strong>Deteção de Dificuldades:</strong> Identificação precoce de conceitos não compreendidos</li>
+                    <li><strong>Personalização do Conteúdo:</strong> Recomendação de materiais baseados no estilo de aprendizagem</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="emoji">⚖️</span> Desafios Éticos e Privacidade</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Considerações Éticas</h3>
+                <ul>
+                    <li><strong>Consentimento Informado:</strong> Transparência sobre coleta e uso de dados comportamentais</li>
+                    <li><strong>Viés Algorítmico:</strong> Prevenção de discriminação em previsões automatizadas</li>
+                    <li><strong>Autonomia do Usuário:</strong> Preservação da capacidade de decisão humana</li>
+                    <li><strong>Responsabilidade:</strong> Definição clara de responsabilidade por previsões erradas</li>
+                </ul>
+
+                <h3>Privacidade e Segurança</h3>
+                <ul>
+                    <li><strong>Anonimização:</strong> Proteção de identidade pessoal nos dados analisados</li>
+                    <li><strong>Minimização de Dados:</strong> Coleta apenas do estritamente necessário</li>
+                    <li><strong>Criptografia:</strong> Proteção de dados sensíveis em trânsito e armazenamento</li>
+                    <li><strong>Controle do Usuário:</strong> Opções claras para gerenciar dados comportamentais</li>
+                </ul>
+
+                <h3>Regulamentações e Compliance</h3>
+                <p>A análise preditiva de comportamento deve estar em conformidade com regulamentações como GDPR, LGPD e CCPA. Isso inclui direito à explicação das decisões automatizadas, portabilidade de dados e direito ao esquecimento digital.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="emoji">🚀</span> Casos de Sucesso e Resultados</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Netflix: Personalização de Conteúdo</h3>
+                <p>O sistema de recomendação da Netflix analisa padrões de visualização, pausas, rebobinagens e avaliações para prever o próximo conteúdo que cada usuário deseja assistir. O resultado: 80% do conteúdo assistido vem de recomendações personalizadas.</p>
+
+                <h3>Amazon: Previsão de Compra</h3>
+                <p>A Amazon utiliza análise comportamental para prever quando um usuário está propenso a fazer uma compra. O sistema "Anticipatory Shipping" chega a enviar produtos para armazéns regionais antes mesmo da compra ser efetuada.</p>
+
+                <h3>Google: Pesquisa Preditiva</h3>
+                <p>O Google completa automaticamente searches baseados em billions de consultas anteriores, padrões de digitação e contexto geográfico. Recursos como "Google Now" antecipam informações que o usuário precisará antes mesmo de solicitar.</p>
+
+                <h3>Spotify: Descoberta Musical</h3>
+                <p>O algoritmo "Discover Weekly" analisa padrões de audição, playlists criadas e compara com usuários similares para prever novas músicas que cada usuário gostará, alcançando 70% de taxa de aproveitamento.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+                <h2><span class="emoji">🔮</span> Futuro da Análise Preditiva</h2>
+                <span class="expand-arrow">▼</span>
+            </div>
+            <div class="section-content">
+                <h3>Tecnologias Emergentes</h3>
+                <ul>
+                    <li><strong>Interação Cérebro-Computador:</strong> Previsões baseadas em sinais cerebrais</li>
+                    <li><strong>Realidade Aumentada:</strong> Antecipação de necessidades em ambientes mistos</li>
+                    <li><strong>IoT Comportamental:</strong> Análise preditiva através de dispositivos conectados</li>
+                    <li><strong>Quantum Computing:</strong> Processamento massivo de dados comportamentais</li>
+                </ul>
+
+                <h3>Novas Fronteiras</h3>
+                <ul>
+                    <li><strong>Saúde Preditiva:</strong> Detecção precoce de condições médicas através de comportamento digital</li>
+                    <li><strong>Cidades Inteligentes:</strong> Otimização urbana baseada em padrões coletivos</li>
+                    <li><strong>Educação Hiper-Personalizada:</strong> Adaptativos em tempo real para cada estudante</li>
+                    <li><strong>Colaboração Humano-Máquina:</strong> Previsões que aprimoram a sinergia entre humanos e IA</li>
+                </ul>
+
+                <h3>Desafios Futuros</h3>
+                <p>O futuro da análise preditiva enfrentará desafios como: escalabilidade para bilhões de usuários, explicaibilidade de decisões complexas, manutenção da privacidade em um mundo ultra-conectado, e prevenção de manipulação comportamental em larga escala.</p>
+            </div>
+        </div>
+
+        <div class="policy-grid">
+            <div class="policy-card">
+                <div class="policy-icon">🏛️</div>
+                <h3>Nível Organizacional</h3>
+                <ul>
+                    <li>Desenvolvimento de políticas éticas para uso de dados comportamentais</li>
+                    <li>Investimento em tecnologias de análise preditiva</li>
+                    <li>Capacitação de equipes em ciência de dados comportamental</li>
+                    <li>Implementação de programas de transparência algorítmica</li>
+                </ul>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">🤖</div>
+                <h3>Nível Tecnológico</h3>
+                <ul>
+                    <li>Desenvolvimento de IA explicável para previsões comportamentais</li>
+                    <li>Criação de sistemas federados de aprendizado</li>
+                    <li>Implementação de privacidade diferencial</li>
+                    <li>Construção de frameworks de auditoria algorítmica</li>
+                </ul>
+            </div>
+            <div class="policy-card">
+                <div class="policy-icon">👥</div>
+                <h3>Nível Individual</h3>
+                <ul>
+                    <li>Educação sobre privacidade digital</li>
+                    <li>Desenvolvimento de literacia em IA</li>
+                    <li>Controle granular sobre dados pessoais</li>
+                    <li>Participação ativa na co-criação de sistemas éticos</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="implementation-phases">
+            <div class="phase-card">
+                <div class="phase-number">1</div>
+                <h3>Coleta e Preparação</h3>
+                <ul>
+                    <li>Identificação de fontes de dados comportamentais</li>
+                    <li>Implementação de sistemas de coleta ética</li>
+                    <li>Limpeza e estruturação dos dados</li>
+                    <li>Garantia de conformidade regulatória</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-number">2</div>
+                <h3>Análise Exploratória</h3>
+                <ul>
+                    <li>Identificação de padrões iniciais</li>
+                    <li>Segmentação de usuários</li>
+                    <li>Análise de correlações comportamentais</li>
+                    <li>Validação de hipóteses preditivas</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-number">3</div>
+                <h3>Modelagem Preditiva</h3>
+                <ul>
+                    <li>Seleção de algoritmos adequados</li>
+                    <li>Treinamento e validação de modelos</li>
+                    <li>Otimização de hiperparâmetros</li>
+                    <li>Testes A/B em ambiente controlado</li>
+                </ul>
+            </div>
+            <div class="phase-card">
+                <div class="phase-number">4</div>
+                <h3>Implementação e Monitoramento</h3>
+                <ul>
+                    <li>Deploy em produção</li>
+                    <li>Monitoramento contínuo de performance</li>
+                    <li>Ajuste fino baseado em feedback</li>
+                    <li>Atualização constante dos modelos</li>
+                </ul>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Centro de Pesquisa em Interação Humano-Computador. Todos os direitos reservados.</p>
+            <p>Fonte: Research em Human-Computer Interaction, MIT Media Lab, Stanford Human-Computer Interaction Institute</p>
+        </footer>
+    </div>
+
+    <button class="floating-button" onclick="openSummary()">📋</button>
+
+    <div class="modal" id="summaryModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSummary()">&times;</span>
+            <h2>Resumo Executivo</h2>
+            <div class="summary-content">
+                <h3>🎯 Pontos Principais</h3>
+                <ul>
+                    <li>A análise preditiva alcança 87% de precisão na previsão de intenções do usuário</li>
+                    <li>Empresas que utilizam personalização preditiva veem 2.3x mais conversão</li>
+                    <li>Sistemas modernos antecipam ações em apenas 150ms</li>
+                    <li>92% dos usuários preferem experiências preditivas bem implementadas</li>
+                </ul>
+
+                <h3>🔮 Tendências Futuras</h3>
+                <ul>
+                    <li>Integração com interfaces cérebro-computador</li>
+                    <li>Análise preditiva em realidade aumentada e mista</li>
+                    <li>Sistemas federados que preservam privacidade</li>
+                    <li>IA explicável para decisões preditivas transparentes</li>
+                </ul>
+
+                <h3>⚠️ Desafios Críticos</h3>
+                <ul>
+                    <li>Equilíbrio entre personalização e privacidade</li>
+                    <li>Prevenção de vieses algorítmicos</li>
+                    <li>Regulamentação e compliance</li>
+                    <li>Manutenção da autonomia humana</li>
+                </ul>
+
+                <h3>📊 Impacto nos Negócios</h3>
+                <ul>
+                    <li>Redução de 64% no tempo de conclusão de tarefas</li>
+                    <li>Aumento significativo na satisfação do cliente</li>
+                    <li>Personalização em escala massiva</li>
+                    <li>Vantagem competitiva sustentável</li>
+                </ul>
+
+                <h3>🚀 Recomendações Estratégicas</h3>
+                <ul>
+                    <li>Investir em capacitação técnica e ética</li>
+                    <li>Implementar frameworks de governança de IA</li>
+                    <li>Priorizar transparência e controle do usuário</li>
+                    <li>Adotar abordagem ágil para experimentação</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função de formatação de números
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            } else if (num % 1 === 0) {
+                return Math.floor(num).toString();
+            } else {
+                return num.toFixed(1);
+            }
+        }
+
+        // 1. Toggle de Seções (Accordion)
+        function toggleSection(header) {
+            const content = header.nextElementSibling;
+            const allSections = document.querySelectorAll('.section');
+            const allHeaders = document.querySelectorAll('.section-header');
+
+            // Fecha outras seções
+            allSections.forEach(section => {
+                if (section !== header.parentElement) {
+                    section.classList.remove('active');
+                }
+            });
+
+            allHeaders.forEach(h => {
+                if (h !== header) {
+                    h.classList.remove('active');
+                }
+            });
+
+            // Abre/fecha seção atual
+            header.parentElement.classList.toggle('active');
+            header.classList.toggle('active');
+        }
+
+        // 2. Animação de Números
+        function animateNumbers() {
+            const numbers = document.querySelectorAll('.stat-number');
+            numbers.forEach(num => {
+                const originalText = num.innerText;
+                const target = parseFloat(originalText.replace(/[^0-9.-]/g, ''));
+                const suffix = originalText.replace(/[0-9.-]/g, '');
+                const isPercentage = suffix.includes('%');
+                const isMultiplier = originalText.includes('x');
+                const isTime = originalText.includes('ms');
+
+                let increment, current = 0;
+
+                if (isMultiplier) {
+                    increment = target / 30;
+                } else if (isTime) {
+                    increment = target / 30;
+                } else if (isPercentage) {
+                    increment = target / 30;
+                } else {
+                    increment = target / 30;
+                }
+
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        let displayValue;
+                        if (isMultiplier) {
+                            displayValue = current.toFixed(1) + 'x';
+                        } else if (isTime) {
+                            displayValue = Math.floor(current) + 'ms';
+                        } else if (isPercentage) {
+                            displayValue = Math.floor(current) + '%';
+                        } else {
+                            displayValue = formatNumber(current);
+                        }
+                        num.innerText = displayValue;
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        num.innerText = originalText;
+                    }
+                };
+
+                updateNumber();
+            });
+        }
+
+        // 3. Controle do Modal
+        function openSummary() {
+            document.getElementById('summaryModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSummary() {
+            document.getElementById('summaryModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // 4. Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Anima números ao carregar
+            animateNumbers();
+
+            // Abre primeira seção automaticamente
+            const firstSection = document.querySelector('.section-header');
+            if (firstSection) {
+                toggleSection(firstSection);
+            }
+        });
+
+        // 5. Fecha modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('summaryModal');
+            if (event.target == modal) {
+                closeSummary();
+            }
+        }
+
+        // 6. Smooth scroll para âncoras
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // 7. Animação no scroll (fade-in)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observa elementos para animação
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll('.stat-card, .policy-card, .phase-card');
+            elementsToAnimate.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
